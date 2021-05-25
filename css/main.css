@@ -1,4 +1,3 @@
-
 /* ===================================================================
  * # custom block grid STACK breakpoints
  *
@@ -61,10 +60,10 @@ body {
 /* ------------------------------------------------------------------- 
  * ## links
 
- #Jayesh Suryavanshi Name
+ Jayesh Suryavanshi Name
  * ------------------------------------------------------------------- */
 a {
-  color: #3edbf0;
+  color: #f9861a;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
