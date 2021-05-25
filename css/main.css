@@ -60,9 +60,11 @@ body {
 
 /* ------------------------------------------------------------------- 
  * ## links
+
+ #Jayesh Suryavanshi Name
  * ------------------------------------------------------------------- */
 a {
-  color: #f9861a;
+  color: #3edbf0;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
