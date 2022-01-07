@@ -314,9 +314,7 @@ li {
 	display: block;
 }
 
-/* ------------------------------------------------------------------- 
- * ## links
- * ------------------------------------------------------------------- */
+
 a {
 	text-decoration: none;
 	line-height: inherit;
@@ -326,9 +324,6 @@ a img {
 	border: none;
 }
 
-/* ------------------------------------------------------------------- 
- * ## inputs
- * ------------------------------------------------------------------- */
 fieldset {
 	margin: 0;
 	padding: 0;
@@ -349,18 +344,7 @@ textarea {
 
 
 
-/* ===================================================================
- * # grid v2.1.2
- *
- *   -----------------------------------------------------------------
- * - Grid breakpoints are based on MAXIMUM WIDTH media queries, 
- *   meaning they apply to that one breakpoint and ALL THOSE BELOW IT.
- * - Grid columns without a specified width will automatically layout 
- *   as equal width columns.
- * ------------------------------------------------------------------- */
 
-/* rows
- * ------------------------------------- */
 .row {
 	width: 89%;
 	max-width: 1200px;
@@ -381,8 +365,7 @@ textarea {
 	margin-right: -20px;
 }
 
-/* columns
- * -------------------------------------- */
+
 .column {
 	-ms-flex: 1 1 0%;
 	-webkit-box-flex: 1;
@@ -395,8 +378,7 @@ textarea {
 	padding: 0;
 }
 
-/* flex row containers utility classes
- * ----------------------------------------- */
+
 .row.row-wrap {
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
@@ -455,8 +437,7 @@ textarea {
 	justify-content: center;
 }
 
-/* flex item utility alignment classes
- * ----------------------------------------- */
+
 .align-center {
 	margin: auto;
 	-webkit-align-self: center;
@@ -513,8 +494,7 @@ textarea {
 	align-self: flex-end;
 }
 
-/* large screen column widths 
- * -------------------------------------- */
+
 .large-1 {
 	-ms-flex: 0 0 8.33333%;
 	-webkit-box-flex: 0;
@@ -601,9 +581,7 @@ textarea {
 	max-width: 100%;
 }
 
-/* ------------------------------------------------------------------- 
- * ## medium screen devices
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:1200px) {
 	.row .row {
 		margin-left: -16px;
@@ -702,9 +680,7 @@ textarea {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## tablets
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:800px) {
 	.tab-1 {
 		-ms-flex: 0 0 8.33333%;
@@ -798,9 +774,7 @@ textarea {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## mobile devices 
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:600px) {
 	.row {
 		width: 100%;
@@ -911,9 +885,7 @@ textarea {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## small mobile devices <= 400px
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:400px) {
 	.row {
 		padding-left: 22px;
@@ -940,12 +912,7 @@ textarea {
 
 
 
-/* ===================================================================
- * # block grids
- *
- * -------------------------------------------------------------------
- * Equally-sized columns define at parent/row level.
- * ------------------------------------------------------------------- */
+
 .block-large-1-8 > .column {
 	-ms-flex: 0 0 12.5%;
 	-webkit-box-flex: 0;
@@ -995,9 +962,7 @@ textarea {
 	max-width: 100%;
 }
 
-/* ------------------------------------------------------------------- 
- * ## block grids - medium screen devices
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:1200px) {
 	.block-medium-1-8 > .column {
 		-ms-flex: 0 0 12.5%;
@@ -1050,9 +1015,7 @@ textarea {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## block grids - tablets
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:800px) {
 	.block-tab-1-8 > .column {
 		-ms-flex: 0 0 12.5%;
@@ -1105,9 +1068,7 @@ textarea {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## block grids - mobile devices
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:600px) {
 	.block-mob-1-8 > .column {
 		-ms-flex: 0 0 12.5%;
@@ -1160,9 +1121,7 @@ textarea {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## block grids - small mobile devices <= 400px
- * ------------------------------------------------------------------- */
+
 @media screen and (max-width:400px) {
 	.stack > .column {
 		-ms-flex: 0 0 100%;
@@ -1179,18 +1138,14 @@ textarea {
 
 
 
-/* ===================================================================
- * # MISC
- *
- * ------------------------------------------------------------------- */
+
 .h-group:after {
 	content: "";
 	display: table;
 	clear: both;
 }
 
-/* misc helper classes
- * -------------------------------------- */
+
 .is-hidden {
 	display: none;
 }
