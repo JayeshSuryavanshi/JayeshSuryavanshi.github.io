@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 @import url('http://fonts.cdnfonts.com/css/product-sans');
-@import url('http://fonts.cdnfonts.com/css/apercu');
+@import url('http://fonts.cdnfonts.com/css/Product Sans');
 
 
 
@@ -56,7 +56,7 @@ body {
   /* font-family: "Product Sans", serif; */
   /* font-family: 'PT Sans', sans-serif; */
   /* font-family: 'Product Sans', sans-serif; */
-  font-family: 'Apercu', sans-serif;
+  font-family: 'Product Sans', sans-serif;
   font-size: 1.8rem;
   font-style: normal;
   font-weight: normal;
@@ -98,7 +98,7 @@ a:active {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   /* font-family: 'Roboto', sans-serif; */
   font-family: 'Product Sans', sans-serif;
-  /* font-family: 'Apercu', sans-serif; */
+  /* font-family: 'Product Sans', sans-serif; */
   font-weight: 700;
   font-style: normal;
   color: #000000;
