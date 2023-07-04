@@ -2,9 +2,16 @@
 
 /* @import url("https://fonts.googleapis.com/css?family=Gothic+A1:300,300i,400,400i,500,500i,600,600i,700,700i|Martel:300,300i,400,400i,700,700i,900,900i|Work+Sans:600,700&display=swap"); */
 
-@font-face {
-	font-family: 'Apercu';
-	src: url('fonts/Apercu/ApercuPro-Regular.ttf') format('truetype');
+/* @font-face {
+	font-family: 'Manrope';
+	src: url('fonts/Manrope/ManropePro-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  } */
+
+  @font-face {
+	font-family: 'Manrope';
+	src: url('fonts/Manrope/Manrope-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
   }
