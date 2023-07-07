@@ -86,7 +86,7 @@ body {
  Jayesh Suryavanshi Name
  * ------------------------------------------------------------------- */
 a {
-  color: #f9861a;
+  color: #7cfac9;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -413,7 +413,7 @@ ul.disc li::before {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #f9861a;
+  background: #7cfac9;
   position: absolute;
   left: -16px;
   top: 11px;
@@ -422,7 +422,7 @@ ul.disc li::before {
 
 dt {
   margin: 0;
-  color: #f9861a;
+  color: #7cfac9;
 }
 
 dd {
@@ -905,7 +905,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: #f9861a;
+  -webkit-text-fill-color: #7cfac9;
   -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
 }
@@ -967,8 +967,8 @@ button.btn--primary,
 input[type="submit"].btn--primary,
 input[type="reset"].btn--primary,
 input[type="button"].btn--primary {
-  background: #f9861a;
-  border-color: #f9861a;
+  background: #7cfac9;
+  border-color: #7cfac9;
   color: #ffffff;
 }
 
@@ -1188,7 +1188,7 @@ input::-moz-focus-inner {
 }
 
 .stats-tabs li a:hover {
-  color: #f9861a;
+  color: #7cfac9;
 }
 
 .stats-tabs li a em {
@@ -1453,7 +1453,7 @@ input::-moz-focus-inner {
   letter-spacing: .4em;
   margin-top: 0;
   margin-bottom: 6rem;
-  color: #f9861a;
+  color: #7cfac9;
 }
 
 .display-1 {
@@ -1817,8 +1817,8 @@ input::-moz-focus-inner {
 
 .header-content .btn:hover,
 .header-content .btn:focus {
-  background-color: #f9861a !important;
-  border-color: #f9861a !important;
+  background-color: #7cfac9 !important;
+  border-color: #7cfac9 !important;
 }
 
 /* ------------------------------------------------------------------- 
@@ -2031,7 +2031,7 @@ input::-moz-focus-inner {
   display: block;
   height: 2px;
   width: 8rem;
-  background-color: #f9861a;
+  background-color: #7cfac9;
   position: absolute;
   left: -10.8rem;
   top: .55em;
@@ -2068,7 +2068,7 @@ input::-moz-focus-inner {
 .hero-social a:hover,
 .hero-social a:focus,
 .hero-social a:active {
-  color: #f9861a;
+  color: #7cfac9;
 }
 
 .hero-social li {
@@ -2142,7 +2142,7 @@ input::-moz-focus-inner {
 
 .hero-scroll .scroll-link:hover,
 .hero-scroll .scroll-link:focus {
-  background-color: #f9861a;
+  background-color: #7cfac9;
 }
 
 /* -------------------------------------------------------------------
@@ -2602,7 +2602,7 @@ html.no-csstransitions .hero-content {
 .s-services .vert-line {
   width: 2px;
   height: 20rem;
-  background-color: #f9861a;
+  background-color: #7cfac9;
   -webkit-transform: translate3d(50%, 0, 0);
   transform: translate3d(50%, 0, 0);
   position: absolute;
@@ -2657,7 +2657,7 @@ html.no-csstransitions .hero-content {
   font-weight: 600;
   font-size: .5em;
   line-height: 1;
-  color: #f9861a;
+  color: #7cfac9;
   position: absolute;
   top: .5em;
   left: 0;
@@ -2801,7 +2801,7 @@ html.no-csstransitions .hero-content {
 .s-portfolio::before {
   content: "";
   display: block;
-  background-color: #f9861a;
+  background-color: #7cfac9;
   position: absolute;
   top: 0;
   right: 0;
@@ -2942,7 +2942,7 @@ html.no-csstransitions .hero-content {
 .folio-item__project-link:hover,
 .folio-item__project-link:focus,
 .folio-item__project-link:active {
-  background-color: #f9861a;
+  background-color: #7cfac9;
   color: #ffffff;
 }
 
@@ -3236,7 +3236,7 @@ html.no-csstransitions .hero-content {
 }
 
 .s-footer .right-vert-line {
-  background-color: #f9861a;
+  background-color: #7cfac9;
 }
 
 .s-footer__bottom {
@@ -3273,7 +3273,7 @@ html.no-csstransitions .hero-content {
 
 .footer-contact-block a:hover,
 .footer-contact-block a:focus {
-  color: #f9861a;
+  color: #7cfac9;
 }
 
 .footer-contact-block__content,
@@ -3310,7 +3310,7 @@ html.no-csstransitions .hero-content {
 
 .ss-copyright a:hover,
 .ss-copyright a:focus {
-  color: #f9861a;
+  color: #7cfac9;
 }
 
 .ss-copyright span {
@@ -3360,7 +3360,7 @@ html.no-csstransitions .hero-content {
 
 .ss-go-top a:hover,
 .ss-go-top a:focus {
-  background-color: #f9861a;
+  background-color: #7cfac9;
 }
 
 .ss-go-top svg {
