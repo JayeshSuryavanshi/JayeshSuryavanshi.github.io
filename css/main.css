@@ -1988,6 +1988,27 @@ input::-moz-focus-inner {
   position: relative;
 }
 
+
+.s-hero {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  min-height: 82rem;
+  background-color: transparent;
+}
+
+.s-hero video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
 .s-hero::before {
   display: block;
   content: "";
