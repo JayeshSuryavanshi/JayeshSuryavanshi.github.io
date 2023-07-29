@@ -86,7 +86,7 @@ body {
  Jayesh Suryavanshi Name
  * ------------------------------------------------------------------- */
 a {
-  color: #7cfac9;
+  color: #4FFFB0;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -94,14 +94,13 @@ a {
 a:hover,
 a:focus,
 a:active {
-  color: #544d9d;
+  color: #00BFFF;
 }
 
 a:hover,
 a:active {
   outline: 0;
 }
-
 
 
 /* ===================================================================
