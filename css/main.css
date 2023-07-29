@@ -94,7 +94,7 @@ body {
  Jayesh Suryavanshi Name
  * ------------------------------------------------------------------- */
 a {
-  color: #4FFFB0;
+  color: #7cfac9;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -1484,7 +1484,7 @@ input::-moz-focus-inner {
 
 .section-intro::before {
   content: attr(data-num);
-  font-family: "Work Sans", sans-serif;
+  font-family: "Product-Sans", sans-serif;
   font-weight: 600;
   font-size: 30rem;
   line-height: 1;
@@ -1514,7 +1514,7 @@ input::-moz-focus-inner {
 .right-vert-line {
   width: 2px;
   height: 20rem;
-  background-color: #302c59;
+  background-color: #0b0a15;
   -webkit-transform: translate3d(50%, 0, 0);
   transform: translate3d(50%, 0, 0);
   position: absolute;
@@ -2449,7 +2449,7 @@ html.no-csstransitions .hero-content {
 }
 
 .s-about .right-vert-line {
-  background-color: #302c59;
+  background-color: #0b0a15;
 }
 
 .s-about__section--profile {
@@ -2462,7 +2462,7 @@ html.no-csstransitions .hero-content {
 .s-about__section--profile::before {
   content: "";
   display: block;
-  background-color: #302c59;
+  background-color: #0b0a15;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -2611,7 +2611,7 @@ html.no-csstransitions .hero-content {
 .s-services {
   padding-top: 24rem;
   padding-bottom: 20rem;
-  background-color: #1d1b37;
+  background-color: #0b0a15;
   position: relative;
 }
 
