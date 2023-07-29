@@ -10,12 +10,12 @@
   font-style: normal;
 } */
 
-/* @font-face {
-	font-family: 'Neue Machina';
-	src: url('fonts/Neue Machina/ProductSans-Regular.ttf') format('truetype');
+@font-face {
+	font-family: 'Product-Sans';
+	src: url('fonts/Product-Sans/ProductSans-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-  } */
+  }
   
   
 @font-face {
@@ -77,7 +77,7 @@ body {
   /* font-family: "Neue Machina", serif; */
   /* font-family: 'PT Sans', sans-serif; */
   /* font-family: 'Neue Machina', sans-serif; */
-  font-family: 'Neue Machina', sans-serif;
+  font-family: 'Product-Sans', sans-serif;
   font-size: 1.8rem;
   font-style: normal;
   font-weight: normal;
