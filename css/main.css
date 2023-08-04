@@ -73,7 +73,7 @@ body {
 }
 
 body {
-  background: #0b1930;
+  background: #0b0a15;
   /* font-family: "Neue Machina", serif; */
   /* font-family: 'PT Sans', sans-serif; */
   /* font-family: 'Neue Machina', sans-serif; */
@@ -548,7 +548,7 @@ form,
   left: 0;
   right: 0;
   bottom: 0;
-  background: #0b1930;
+  background: #0b0a15;
   z-index: 500;
   height: 100vh;
   width: 100%;
@@ -1514,7 +1514,7 @@ input::-moz-focus-inner {
 .right-vert-line {
   width: 2px;
   height: 20rem;
-  background-color: #0b1930;
+  background-color: #0b0a15;
   -webkit-transform: translate3d(50%, 0, 0);
   transform: translate3d(50%, 0, 0);
   position: absolute;
@@ -2449,7 +2449,7 @@ html.no-csstransitions .hero-content {
 }
 
 .s-about .right-vert-line {
-  background-color: #0b1930;
+  background-color: #0b0a15;
 }
 
 .s-about__section--profile {
@@ -2462,7 +2462,7 @@ html.no-csstransitions .hero-content {
 .s-about__section--profile::before {
   content: "";
   display: block;
-  background-color: #0b1930;
+  background-color: #0b0a15;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -2611,7 +2611,7 @@ html.no-csstransitions .hero-content {
 .s-services {
   padding-top: 24rem;
   padding-bottom: 20rem;
-  background-color: #0b1930;
+  background-color: #0b0a15;
   position: relative;
 }
 
@@ -3259,7 +3259,7 @@ html.no-csstransitions .hero-content {
 .s-footer {
   padding-top: 24rem;
   padding-bottom: 8rem;
-  background-color: #0b1930;
+  background-color: #0b0a15;
   position: relative;
 }
 
