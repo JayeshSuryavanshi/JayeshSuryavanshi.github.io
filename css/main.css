@@ -94,7 +94,7 @@ body {
  Jayesh Suryavanshi Name
  * ------------------------------------------------------------------- */
 a {
-  color: #64ffda;
+  color: #f9861a;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -102,7 +102,7 @@ a {
 a:hover,
 a:focus,
 a:active {
-  color: #2b453e;
+  color: #544d9d;
 }
 
 a:hover,
@@ -420,7 +420,7 @@ ul.disc li::before {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #64ffda;
+  background: #f9861a;
   position: absolute;
   left: -16px;
   top: 11px;
@@ -429,7 +429,7 @@ ul.disc li::before {
 
 dt {
   margin: 0;
-  color: #64ffda;
+  color: #f9861a;
 }
 
 dd {
@@ -912,7 +912,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: #64ffda;
+  -webkit-text-fill-color: #f9861a;
   -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
 }
@@ -974,8 +974,8 @@ button.btn--primary,
 input[type="submit"].btn--primary,
 input[type="reset"].btn--primary,
 input[type="button"].btn--primary {
-  background: #64ffda;
-  border-color: #64ffda;
+  background: #f9861a;
+  border-color: #f9861a;
   color: #ffffff;
 }
 
@@ -1195,7 +1195,7 @@ input::-moz-focus-inner {
 }
 
 .stats-tabs li a:hover {
-  color: #64ffda;
+  color: #f9861a;
 }
 
 .stats-tabs li a em {
@@ -1460,7 +1460,7 @@ input::-moz-focus-inner {
   letter-spacing: .4em;
   margin-top: 0;
   margin-bottom: 6rem;
-  color: #64ffda;
+  color: #f9861a;
 }
 
 .display-1 {
@@ -1824,8 +1824,8 @@ input::-moz-focus-inner {
 
 .header-content .btn:hover,
 .header-content .btn:focus {
-  background-color: #64ffda !important;
-  border-color: #64ffda !important;
+  background-color: #f9861a !important;
+  border-color: #f9861a !important;
 }
 
 /* ------------------------------------------------------------------- 
@@ -2059,7 +2059,7 @@ input::-moz-focus-inner {
   display: block;
   height: 2px;
   width: 8rem;
-  background-color: #64ffda;
+  background-color: #f9861a;
   position: absolute;
   left: -10.8rem;
   top: .55em;
@@ -2096,7 +2096,7 @@ input::-moz-focus-inner {
 .hero-social a:hover,
 .hero-social a:focus,
 .hero-social a:active {
-  color: #64ffda;
+  color: #f9861a;
 }
 
 .hero-social li {
@@ -2170,7 +2170,7 @@ input::-moz-focus-inner {
 
 .hero-scroll .scroll-link:hover,
 .hero-scroll .scroll-link:focus {
-  background-color: #64ffda;
+  background-color: #f9861a;
 }
 
 /* -------------------------------------------------------------------
@@ -2630,7 +2630,7 @@ html.no-csstransitions .hero-content {
 .s-services .vert-line {
   width: 2px;
   height: 20rem;
-  background-color: #64ffda;
+  background-color: #f9861a;
   -webkit-transform: translate3d(50%, 0, 0);
   transform: translate3d(50%, 0, 0);
   position: absolute;
@@ -2685,7 +2685,7 @@ html.no-csstransitions .hero-content {
   font-weight: 600;
   font-size: .5em;
   line-height: 1;
-  color: #64ffda;
+  color: #f9861a;
   position: absolute;
   top: .5em;
   left: 0;
@@ -2829,7 +2829,7 @@ html.no-csstransitions .hero-content {
 .s-portfolio::before {
   content: "";
   display: block;
-  background-color: #64ffda;
+  background-color: #f9861a;
   position: absolute;
   top: 0;
   right: 0;
@@ -2970,7 +2970,7 @@ html.no-csstransitions .hero-content {
 .folio-item__project-link:hover,
 .folio-item__project-link:focus,
 .folio-item__project-link:active {
-  background-color: #64ffda;
+  background-color: #f9861a;
   color: #ffffff;
 }
 
@@ -3264,7 +3264,7 @@ html.no-csstransitions .hero-content {
 }
 
 .s-footer .right-vert-line {
-  background-color: #64ffda;
+  background-color: #f9861a;
 }
 
 .s-footer__bottom {
@@ -3301,7 +3301,7 @@ html.no-csstransitions .hero-content {
 
 .footer-contact-block a:hover,
 .footer-contact-block a:focus {
-  color: #64ffda;
+  color: #f9861a;
 }
 
 .footer-contact-block__content,
@@ -3338,7 +3338,7 @@ html.no-csstransitions .hero-content {
 
 .ss-copyright a:hover,
 .ss-copyright a:focus {
-  color: #64ffda;
+  color: #f9861a;
 }
 
 .ss-copyright span {
@@ -3388,7 +3388,7 @@ html.no-csstransitions .hero-content {
 
 .ss-go-top a:hover,
 .ss-go-top a:focus {
-  background-color: #64ffda;
+  background-color: #f9861a;
 }
 
 .ss-go-top svg {
