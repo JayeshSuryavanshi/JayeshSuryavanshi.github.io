@@ -3,41 +3,19 @@
 /* @import url("https://fonts.googleapis.com/css?family=Gothic+A1:300,300i,400,400i,500,500i,600,600i,700,700i|Martel:300,300i,400,400i,700,700i,900,900i|Work+Sans:600,700&display=swap"); */
 
 /* @font-face {
-	font-family: 'MarketSans', sans-serif;
+	font-family: 'Product-Sans';
 	src: url('fonts/Product-Sans/Product-SansPro-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
   } */
 
   @font-face {
-	font-family: 'MarketSans';
-	src: url('fonts/MarketSans/MarketSans-Regular.otf') format('opentype');
-	font-weight: 400;
+	font-family: 'Product-Sans';
+	src: url('fonts/Product-Sans/ProductSans-Regular.ttf') format('truetype');
+	font-weight: normal;
 	font-style: normal;
-	font-display: swap;
   }
-  @font-face {
-	font-family: 'MarketSans';
-	src: url('fonts/MarketSans/MarketSans-Medium.otf') format('opentype');
-	font-weight: 500;
-	font-style: normal;
-	font-display: swap;
-  }
-  @font-face {
-	font-family: 'MarketSans';
-	src: url('fonts/MarketSans/MarketSans-SemiBold.otf') format('opentype');
-	font-weight: 600;
-	font-style: normal;
-	font-display: swap;
-  }
-  @font-face {
-	font-family: 'MarketSans';
-	src: url('fonts/MarketSans/MarketSans-Bold.otf') format('opentype');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-  }
-
+  
 
 html {
 	line-height: 1.15;  /* 1 */
