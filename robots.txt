@@ -1,0 +1,29 @@
+# https://www.jayeshsuryavanshi.com/robots.txt
+# Everything is public and indexable — including for AI crawlers.
+
+User-agent: *
+Allow: /
+
+# Explicitly welcome the major AI / search crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.jayeshsuryavanshi.com/sitemap.xml
