@@ -1,7 +1,29 @@
-# About my website
+# jayeshsuryavanshi.com
 
-Welcome to my portfolio website! My name is Jayesh and I am a Software Engineer. On this website, you will find a selection of my past projects and experiences that showcase my skills and passion for Software Engineering / Machine Learning / Distributed Systems.
+Source for my personal portfolio site, **[www.jayeshsuryavanshi.com](https://www.jayeshsuryavanshi.com)** — served via GitHub Pages from this repo (custom domain in `CNAME`).
 
-In addition to my portfolio, you will also find my resume, which outlines my education and professional experience in detail. If you have any questions or would like to learn more about me and my work, please don't hesitate to contact me through the provided form on the website.
+## Stack
 
-I hope you enjoy exploring my portfolio and learning more about my journey. Thank you for visiting!
+Hand-built static site — HTML, CSS, and vanilla JS (with jQuery). No build step: the files here are what's deployed.
+
+## Run locally
+
+Clone and open `index.html` directly, or serve the folder:
+
+```sh
+python3 -m http.server 8000   # then visit http://localhost:8000
+```
+
+## Structure
+
+| Path | What it is |
+|------|------------|
+| `index.html` | The single-page site (intro, portfolio, resume, contact). |
+| `css/` | Styles and fonts. |
+| `images/` | Portfolio thumbnails, hero media, and Open Graph images. |
+| `blog/` | Blog section. |
+| `CNAME` | Custom-domain config for GitHub Pages. |
+
+## Deploy
+
+Pushing to the default branch triggers a GitHub Pages rebuild; the site is live at the custom domain within a minute or two.
