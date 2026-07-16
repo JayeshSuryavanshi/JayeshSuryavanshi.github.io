@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Inkling, up close — a technical study — Jayesh Suryavanshi</title>
+  <meta name="description" content="A close technical read of Thinking Machines Lab's Inkling: a 975B-parameter open-weights multimodal MoE. What's actually new in the architecture, where it really lands on benchmarks, the interaction-models system it was built for, and how to fine-tune it on Tinker.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/inkling.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/inkling.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="Inkling, up close — a technical study">
+  <meta property="og:description" content="A close technical read of Thinking Machines Lab's 975B open-weights multimodal MoE — what's new, where it really lands, and how I'd fine-tune it.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-jayesh.jpg">
+  <meta property="article:published_time" content="2026-07-16">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="Inkling, up close — a technical study">
+  <meta name="twitter:description" content="A close technical read of Thinking Machines Lab's 975B open-weights multimodal MoE — what's new, where it really lands, and how I'd fine-tune it.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-jayesh.jpg">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="here">Writing</a>
+        <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <p class="kicker">Model Study</p>
+      <h1 class="title">Inkling, up close</h1>
+      <p class="dek">A close read of Thinking Machines Lab's 975B open-weights multimodal MoE — what's actually new, where it really lands, and how I'd fine-tune it.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">·</span>
+        <span>July&nbsp;16,&nbsp;2026</span>
+        <span class="sep">·</span>
+        <span>~12&nbsp;min read</span>
+      </div>
+
+      <div class="prose">
+
+        <p class="lead">On July&nbsp;15,&nbsp;2026, Thinking Machines Lab — Mira Murati's lab — shipped its first foundation model. <strong>Inkling</strong> is a 975B-parameter (41B active) open-weights, natively multimodal Mixture-of-Experts, released under Apache&nbsp;2.0. I spent a while pulling it apart: reading the model card and serving recipe line by line, and cross-checking every marketing claim against independent leaderboards. This is the write-up.</p>
+
+        <p>The honest one-liner first, because it reframes everything else: <strong>Inkling is one of the strongest open-weights models available today, and it is not a frontier model — and Thinking Machines says so themselves.</strong> Their own announcement: <em>"Inkling is not the strongest overall model available today, open or closed."</em> So the interesting story here isn't the leaderboard. It's the architecture choices, the real-time system Inkling was quietly built to serve, and the business bet underneath it all.</p>
+
+        <div class="callout">
+          <div class="label">How I studied this</div>
+          <p>Rather than read the launch post and paraphrase, I ran a small <strong>multi-agent research harness</strong>. One wave of agents pulled the primary sources — the model card, the Hugging&nbsp;Face blog, the vLLM serving recipe, the Tinker docs — while another mapped every reported score against independent July-2026 leaderboards. A second, adversarial wave then tried to <em>refute</em> the boldest claims one by one.</p>
+          <p>Everything below traces to a primary source. Anything that is vendor-reported and not independently reproducible is flagged as such.</p>
+        </div>
+
+        <h2>What it is, in one screen</h2>
+        <ul>
+          <li><strong>975B total / 41B active</strong> sparse MoE · 66-layer decoder-only transformer</li>
+          <li><strong>Natively multimodal</strong> — text, image, and audio in; <em>text out</em></li>
+          <li><strong>1M-token</strong> context · trained on <strong>45&nbsp;trillion</strong> multimodal tokens</li>
+          <li><strong>Apache&nbsp;2.0</strong>, weights on Hugging&nbsp;Face (BF16 + a quantized NVFP4 checkpoint)</li>
+          <li>A controllable <strong><code>reasoning_effort</code></strong> dial, agentic tool-use, and first-class fine-tuning via their Tinker platform</li>
+          <li>A preview sibling, <strong>Inkling-Small</strong> (276B / 12B active)</li>
+        </ul>
+
+        <h2>The architecture: two bets worth noticing</h2>
+        <p>Strip away the headline number and most of Inkling is the 2024–2026 open-weights playbook, assembled with taste and scaled up. The MoE core is close to a <strong>DeepSeek-V3 recipe</strong> — a sigmoid router with auxiliary-loss-free load balancing, fine-grained routed experts plus always-on shared experts. The 5:1 sliding-window-to-global attention split is the same ratio Gemma&nbsp;3 uses. The Muon+Adam optimizer split is exactly how Kimi&nbsp;K2 trains. None of that is a departure; it's good engineering converging on what works.</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>Component</th><th>What Inkling does</th></tr></thead>
+          <tbody>
+            <tr><td>Depth / width</td><td>66 layers · hidden size 6144</td></tr>
+            <tr><td>Attention</td><td>GQA, 8 KV heads, head&nbsp;dim 128; <strong>11 global + 55 sliding-window</strong> layers (512-token window)</td></tr>
+            <tr><td>Positional</td><td><span class="warn">No RoPE</span> — a learned relative term from a 4th "R" projection, added into the attention logits</td></tr>
+            <tr><td>Short convs</td><td><span class="warn">4× depthwise W=4 convolutions per layer</span> — on attention keys, values, output, and the MoE output</td></tr>
+            <tr><td>MoE</td><td>256 routed experts, top-6, + 2 shared always-on = 8 experts/token</td></tr>
+            <tr><td>Decoding</td><td>8 chained multi-token-prediction heads (up to 9 tokens/step, mean acceptance ~4.5)</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Two choices genuinely cut against the grain of a 2026 frontier model:</p>
+        <p><strong>1. It drops RoPE.</strong> Rotary embeddings are near-universal — Llama, Qwen, Gemini, DeepSeek, Mistral all use them, and most long-context work is about <em>extending</em> RoPE, not replacing it. Inkling instead adds a learned, per-head relative-position term straight into the pre-softmax logits (the reason its attention block has a fourth "qkv<strong>r</strong>" projection). Relative-bias schemes are known to extrapolate more gracefully, so it's defensible — but it's a minority position, and a notable one at this scale.</p>
+        <p><strong>2. It puts short convolutions inside a dense-attention MoE.</strong> Four small depthwise convolutions per layer, wired into both the attention and MoE residual paths, borrowed from the sub-quadratic/hybrid-recurrent lineage (Primer, Griffin, Mamba). Those tricks usually live in linear-attention models, not a softmax-attention frontier MoE.</p>
+        <p>I'll resist over-selling it, though. When I adversarially checked "these are meaningful departures from standard practice," the verdict was <em>overstated</em>: the Muon+Adam split is simply how Muon is used, and the encoder-free multimodal stack (discretized-mel audio, raw image patches) reuses named prior art. Only the RoPE drop is really unusual — and even that is a revival of a pre-RoPE idea. This is excellent systems taste, not a clean-sheet architecture.</p>
+
+        <h2>Where it actually lands</h2>
+        <p>Every headline number is reported at <code>effort=0.99</code> — the maximum test-time-compute ceiling — so real-world, default-effort scores will sit lower. Against the actual July-2026 frontier:</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>Benchmark</th><th>Inkling</th><th>Closed frontier</th><th>Open peer · Nemotron&nbsp;3&nbsp;Ultra</th></tr></thead>
+          <tbody>
+            <tr><td>AIME 2026</td><td>97.1%</td><td>~99–100%</td><td>—</td></tr>
+            <tr><td>GPQA Diamond</td><td>87.2%</td><td>~94%</td><td>87.0 <span class="win">(tie)</span></td></tr>
+            <tr><td>SWE-bench Verified</td><td>77.6%</td><td>88–95%</td><td>~72 <span class="win">(beats)</span></td></tr>
+            <tr><td>HLE (text-only)</td><td>29.7%</td><td>45–53%</td><td>26.7 <span class="win">(edges)</span></td></tr>
+            <tr><td>MMMU Pro</td><td>73.5%</td><td>83–84%</td><td>—</td></tr>
+            <tr><td>SimpleQA Verified</td><td>43.9%</td><td>~74% (Gemini)</td><td>—</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Read honestly, this <strong>trails the closed frontier across the board</strong> — which is exactly what the lab told you. The right frame is to judge Inkling against <em>other open-weights models</em>, and there it wins or ties on several axes. Its genuinely weak spots are <strong>HLE</strong> (roughly half the leader) and <strong>SimpleQA factuality</strong>. It also trails the open Chinese coders — GLM&nbsp;5.2 and Kimi&nbsp;K2.6/K2.7 — on agentic coding like Terminal&nbsp;Bench. And one number to treat with suspicion: <strong>VoiceBench 91.4%</strong> sits above any score on the public leaderboard, so I'd file it as vendor-reported until reproduced.</p>
+
+        <blockquote>
+          Judge it as an open-weights model and it's arguably the strongest US release on calibration, factuality, safety, and audio. Judge it as a frontier model and it loses to GPT-5.6, Gemini&nbsp;3.1, and Claude across the board.
+        </blockquote>
+
+        <h2>What's genuinely differentiated</h2>
+        <p>Three things hold up under scrutiny, and none of them are on the leaderboard's front page:</p>
+        <ul>
+          <li><strong>Calibration &amp; factuality.</strong> A positive Artificial-Analysis Omniscience score where Nemotron&nbsp;3&nbsp;Ultra, Kimi&nbsp;K2.5, and DeepSeek&nbsp;V4&nbsp;Pro all land negative. They RL-trained explicitly for calibrated confidence, over 30M+ rollouts.</li>
+          <li><strong>Safety among open models.</strong> Best-in-open on FORTRESS adversarial (78%) and StrongREJECT (98.6%), paired with a deliberately contrarian "answer directly on sensitive topics" stance.</li>
+          <li><strong>Audio, and the system behind it.</strong> This is the part most coverage missed.</li>
+        </ul>
+
+        <h3>Inkling is the brain of a two-model system</h3>
+        <p>Inkling was built to be the <em>asynchronous background reasoner</em> in Thinking Machines' <strong>"interaction models"</strong> architecture. A small, always-resident full-duplex model (<strong>TML-Interaction-Small</strong>, 276B/12B) handles the live voice-and-video conversation in 200ms micro-turns — listening while it talks, no separate voice-activity-detection harness. When a turn needs real reasoning, it hands the <em>whole conversation</em> to Inkling, keeps talking, and splices Inkling's streamed results back in at a natural pause.</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>Turn-taking latency (FD-bench)</th><th>Model</th></tr></thead>
+          <tbody>
+            <tr><td><span class="win">0.40&nbsp;s</span></td><td>TML-Interaction-Small</td></tr>
+            <tr><td>0.57&nbsp;s</td><td>Gemini-3.1-flash-live</td></tr>
+            <tr><td>1.18&nbsp;s</td><td>GPT-realtime-2.0 (minimal)</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The tell is one benchmark row: the small model alone scores 75.7 on BigBench&nbsp;Audio, but <strong>with Inkling as its background agent it jumps to 96.5</strong> — matching GPT-realtime-2 at max effort, while still answering at 0.4-second latency. That's the whole thesis: reasoning-model intelligence at non-thinking-model latency, by splitting the two jobs across two models that share context.</p>
+        <p>(A correction to a lot of the launch coverage, including my own first read: <strong>Inkling itself outputs text only.</strong> The native speech — discretized-mel in, flow-matching decoder out — lives in the interaction model, which is still a closed research preview. Inkling is the open, downloadable half.)</p>
+
+        <h2>The strategy underneath</h2>
+        <p>Why open-weight a 975B model at all? Because the model isn't the product — <strong>Tinker</strong> is. Thinking Machines sells the fine-tuning-and-customization layer; Inkling is the strong open base that makes that layer worth paying for. It's a deliberate inversion of the closed-API playbook, and the reception framed it as <em>"America's DeepSeek"</em> — the first competitive non-Chinese open-weights model since Llama&nbsp;3.</p>
+        <p>Two caveats keep it honest. "Open" is not "free": the BF16 checkpoint needs ~2&nbsp;TB of VRAM, and even the NVFP4 quantization needs ~600&nbsp;GB — a datacenter, not a workstation. And on Tinker its per-token pricing lands above the open-model median. The realistic access path for most people is a hosted endpoint (Together, Fireworks, Modal, Databricks, Baseten) or the smaller sibling.</p>
+
+        <h2>How I'd fine-tune it</h2>
+        <p>Tinker is worth understanding because it's <em>not</em> "upload data, click train." It's a <strong>low-level LoRA training API</strong>: you write an ordinary Python loop on a CPU-only box, and Tinker runs your exact <code>forward_backward</code> / <code>optim_step</code> / <code>sample</code> on its GPU cluster, handling sharding and failure recovery. Both Inkling and Inkling-Small are fine-tunable (64K and 256K context options), and it supports SFT, RL (GRPO/PPO), DPO, and distillation.</p>
+        <p>A worked example that plays to Inkling's actual strengths — a financial-document assistant that cites its sources and abstains when unsupported (mirroring the Bridgewater case the lab showcased):</p>
+        <pre><code><span class="c"># SFT: teach the format. Effort must match what you serve at.</span>
+train = svc.create_lora_training_client(
+    base_model=<span class="k">"thinkingmachines/Inkling:peft:262144"</span>,  <span class="c"># 256K ctx for long filings</span>
+    rank=32,
+)
+renderer = renderers.get_renderer(<span class="k">"inkling"</span>, train.get_tokenizer())
+
+<span class="k">for</span> step, batch <span class="k">in</span> enumerate(loader):
+    data = [renderer.build_supervised_example(ex.messages, effort=0.9) <span class="k">for</span> ex <span class="k">in</span> batch]
+    train.forward_backward(data, loss_fn=<span class="k">"cross_entropy"</span>).result()
+    train.optim_step(tinker.AdamParams(lr=1e-4))
+
+<span class="c"># Then RL a calibration reward with the sampling primitives, and export:</span>
+<span class="c">#   save_weights_for_sampler -> weights.download -> weights.build_hf_model -> publish_to_hf_hub</span>
+<span class="c"># Serve the merged model under vLLM:  vllm serve ./merged --tool-call-parser inkling</span></code></pre>
+        <p>Order of magnitude: a solid SFT-only domain adapter is <strong>low hundreds of dollars</strong>; add a calibration-RL pass and you're in the <strong>low thousands</strong>. You're not buying raw capability here — you're buying Inkling's calibration prior, long context, and effort dial, then specializing it cheaply. Which is exactly the bet the whole product is built on.</p>
+
+        <hr class="rule">
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>Best-in-class open, not frontier.</strong> The lab is refreshingly honest about this; the numbers back them up.</li>
+            <li><strong>Reach for it when factuality, calibration, safety, long context, or voice matter</strong> — probably the best US open model on those axes right now.</li>
+            <li><strong>Don't reach for it for raw agentic-coding or reasoning SOTA</strong> — GLM&nbsp;5.2 / Kimi&nbsp;K2.7 (open) or the closed frontier still win.</li>
+            <li><strong>The real product is customization.</strong> Open weights + Tinker is a coherent, contrarian strategy — the model is the on-ramp.</li>
+          </ul>
+        </div>
+
+        <div class="sources">
+          <h3>Primary sources</h3>
+          <ul>
+            <li><a href="https://thinkingmachines.ai/news/introducing-inkling/">Introducing Inkling</a> · <a href="https://thinkingmachines.ai/model-card/inkling/">Model card</a> · <a href="https://thinkingmachines.ai/blog/interaction-models/">Interaction models</a> — Thinking Machines Lab</li>
+            <li><a href="https://huggingface.co/thinkingmachines/Inkling">thinkingmachines/Inkling</a> &amp; <a href="https://huggingface.co/blog/thinkingmachines-inkling">HF launch blog</a></li>
+            <li><a href="https://recipes.vllm.ai/thinkingmachines/Inkling">vLLM serving recipe</a> · <a href="https://tinker-docs.thinkingmachines.ai/">Tinker docs</a></li>
+            <li>Benchmark context: Artificial Analysis, benchlm.ai, llm-stats.com leaderboards (July 2026)</li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+    <footer class="post-foot">
+      <a class="back" href="index.html">← All writing</a>
+      <p class="made">Researched with a multi-agent harness and adversarial fact-checking · numbers verified against primary sources as of July&nbsp;2026.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
+  </script>
+</body>
+</html>
