@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The open-weights frontier, mid-2026 — Jayesh Suryavanshi</title>
+  <meta name="description" content="Five open-weights models — Inkling, GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra — and who actually wins what. A benchmark-checked field guide to the state of open models in mid-2026.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="The open-weights frontier, mid-2026">
+  <meta property="og:description" content="Inkling, GLM 5.2, Kimi K2.7, DeepSeek V4, Nemotron 3 Ultra — who actually wins what. A benchmark-checked field guide.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-open-weights.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="The open-weights frontier, mid-2026 — a study by Jayesh Suryavanshi">
+  <meta property="article:published_time" content="2026-07-16">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="The open-weights frontier, mid-2026">
+  <meta name="twitter:description" content="Inkling, GLM 5.2, Kimi K2.7, DeepSeek V4, Nemotron 3 Ultra — who actually wins what.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-open-weights.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="here">Writing</a>
+        <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <p class="kicker">Field Guide</p>
+      <h1 class="title">The open-weights frontier, mid-2026</h1>
+      <p class="dek">Inkling landed in a crowded field. Here's how it stacks up against GLM&nbsp;5.2, Kimi&nbsp;K2.7, DeepSeek&nbsp;V4, and Nemotron&nbsp;3&nbsp;Ultra — and who actually wins what.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">·</span>
+        <span>July&nbsp;16,&nbsp;2026</span>
+        <span class="sep">·</span>
+        <span>~14&nbsp;min read</span>
+      </div>
+
+      <div class="prose">
+
+        <p class="lead">Sometime in the first half of 2026, the open-weights tier stopped being a discount rack. On the benchmarks that used to separate the frontier — graduate-level science, competition math — the best open models now sit <em>inside</em> the closed-frontier band. The gap that remains is narrower and more specific than the "open is a generation behind" story suggests. After <a href="inkling.html">taking apart Inkling</a>, I lined up the five open models that actually matter this summer and checked the receipts.</p>
+
+        <div class="callout">
+          <div class="label">A word on the numbers</div>
+          <p>Almost every headline score below is <strong>vendor-reported</strong>, and the vendors don't run the same harness. Inkling reports at <code>effort=0.99</code> (its max thinking budget). GLM quotes Terminal-Bench at 81.0 where Artificial&nbsp;Analysis independently measures 77.9. GLM's coding flagship is SWE-bench <em>Pro</em>, not the <em>Verified</em> everyone else quotes. Kimi&nbsp;K2.7 has <strong>no independent public-suite numbers at all</strong>.</p>
+          <p>Where I could, I anchored to independent sources — the Artificial&nbsp;Analysis Intelligence Index, and NIST/CAISI's evaluation. Treat ±2–3&nbsp;points as noise, and read "vendor" as an upper bound. The real skill in mid-2026 isn't reading scores; it's reading <em>provenance</em>.</p>
+        </div>
+
+        <h2>The cast</h2>
+        <p>Five models, five very different bets. Quick orientation before the numbers:</p>
+        <ul>
+          <li><strong>GLM&nbsp;5.2</strong> (Zhipu&nbsp;AI, MIT) — the current <strong>open intelligence leader</strong>. First open model to top the Artificial&nbsp;Analysis Intelligence Index (51). Text-only, tuned hard for agentic coding. ~753B/40B MoE.</li>
+          <li><strong>Kimi&nbsp;K2.7</strong> (Moonshot, modified-MIT) — the trillion-param (1T/32B) autonomy specialist: 12-hour agent runs, 300-agent swarms. K2.7 is a coding-focused point release trained with MuonClip.</li>
+          <li><strong>DeepSeek&nbsp;V4</strong> (MIT) — the <strong>efficiency and factuality king</strong>. A 1.6T/49B "Pro" and a self-hostable 285B/13B "Flash," built around genuinely cheap 1M-token context.</li>
+          <li><strong>Nemotron&nbsp;3&nbsp;Ultra</strong> (NVIDIA, OpenMDW) — the architecture outlier: a 550B/55B <strong>hybrid Mamba-Attention</strong> MoE, pretrained natively in NVFP4, sold on throughput and token efficiency. Fully open — data and recipes too.</li>
+          <li><strong>Inkling</strong> (Thinking&nbsp;Machines, Apache&nbsp;2.0) — the only true <strong>multimodal</strong> one: 975B/41B, native audio, published safety, and Tinker fine-tuning.</li>
+        </ul>
+
+        <h2>Who wins what</h2>
+
+        <h3>Raw intelligence → GLM 5.2</h3>
+        <p>On the one genuinely independent cross-model yardstick — Artificial&nbsp;Analysis's Intelligence Index — the ranking is <strong>GLM&nbsp;5.2 (51) &gt; Nemotron&nbsp;3&nbsp;Ultra (48) &gt; Kimi&nbsp;K2.6 (44) &gt; Inkling (41)</strong>. GLM is the first open model ever to lead that board, and it trails only the closed frontier (Claude&nbsp;Opus&nbsp;4.8 at 56, GPT-5.5 at 53). DeepSeek&nbsp;V4 is a preview and wasn't cleanly indexed at the time, but its component scores land it in the same top cluster.</p>
+
+        <h3>Agentic coding → GLM 5.2 (with an asterisk)</h3>
+        <p>This is where I had to walk back my own starting assumption. "Chinese labs own open coding" is <em>directionally</em> true — but only for GLM. GLM leads Terminal-Bench&nbsp;2.1 (77.9 independent / 81.0 vendor) and SWE-bench&nbsp;Pro (62.1). But the benchmarks don't line up cleanly: GLM never published SWE-bench <em>Verified</em>, and <strong>Kimi&nbsp;K2.7's Verified is only 60.4 — below both Nemotron (71.9) and Inkling (77.6)</strong>. So "Kimi&nbsp;K2.7 beats the field on coding" is just wrong on the one apples-to-apples number that exists. Kimi's real edge is <em>autonomy</em> — 12-hour runs and agent swarms — not raw SWE-bench.</p>
+
+        <h3>Math &amp; science → a near-tie at the ceiling</h3>
+        <p>Effectively saturated. GLM posts AIME&nbsp;2026 99.2 and GPQA&nbsp;Diamond 91.2; Kimi 96.4 / 90.5; DeepSeek — / 90.1; Inkling 97.1 / 87.2. The headline here isn't the winner — it's that <strong>open GPQA scores now overlap the closed band</strong>. GLM (91.2) and DeepSeek (90.1) match Claude&nbsp;Opus&nbsp;4.8 (~92) and trail only Gemini&nbsp;3.1&nbsp;Pro (94.3). The "distinct lower tier" is gone on knowledge benchmarks.</p>
+
+        <h3>Factuality &amp; calibration → DeepSeek V4 (and a correction)</h3>
+        <p>DeepSeek&nbsp;V4&nbsp;Pro posts the best raw open factuality by a wide margin — SimpleQA-Verified <strong>57.9</strong> vs Inkling's 43.9 — roughly 20 points above prior open baselines. On the softer "does it hallucinate" axis (AA-Omniscience), the order is <strong>Kimi&nbsp;K2.6 (6.0) &gt; GLM&nbsp;5.2 (4.0) &gt; Inkling (+2.1) &gt; Nemotron (−1)</strong>.</p>
+        <div class="callout">
+          <div class="label">Correcting my own record</div>
+          <p>In the Inkling write-up I called it a factuality leader among open models. That's too strong. On AA-Omniscience, Inkling (+2.1) trails Kimi&nbsp;K2.6 and GLM&nbsp;5.2 — Artificial&nbsp;Analysis's exact words are that it sits <em>"below leading open weights models but above other U.S. open weights models."</em> So Inkling leads the <strong>US</strong> open subset on calibration, not the whole field. Worth fixing.</p>
+        </div>
+
+        <h3>Multimodality &amp; audio → Inkling, uncontested</h3>
+        <p>The one row nobody else shows up for. GLM, DeepSeek, and Nemotron are <strong>text-only</strong>; Kimi K2.6 has a vision encoder (MoonViT, MMMU-Pro 79.4) but no audio. Inkling is the only natively omni-modal model of the five — text, image, audio, and video in — and the only one with a published safety suite (FORTRESS 78.0). If your product touches voice or images, this isn't a benchmark comparison; it's the only option on the list.</p>
+
+        <h3>Efficiency, footprint &amp; openness → DeepSeek / Nemotron</h3>
+        <p>Two different kinds of efficient. <strong>DeepSeek</strong> wins cost — $0.87/M output (promo; $3.48 list) and genuinely cheap 1M context (~10% of V3's KV cache), and its 285B Flash is the only variant here you can realistically self-host. <strong>Nemotron</strong> wins throughput and footprint via its hybrid Mamba design and native NVFP4, and it's the <em>most</em> open of the five — weights, training data, and recipes all under OpenMDW. Everyone else is a ~1–2&nbsp;TB-VRAM datacenter animal.</p>
+
+        <h2>The scoreboard</h2>
+        <p>Best open value in each row is <strong>bold</strong>. "v" = vendor-reported, "ind" = independent. Read it with the caveats above — this is a map, not a photo finish.</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Dimension</th><th>Inkling</th><th>GLM&nbsp;5.2</th><th>Kimi&nbsp;K2.7</th><th>DeepSeek&nbsp;V4</th><th>Nemotron&nbsp;3&nbsp;Ultra</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>AA Intelligence Index <span style="color:var(--faint)">(ind)</span></td><td>41</td><td class="win"><strong>51</strong></td><td>44*</td><td>—</td><td>48</td></tr>
+            <tr><td>Params (total / active)</td><td>975B / 41B</td><td>753B / 40B</td><td>1T / 32B</td><td>1.6T / 49B</td><td>550B / 55B</td></tr>
+            <tr><td>Context</td><td>1M</td><td>1M</td><td>256K</td><td>1M</td><td>1M</td></tr>
+            <tr><td>License</td><td>Apache 2.0</td><td>MIT</td><td>mod. MIT</td><td>MIT</td><td>OpenMDW</td></tr>
+            <tr><td>Modality</td><td class="win"><strong>text+img+audio+video</strong></td><td>text</td><td>text+vision</td><td>text</td><td>text</td></tr>
+            <tr><td>GPQA Diamond</td><td>87.2</td><td class="win"><strong>91.2</strong>v</td><td>90.5v</td><td>90.1v</td><td>87.0</td></tr>
+            <tr><td>AIME 2026</td><td>97.1v</td><td class="win"><strong>99.2</strong>v</td><td>96.4v</td><td>n/p</td><td>n/p</td></tr>
+            <tr><td>SWE-bench Verified</td><td class="win"><strong>77.6</strong>v</td><td>n/p (Pro 62.1)</td><td>60.4</td><td>80.6v / ~74 ind</td><td>71.9 ind</td></tr>
+            <tr><td>Terminal-Bench 2.1</td><td>63.8v</td><td class="win"><strong>77.9</strong> ind</td><td>66.7 (TB2.0)</td><td>67.9 (TB2.0)</td><td>56.4 ind</td></tr>
+            <tr><td>HLE (text / tools)</td><td>29.7 / 46.0</td><td class="win"><strong>40.5 / 54.7</strong>v</td><td>34.7v</td><td>37.7v</td><td>26.7 / 37.4</td></tr>
+            <tr><td>SimpleQA (factuality)</td><td>43.9</td><td>n/p</td><td>n/p</td><td class="win"><strong>57.9</strong>v</td><td>n/p</td></tr>
+            <tr><td>Hosted $/M output</td><td>—</td><td>$4.40</td><td>~$3.4–4.0</td><td class="win"><strong>$0.87</strong>*</td><td>$1.08</td></tr>
+            <tr><td>Footprint</td><td>2TB / 600GB NVFP4</td><td>~1TB FP8</td><td>~630GB INT4</td><td>Flash self-hostable</td><td class="win"><strong>lightest</strong></td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p style="font-size:14px;color:var(--faint);margin-top:-8px">* Kimi index/benchmarks are K2.6 (K2.7 has no independent numbers). DeepSeek $0.87 was a promo; list is $3.48. "n/p" = not published (often because the model is text-only or the vendor reported a different benchmark).</p>
+
+        <h2>How to choose</h2>
+        <ul>
+          <li><strong>GLM&nbsp;5.2</strong> — the default pick for the strongest all-round open model and the best open agentic coder, if you can feed a ~1TB-VRAM box. Caveat: very verbose (real token cost is high despite the low per-token price), text-only.</li>
+          <li><strong>DeepSeek&nbsp;V4</strong> — best cost-per-token and best open factuality, with cheap 1M context. <strong>Flash</strong> (285B/13B) is the one you can actually run yourself.</li>
+          <li><strong>Kimi&nbsp;K2.7</strong> — reach for it when the job is long-horizon autonomous agents (multi-hour runs, swarms). Trust-but-verify: no independent numbers yet.</li>
+          <li><strong>Nemotron&nbsp;3&nbsp;Ultra</strong> — best throughput and self-host footprint, fully open (data + recipes), and the most interesting architecture bet. NVIDIA's answer, and the strongest US open model after GLM.</li>
+          <li><strong>Inkling</strong> — the pick when you need multimodality or native audio, published safety, and cheap LoRA specialization via Tinker — not when you're chasing raw coding SOTA.</li>
+        </ul>
+
+        <hr class="rule">
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>The open tier caught up on knowledge and reasoning.</strong> On GPQA and AIME, the best open models now overlap the closed frontier. The gap survives mainly on the hardest agentic coding and on HLE.</li>
+            <li><strong>There's no single winner.</strong> GLM = intelligence + coding; DeepSeek = efficiency + factuality; Kimi = autonomy; Nemotron = throughput + openness; Inkling = modality + safety + customization.</li>
+            <li><strong>Benchmarks are a mess.</strong> Vendor vs independent, effort=0.99 vs default, SWE-Pro vs Verified, and one model with no public numbers at all. The meta-skill is auditing provenance, not memorizing leaderboards.</li>
+          </ul>
+        </div>
+
+        <div class="sources">
+          <h3>Sources</h3>
+          <ul>
+            <li>Model cards &amp; blogs: Z.ai / GLM-5.2, Moonshot / Kimi&nbsp;K2.7, DeepSeek&nbsp;V4 technical report, NVIDIA Nemotron&nbsp;3&nbsp;Ultra, Thinking&nbsp;Machines / Inkling</li>
+            <li>Independent: <a href="https://artificialanalysis.ai/">Artificial Analysis</a> Intelligence Index &amp; evals · <a href="https://benchlm.ai/">benchlm.ai</a> · llm-stats.com · NIST/CAISI evaluation</li>
+            <li>Companion piece: <a href="inkling.html">Inkling, up close</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+    <footer class="post-foot">
+      <a class="back" href="index.html">← All writing</a>
+      <p class="made">Researched with a multi-agent harness and adversarial fact-checking · numbers cross-checked against independent leaderboards, July&nbsp;2026.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
+  </script>
+</body>
+</html>
