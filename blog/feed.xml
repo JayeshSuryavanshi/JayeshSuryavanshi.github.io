@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jayesh Suryavanshi — Writing</title>
+    <link>https://www.jayeshsuryavanshi.com/blog/</link>
+    <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 16 Jul 2026 09:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>The open-weights frontier, mid-2026</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html</guid>
+      <pubDate>Thu, 16 Jul 2026 12:00:00 GMT</pubDate>
+      <description>Inkling vs GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra — a benchmark-checked field guide to who actually wins what, and how far the open tier has closed the gap to the closed frontier.</description>
+    </item>
+
+    <item>
+      <title>Inkling, up close</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/inkling.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/inkling.html</guid>
+      <pubDate>Thu, 16 Jul 2026 09:00:00 GMT</pubDate>
+      <description>A close read of Thinking Machines Lab's 975B open-weights multimodal MoE — what's actually new in the architecture, where it really lands on benchmarks, the real-time system it was built for, and how I'd fine-tune it on Tinker.</description>
+    </item>
+
+  </channel>
+</rss>
