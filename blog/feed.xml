@@ -6,7 +6,15 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Jul 2026 09:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 14:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>The closed frontier, mid-2026</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/closed-frontier.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/closed-frontier.html</guid>
+      <pubDate>Thu, 16 Jul 2026 14:00:00 GMT</pubDate>
+      <description>GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 and Fable 5, and Grok 4.5 — who actually holds the crown at the closed frontier, and why nobody holds all of it. Adversarially fact-checked: two of five headline claims came back qualified.</description>
+    </item>
 
     <item>
       <title>The open-weights frontier, mid-2026</title>

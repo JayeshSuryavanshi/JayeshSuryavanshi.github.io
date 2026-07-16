@@ -10,6 +10,15 @@
   ],
   "items": [
     {
+      "id": "https://www.jayeshsuryavanshi.com/blog/closed-frontier.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/closed-frontier.html",
+      "title": "The closed frontier, mid-2026",
+      "summary": "GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 & Fable 5, and Grok 4.5 — who actually holds the crown, and why nobody holds all of it. Adversarially fact-checked.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-closed-frontier.png",
+      "date_published": "2026-07-16T14:00:00Z",
+      "tags": ["machine-learning", "llm", "benchmarks", "frontier-models"]
+    },
+    {
       "id": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
       "title": "The open-weights frontier, mid-2026",
