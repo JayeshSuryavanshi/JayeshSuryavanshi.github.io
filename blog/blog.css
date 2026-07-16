@@ -1,0 +1,260 @@
+/* ==========================================================================
+   Writing — minimal reading layer for jayeshsuryavanshi.com
+   Reuses the site's brand: #0b0a15 canvas, #f9861a accent,
+   Neue Machina headings, Product-Sans body. Intentionally free of the
+   main template's jQuery/vendor CSS so posts stay light and fast.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Neue Machina';
+  src: url('../css/fonts/Neue%20Machina/NeueMachina-Light.otf') format('opentype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Machina';
+  src: url('../css/fonts/Neue%20Machina/NeueMachina.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Machina';
+  src: url('../css/fonts/Neue%20Machina/NeueMachina-Ultrabold.otf') format('opentype');
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Product-Sans';
+  src: url('../css/fonts/Product-Sans/ProductSans-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Product-Sans';
+  src: url('../css/fonts/Product-Sans/ProductSans-Medium.ttf') format('truetype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Product-Sans';
+  src: url('../css/fonts/Product-Sans/ProductSans-Bold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  --bg:        #0b0a15;
+  --bg-soft:   #12111d;
+  --panel:     #15131f;
+  --text:      #e9e8f0;
+  --muted:     #9c9bab;
+  --faint:     #6e6d7d;
+  --accent:    #f9861a;
+  --accent-dim:#c76c15;
+  --line:      rgba(255,255,255,.10);
+  --line-soft: rgba(255,255,255,.055);
+  --mono: "SFMono-Regular", ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Product-Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* faint top gradient wash so the dark canvas isn't flat */
+body::before {
+  content: "";
+  position: fixed; inset: 0 0 auto 0; height: 420px;
+  background: radial-gradient(120% 100% at 50% -20%, rgba(249,134,26,.10), transparent 62%);
+  pointer-events: none; z-index: 0;
+}
+
+::selection { background: rgba(249,134,26,.28); color: #fff; }
+
+a { color: var(--accent); text-decoration: none; transition: color .15s ease; }
+a:hover { color: #ffa94d; }
+
+.wrap { position: relative; z-index: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* reading progress bar */
+#progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0;
+  background: var(--accent); z-index: 50; transition: width .1s linear;
+}
+
+/* ---- masthead ---------------------------------------------------------- */
+.masthead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 30px 0 26px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.brand {
+  font-family: 'Neue Machina', sans-serif; font-weight: 800;
+  font-size: 17px; letter-spacing: -.01em; color: var(--text);
+}
+.brand:hover { color: var(--text); }
+.brand .dot { color: var(--accent); }
+.masthead nav { display: flex; gap: 22px; font-size: 14.5px; }
+.masthead nav a { color: var(--muted); }
+.masthead nav a:hover { color: var(--text); }
+.masthead nav a.here { color: var(--text); }
+
+/* ---- article header ---------------------------------------------------- */
+.kicker {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--accent); margin: 64px 0 22px;
+}
+h1.title {
+  font-family: 'Neue Machina', sans-serif; font-weight: 800;
+  font-size: clamp(34px, 6.2vw, 56px); line-height: 1.04;
+  letter-spacing: -.02em; margin: 0 0 22px; color: #fff;
+}
+.dek {
+  font-size: 21px; line-height: 1.5; color: var(--muted);
+  font-weight: 400; margin: 0 0 30px; max-width: 40ch;
+}
+.byline {
+  display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center;
+  font-size: 14px; color: var(--faint);
+  padding-bottom: 30px; border-bottom: 1px solid var(--line-soft);
+}
+.byline .sep { opacity: .5; }
+.byline strong { color: var(--text); font-weight: 500; }
+
+/* ---- prose ------------------------------------------------------------- */
+.prose { padding: 8px 0 20px; }
+.prose > p:first-of-type { margin-top: 40px; }
+.prose p { margin: 0 0 24px; }
+.prose h2 {
+  font-family: 'Neue Machina', sans-serif; font-weight: 800;
+  font-size: 27px; letter-spacing: -.01em; line-height: 1.2;
+  margin: 60px 0 18px; color: #fff; scroll-margin-top: 24px;
+}
+.prose h2::before {
+  content: ""; display: block; width: 30px; height: 3px;
+  background: var(--accent); border-radius: 2px; margin-bottom: 20px;
+}
+.prose h3 {
+  font-family: 'Neue Machina', sans-serif; font-weight: 400;
+  font-size: 19px; letter-spacing: 0; margin: 38px 0 12px; color: #fff;
+}
+.prose strong { color: #fff; font-weight: 700; }
+.prose em { color: var(--text); }
+.prose a { border-bottom: 1px solid rgba(249,134,26,.35); }
+.prose a:hover { border-color: #ffa94d; }
+
+.prose ul, .prose ol { margin: 0 0 24px; padding-left: 22px; }
+.prose li { margin: 0 0 10px; }
+.prose li::marker { color: var(--accent-dim); }
+
+.lead { font-size: 20px; color: var(--text); }
+
+/* pull quote */
+.prose blockquote {
+  margin: 32px 0; padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--accent);
+  font-size: 20px; line-height: 1.55; color: #fff; font-weight: 500;
+}
+.prose blockquote cite { display:block; margin-top:10px; font-size:14px; font-weight:400; font-style:normal; color:var(--faint); }
+
+/* method / note callout */
+.callout {
+  margin: 34px 0; padding: 22px 24px;
+  background: var(--bg-soft); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--accent); border-radius: 12px;
+}
+.callout .label {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+.callout p { margin: 0; font-size: 16px; line-height: 1.65; color: var(--muted); }
+.callout p + p { margin-top: 12px; }
+.callout strong { color: var(--text); }
+
+/* tables */
+.table-scroll { overflow-x: auto; margin: 28px 0; border: 1px solid var(--line-soft); border-radius: 12px; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 460px; }
+.prose thead th {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase;
+  text-align: left; color: var(--faint); font-weight: 400;
+  padding: 14px 18px; background: rgba(255,255,255,.02);
+  border-bottom: 1px solid var(--line);
+}
+.prose tbody td { padding: 13px 18px; border-bottom: 1px solid var(--line-soft); color: var(--muted); vertical-align: top; }
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose tbody td:first-child { color: var(--text); }
+.prose td .win { color: #7fd18b; }
+.prose td .warn { color: var(--accent); }
+
+/* code */
+.prose :not(pre) > code {
+  font-family: var(--mono); font-size: .84em;
+  background: rgba(255,255,255,.055); color: #ffb066;
+  padding: 2px 6px; border-radius: 5px;
+}
+.prose pre {
+  margin: 28px 0; padding: 20px 22px; overflow-x: auto;
+  background: var(--panel); border: 1px solid var(--line-soft);
+  border-radius: 12px; font-family: var(--mono); font-size: 14px; line-height: 1.65;
+  color: #d6d5e2;
+}
+.prose pre code { color: inherit; background: none; padding: 0; font-size: inherit; }
+.prose pre .c { color: var(--faint); }      /* comment */
+.prose pre .k { color: #ffb066; }            /* keyword/accent */
+
+hr.rule { border: 0; border-top: 1px solid var(--line-soft); margin: 56px 0; }
+
+/* takeaways box */
+.takeaways { margin: 8px 0 8px; padding: 26px 26px 10px; background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: 14px; }
+.takeaways h2 { margin-top: 0; }
+.takeaways h2::before { display: none; }
+
+/* footnote / sources */
+.sources { margin-top: 20px; font-size: 14px; color: var(--faint); }
+.sources h3 { font-family: var(--mono); font-size: 12px; letter-spacing:.18em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; font-weight:400; }
+.sources ul { list-style: none; padding: 0; margin: 0; columns: 1; }
+.sources li { margin-bottom: 8px; line-height: 1.5; }
+.sources a { color: var(--muted); border-bottom: 1px solid var(--line); }
+.sources a:hover { color: var(--text); }
+
+/* ---- article footer ---------------------------------------------------- */
+.post-foot { margin: 20px 0 0; padding: 30px 0 70px; border-top: 1px solid var(--line-soft); }
+.post-foot .back { font-size: 15px; color: var(--muted); }
+.post-foot .back:hover { color: var(--text); }
+.post-foot .made { margin-top: 18px; font-size: 13.5px; color: var(--faint); }
+
+/* =====================  blog index (listing)  ========================== */
+.index-hero { padding: 76px 0 20px; border-bottom: 1px solid var(--line-soft); }
+.index-hero h1 {
+  font-family: 'Neue Machina', sans-serif; font-weight: 800;
+  font-size: clamp(38px, 8vw, 66px); line-height: 1; letter-spacing: -.025em;
+  margin: 0 0 20px; color: #fff;
+}
+.index-hero p { font-size: 19px; color: var(--muted); margin: 0; max-width: 46ch; }
+
+.post-list { list-style: none; padding: 0; margin: 8px 0 60px; }
+.post-list li { border-bottom: 1px solid var(--line-soft); }
+.post-list a.card {
+  display: block; padding: 34px 0; color: var(--text);
+  transition: padding-left .2s ease;
+}
+.post-list a.card:hover { padding-left: 10px; color: var(--text); }
+.post-list .p-meta { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.post-list .p-title { font-family: 'Neue Machina', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -.01em; line-height: 1.2; margin: 0 0 10px; color: #fff; }
+.post-list .p-dek { font-size: 16.5px; color: var(--muted); margin: 0; max-width: 60ch; }
+.post-list a.card:hover .p-title { color: var(--accent); }
+
+/* ---- responsive -------------------------------------------------------- */
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  .wrap { padding: 0 20px; }
+  .kicker { margin-top: 44px; }
+  .dek { font-size: 19px; }
+  .prose h2 { font-size: 24px; margin-top: 48px; }
+  .masthead nav { gap: 16px; }
+  .callout, .takeaways { padding-left: 20px; padding-right: 20px; }
+}
