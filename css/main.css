@@ -3481,3 +3481,12 @@ html.no-csstransitions .hero-content {
   }
 
 }
+
+/* Uniform 16:9 project-card thumbnails — keeps the portfolio grid rows aligned
+   regardless of source-image aspect ratio. */
+.folio-item__thumb img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
