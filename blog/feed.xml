@@ -6,7 +6,15 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Jul 2026 14:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 26 Jul 2026 16:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>The 0.85 that wasn&#8217;t</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html</guid>
+      <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
+      <description>Auditing my own masters project for label leakage, then rebuilding the question honestly: what news text really adds to unrest forecasting, measured across 336M events and 55 countries. The finding: news semantics are subsumed by the event record; the small real complement is the arithmetic of coverage.</description>
+    </item>
 
     <item>
       <title>The closed frontier, mid-2026</title>
