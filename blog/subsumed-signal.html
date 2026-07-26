@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The 0.85 that wasn't — Jayesh Suryavanshi</title>
+  <meta name="description" content="I rebuilt my masters project to find out what news text really knows about social unrest. One leakage autopsy, 336 million events, and 55 countries later: news semantics are subsumed by the event record — and the honest effect is 100× smaller than my 2022 self believed.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="The 0.85 that wasn't">
+  <meta property="og:description" content="Rebuilding my masters project honestly: what news text really adds to unrest forecasting, measured across 336M events and 55 countries.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-subsumed.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="The 0.85 that wasn't — a study by Jayesh Suryavanshi">
+  <meta property="article:published_time" content="2026-07-26">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="The 0.85 that wasn't">
+  <meta name="twitter:description" content="What news text really adds to unrest forecasting: a leakage autopsy of my own masters project, then the honest rebuild at scale.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-subsumed.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi — Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
+  <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi — Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="here">Writing</a>
+        <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <p class="kicker">Research Notes</p>
+      <h1 class="title">The 0.85 that wasn&rsquo;t</h1>
+      <p class="dek">In 2022 my masters project claimed it could predict social unrest from news with 85% accuracy. This month I audited it, found the number was an artifact, and rebuilt the whole question honestly &mdash; 336&nbsp;million events, 55&nbsp;countries, every rung of the text ladder. What news actually knows turned out to be stranger than what I claimed.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">&middot;</span>
+        <span>July&nbsp;26,&nbsp;2026</span>
+        <span class="sep">&middot;</span>
+        <span>~12&nbsp;min read</span>
+      </div>
+
+      <div class="prose">
+
+        <h2>The confession</h2>
+        <p>Four years ago, for an NLP course at Buffalo, my team built a pipeline that downloaded news articles, matched them to conflict events from <a href="https://acleddata.com/">ACLED</a>, and trained a classifier that scored <strong>0.85 accuracy</strong> at &ldquo;predicting social unrest.&rdquo; We reported a five-day warning lead time. It went on my r&eacute;sum&eacute;.</p>
+        <p>This month I went back and read my own notebooks the way I&rsquo;d review a stranger&rsquo;s. The label for each article had been constructed by <em>cosine-matching the article&rsquo;s text against ACLED event descriptions</em> &mdash; and then the model was trained to recover that label <em>from the same text</em>, evaluated on a random split. The classifier had learned that articles about protests contain protest words. The &ldquo;five-day lead&rdquo; came from a filter that only kept article&ndash;event pairs where the article came first. The 0.85 measured nothing about the future.<span class="sn-ref">1</span></p>
+        <aside class="sidenote"><span class="sn-num">1</span>This failure mode &mdash; target leakage through label construction &mdash; is endemic in applied ML, and it&rsquo;s exactly what Kapoor &amp; Narayanan&rsquo;s reproducibility work warns about. I just happened to own a textbook specimen.</aside>
+        <p>The interesting question wasn&rsquo;t whether my course project was wrong. It was: <strong>strip away the leakage &mdash; what does news text actually know about upcoming unrest?</strong> The literature disagrees violently: some groups report that newspaper topics predict conflict onset; forecasting competitions keep finding that nothing beats &ldquo;assume next month looks like this month.&rdquo; So I rebuilt the question from scratch, with the discipline my 2022 self skipped.</p>
+
+        <h2>The rebuild: rules first, models second</h2>
+        <p>Everything runs on complete unit&times;period grids (994 admin-1 regions across 55 countries, monthly, on <a href="https://ucdp.uu.se/">UCDP</a> data; plus an ACLED India state&times;week track), with three frozen targets: <em>occurrence</em> (any violence next period), <em>escalation</em> (a spike above the region&rsquo;s own recent norm), and <em>onset</em> &mdash; violence erupting in a region that&rsquo;s been calm for two years, the case that actually matters for early warning. Four rules, learned the hard way:</p>
+        <ul>
+          <li><strong>Out-of-time only.</strong> Rolling-origin backtests &mdash; train on the past, score the strictly-unseen future, refit as the window expands. Never a random split, because that&rsquo;s how you get 0.85s.</li>
+          <li><strong>Beat the boring baselines or say so.</strong> Persistence and per-region climatology are reported everywhere. Accuracy is banned: with base rates of 2&ndash;20%, a model that predicts &ldquo;nothing happens&rdquo; scores 80&ndash;98%.</li>
+          <li><strong>Two model families, always.</strong> A random forest and a regularized linear model must agree on the <em>sign</em> of any effect before it counts. This rule exists because an earlier version of my own analysis produced a &ldquo;statistically significant&rdquo; negative that flipped positive the moment I regularized.<span class="sn-ref">2</span></li>
+          <li><strong>Confidence intervals from saved predictions.</strong> Every marginal gets a block bootstrap over test periods, recomputable by anyone from the released per-row predictions.</li>
+        </ul>
+        <aside class="sidenote"><span class="sn-num">2</span>Tree ensembles fed 90+ features against ~140 positives will happily manufacture signed artifacts. If your headline effect is model-conditional, you don&rsquo;t have a headline &mdash; you have a hyperparameter.</aside>
+
+        <h2>What&rsquo;s forecastable at all</h2>
+        <figure>
+          <img src="../images/subsumed-regime-map.png" alt="Dot plot: AUPRC by regime and scorer on a log scale. Occurrence ~0.8, escalation ~0.18, onset ~0.025 barely above its 0.018 base rate." loading="lazy">
+          <figcaption>The regime map. Out-of-time AUPRC (log scale) across 87,000+ test region-months. Dotted marks are base rates &mdash; the score a no-skill model gets. Onset is the cliff on the right.</figcaption>
+        </figure>
+        <p>Skill collapses by an order of magnitude at each step. <em>Where violence already burns</em>, next month is very learnable (0.80 AUPRC against a 0.53 persistence baseline). <em>Whether it spikes</em> is much harder but real (0.175 vs 0.107). And <em>onset</em> &mdash; eruption after two calm years &mdash; is close to unforecastable for everything I tested: the best model reaches 0.025 against a 0.018 base rate, and persistence is <em>completely blind</em> there by construction, since every region in the risk set looks identical to it. The case early-warning systems exist for is the case nobody can call.</p>
+
+        <h2>The text ladder</h2>
+        <p>Onto that scaffold I bolted every text signal I could construct from news, in increasing order of depth: GDELT&rsquo;s machine-coded tone and article volume; its thematic tags; topic models over event narratives; precipitation anomalies as a non-news control; and finally &mdash; because &ldquo;your text signals were too shallow&rdquo; is the correct objection to everything above &mdash; <strong>neural sentence embeddings of 1.37&nbsp;million human-written headlines</strong>, harvested from the URL slugs of the 336&nbsp;million GDELT events I&rsquo;d joined to the panel by pure geography.<span class="sn-ref">3</span></p>
+        <aside class="sidenote"><span class="sn-num">3</span>No name-matching between datasets &mdash; every event is assigned to the nearest region centroid by great-circle distance, 200&nbsp;km cap. The embedding representation is fitted on pre-2017 months only, so no test-era text shapes the features.</aside>
+        <figure>
+          <img src="../images/subsumed-forest.png" alt="Forest plot of news-text marginal AUPRC with confidence intervals: six tight multi-country intervals near zero (escalation just above), two much wider single-country intervals." loading="lazy">
+          <figcaption>What text adds on top of event history, with 90% block-bootstrap CIs. Green: the only regime where both model families agree it&rsquo;s positive. Gray: my single-country India intervals &mdash; wide enough to hide the true effect entirely.</figcaption>
+        </figure>
+        <p>Three results, and I&rsquo;d defend each at gunpoint:</p>
+        <p><strong>1. Text&rsquo;s real complement is tiny, but it exists.</strong> On escalation, adding news signals to event history is worth <strong>+0.3 to +0.6 points of AUPRC</strong> &mdash; significant in both model families, surviving 95% intervals, four alternative label definitions, and a robustness grid. That&rsquo;s roughly 2&ndash;4% relative improvement. It is also about <em>a hundred times smaller</em> than what my leaky 2022 evaluation implied.</p>
+        <p><strong>2. Single-country studies can&rsquo;t see it.</strong> My India-only intervals were &plusmn;0.03 wide &mdash; a &plusmn;0.005 effect is invisible at that scale. It took 87,000 test region-months across 55 countries to resolve the effect at all. I suspect this explains a good chunk of why the literature disagrees: everyone is measuring the same small number with instruments of wildly different power.</p>
+        <p><strong>3. The part of news that helps isn&rsquo;t the part you&rsquo;d think.</strong> This is the finding I didn&rsquo;t expect. The embeddings &mdash; the <em>richest</em> representation, the one that beats every machine-coded signal as a standalone predictor (0.105 vs 0.085) &mdash; add <em>nothing</em> on top of event history. Null in both families. What carries the small complement is the <em>count-like</em> content of news streams: how much is being reported, where, how often. The <em>semantic</em> content &mdash; what the articles actually say &mdash; is precisely what the event record already encodes. <strong>News semantics are subsumed; news arithmetic is not.</strong></p>
+
+        <div class="callout">
+          <div class="label">And onset?</div>
+          <p>Nothing cracks it. Not event history (1.35&times; base rate), not counts, not themes, not a million embedded headlines &mdash; null in every cell, across calm windows of one, two, and three years. The regime where the literature most hoped text would shine &mdash; where the event record is empty by definition &mdash; is the regime where everything I tested fails together. If someone tells you their system predicts eruptions in quiet regions, ask for their risk-set definition and their base rate before anything else.</p>
+        </div>
+
+        <h2>What I&rsquo;d tell my 2022 self</h2>
+        <ul>
+          <li><strong>Your label is your result.</strong> If the target is any function of the inputs, the model will find the function and you will find a publication-shaped artifact.</li>
+          <li><strong>Random splits are how time-series lie to you.</strong> The future must be structurally unseen &mdash; not just held out, but <em>later</em>.</li>
+          <li><strong>&ldquo;Significant&rdquo; is a property of a pipeline, not a truth.</strong> Mine flipped sign under regularization once. Now every effect needs two model families to agree before I believe it.</li>
+          <li><strong>Small true numbers beat large false ones.</strong> +0.006 with clean intervals taught me more about the world than 0.85 ever did &mdash; and it&rsquo;s the only one of the two I can build on.</li>
+        </ul>
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>Unrest is forecastable where it&rsquo;s already burning, barely forecastable where it spikes, and unforecastable where it begins.</strong> An order-of-magnitude skill cliff at each step, measured out-of-time across 55 countries.</li>
+            <li><strong>News text adds a real but tiny complement to event history</strong> &mdash; +0.3&ndash;0.6 AUPRC points on escalation, family-robust, label-robust &mdash; and its source is the count-like content of coverage, not the semantics. The meaning of the news is already in the event record.</li>
+            <li><strong>The whole thing is reproducible.</strong> The benchmark, panels, per-row predictions, and every script are public: <a href="https://github.com/JayeshSuryavanshi/social-unrest-forecasting">SUB-Forecast v1.0</a>. If you think a richer text signal clears the bar my signals didn&rsquo;t &mdash; the harness is waiting.</li>
+          </ul>
+        </div>
+
+        <div class="rule"></div>
+
+        <div class="sources">
+          <h3>Sources &amp; further reading</h3>
+          <ul>
+            <li>Code, data &amp; released predictions: <a href="https://github.com/JayeshSuryavanshi/social-unrest-forecasting">github.com/JayeshSuryavanshi/social-unrest-forecasting</a> (benchmark spec in <code>BENCHMARK.md</code>)</li>
+            <li>Ground truth &amp; signals: <a href="https://ucdp.uu.se/">UCDP GED</a> &middot; <a href="https://acleddata.com/">ACLED</a> &middot; <a href="https://www.gdeltproject.org/">The GDELT Project</a> &middot; <a href="https://open-meteo.com/">Open-Meteo</a></li>
+            <li>The literature this argues with (and owes): Mueller &amp; Rauh&rsquo;s newspaper-topic conflict forecasting (APSR 2018; JEEA 2022) &middot; the ViEWS escalation-prediction competitions (Vesco et al. 2022; Hegre et al. 2025) &middot; Chadefaux &amp; Schincariol on covariates vs. autoregression (EPJ Data Science 2025) &middot; Kapoor &amp; Narayanan on leakage in ML-based science</li>
+            <li>The original 2022 course project, preserved warts-and-all: <a href="https://github.com/JayeshSuryavanshi/Social-Unrest-Prediction-NLP">Social-Unrest-Prediction-NLP</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+    <footer class="post-foot">
+      <a href="index.html">&larr; All writing</a>
+      <span>Built with an agentic research pipeline doing the heavy lifting &mdash; every number above traces to a released prediction file.</span>
+    </footer>
+
+  </div>
+
+  <script>
+    const bar = document.getElementById('progress');
+    addEventListener('scroll', () => {
+      const h = document.documentElement;
+      bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    }, { passive: true });
+  </script>
+</body>
+</html>

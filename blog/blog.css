@@ -283,3 +283,24 @@ hr.rule { border: 0; border-top: 1px solid var(--rule); margin: 54px 0; }
   .callout, .takeaways { padding-left: 20px; padding-right: 20px; }
   .lead::first-letter { font-size: 2.7em; }
 }
+
+/* ---- figures (added for Research Notes posts) ---- */
+.prose figure {
+  margin: 2.2rem 0;
+}
+.prose figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.prose figcaption {
+  margin-top: .65rem;
+  font-size: .82rem;
+  line-height: 1.55;
+  color: var(--ink-faint);
+}
