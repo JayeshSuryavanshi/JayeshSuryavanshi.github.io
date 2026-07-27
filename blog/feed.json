@@ -15,8 +15,8 @@
     {
       "id": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
-      "title": "The 0.85 that wasn’t",
-      "summary": "Auditing my own masters project for label leakage, then rebuilding the question honestly: what news text really adds to unrest forecasting, measured across 336M events and 55 countries.",
+      "title": "Informative but subsumed",
+      "summary": "What news text really adds to unrest forecasting, measured on a leakage-controlled benchmark: 336M events, 55 countries, and a text-signal ladder up to neural embeddings of 1.37M headlines. The semantics of news are already in the event record.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-subsumed.png",
       "date_published": "2026-07-26T16:00:00Z",
       "tags": [
