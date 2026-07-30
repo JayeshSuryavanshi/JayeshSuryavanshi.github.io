@@ -13,7 +13,7 @@
   --paper-deep: #ece7da;   /* slightly deeper tint */
   --ink:        #22201b;   /* warm near-black body text */
   --ink-soft:   #57534a;   /* muted secondary text */
-  --ink-faint:  #8a867a;   /* metadata / captions */
+  --ink-faint:  #6f6b60;   /* metadata / captions */
   --faint:      #8a867a;   /* alias — posts reference var(--faint) inline */
   --rule:       #e3ddce;   /* hairline */
   --rule-soft:  #ede8db;   /* softer hairline */

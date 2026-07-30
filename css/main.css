@@ -3539,3 +3539,15 @@ html.no-csstransitions .hero-content {
 /* Hero name accent — preserves the original orange highlight
    that was previously carried by an <a href="#"> placeholder. */
 .hero-name { color: #f9861a; }
+
+/* ============================================================
+   Contrast fixes on solid backgrounds (site audit follow-up):
+   darker accent on white grounds, brighter dim labels on dark.
+   (Nav-over-video contrast intentionally left — needs a header
+   background change, a design call.)
+   ============================================================ */
+.s-about a,
+.s-about .subhead,
+.s-portfolio .section-intro .subhead { color: #b45905; }   /* 4.8:1 on white */
+.position__timeframe { color: #6a6a6a; }                    /* 5.4:1 on white */
+.footer-contact-block__header { color: rgba(255, 255, 255, 0.62); }  /* ~7.3:1 on #0b0a15 */
