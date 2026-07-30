@@ -56,6 +56,34 @@
     <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi — Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
     <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi — Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
 
+    <!-- structured data
+    ================================================== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jayesh Suryavanshi",
+      "jobTitle": "Machine Learning Engineer",
+      "worksFor": { "@type": "Organization", "name": "eBay" },
+      "url": "https://www.jayeshsuryavanshi.com/",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-jayesh.jpg",
+      "email": "mailto:jayeshsuryavanshi808@gmail.com",
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "University at Buffalo, SUNY" },
+        { "@type": "CollegeOrUniversity", "name": "University of Pune" }
+      ],
+      "knowsAbout": ["LLM agents", "Generative AI", "Machine Learning", "MCP", "Data Engineering"],
+      "sameAs": [
+        "https://www.linkedin.com/in/jayeshsuryavanshi/",
+        "https://github.com/JayeshSuryavanshi",
+        "https://www.instagram.com/jayy.aesh/",
+        "https://medium.com/@jayeshsuryavanshi808",
+        "https://twitter.com/2jayesh3",
+        "https://hashnode.com/@JayeshSuryavanshi"
+      ]
+    }
+    </script>
+
 </head>
 
 
@@ -63,12 +91,8 @@
 
 <body id="top">
 
-    <style>
-        .larger-font {
-            font-size: 16px; /* or any size you prefer */
-        }
-    </style>
-    
+    <a class="skip-link" href="#main">Skip to content</a>
+
 
 
     <!-- preloader
@@ -96,13 +120,13 @@
 
             <nav class="row header-nav-wrap">
                 <ul class="header-nav">
-                    <li><a class="smoothscroll larger-font" href="#hero" title="It's what you're looking">Home</a></li>
+                    <li><a class="smoothscroll larger-font" href="#hero" title="Home">Home</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#about" title="About">About me</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
-                    <li><a class="smoothscroll larger-font" href="#services" title="have a look">Skills</a></li>
+                    <li><a class="smoothscroll larger-font" href="#services" title="Skills">Skills</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
-                    <li><a class="smoothscroll larger-font" href="#portfolio" title="Works">Projects</a></li>
+                    <li><a class="smoothscroll larger-font" href="#portfolio" title="Projects">Projects</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="larger-font" href="blog/" title="Writing & studies">Writing</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
@@ -118,11 +142,13 @@
 
     </header>
 
+    <main id="main">
+
 
     <!-- hero
     ================================================== -->
     <section id="hero" class="s-hero target-section" data-parallax="scroll" data-position-y=center>
-        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" poster="/images/hero-poster.jpg" preload="auto">
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" poster="/images/hero-poster.jpg" preload="metadata">
             <source src="/images/hero.mp4" type="video/mp4">
         </video>
 
@@ -132,7 +158,7 @@
 
 
                 <h1>
-                    I'm <a href="#">Jayesh Suryavanshi.</a><br>
+                    I'm <span class="hero-name">Jayesh Suryavanshi.</span><br>
                     I build LLM agents &amp; GenAI<br>
                     in production at eBay.
                 </h1>
@@ -158,7 +184,6 @@
                         <a href="https://github.com/JayeshSuryavanshi?tab=repositories" target="_blank" title="">➜Projects</a>
                     </li>
 
-                    <li></li>
                 </ul> <!-- end hero-social -->
 
             </div>
@@ -166,8 +191,8 @@
         </div> <!-- end hero-content -->
 
         <div class="hero-scroll">
-            <a href="#about" class="scroll-link smoothscroll">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <a href="#about" class="scroll-link smoothscroll" aria-label="Scroll to About">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M12 24l-8-9h6v-15h4v15h6z" /></svg>
             </a>
         </div> <!-- end hero-scroll -->
@@ -192,8 +217,7 @@
                     </div>
 
                     <div class="profile-pic" data-aos="fade-up">
-                        <img src="images/jayeshsf1.jpg" loading="lazy" decoding="async"
-                            srcset="images/jayeshsf1.jpg, images/jayeshsf1.jpg" alt="">
+                        <img src="images/jayeshsf1.jpg" loading="lazy" decoding="async" alt="Jayesh Suryavanshi">
                     </div>
 
                     <h2 data-aos="fade-up">About Me</h2><br>
@@ -393,6 +417,8 @@
                         </div>
                     </div>
                 </div> <!-- end column -->
+                </div> <!-- end work-positions row -->
+            </div> <!-- end s-about__section -->
                 
     </section> 
 
@@ -511,13 +537,12 @@
 
              <!-- end column -->
 
-            <div class="column" data-aos="fade-up">
+            <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/lyft.jpg" Title="Lyft Motion Prediction"
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/lyft.jpg" title="Lyft Motion Prediction"
                             data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/lyft.jpg"
-                                srcset="images/portfolio/gallery/lyft.jpg, images/portfolio/lyft.jpg" alt="">
+                            <img decoding="async" src="images/portfolio/gallery/lyft.jpg" alt="Lyft Motion Prediction project thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -533,13 +558,12 @@
             </div><!-- end column -->
 
 
-            <div class="column" data-aos="fade-up">
+            <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/triangulation.png" title="Triangulation SQL Explorer — click to see the app"
                             data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/triangulation-bg.jpg"
-                                srcset="images/portfolio/gallery/triangulation-bg.jpg, images/portfolio/gallery/triangulation-bg.jpg" alt="">
+                            <img decoding="async" src="images/portfolio/gallery/triangulation-bg.jpg" alt="Triangulation SQL Explorer project thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -554,35 +578,13 @@
                 </div>
             </div><!-- end column -->
             
-            <!-- <div class="column" data-aos="fade-up">
-                <div class="folio-item">
-                    <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/charge.jpg"
-                            title="App Login Mockup" data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/charge.jpg"
-                                srcset="images/portfolio/gallery/charge.jpg, images/portfolio/charge.jpg"
-                                alt="">
-                        </a>
-                    </div>
-                    <div class="folio-item__info">
-                        <div class="folio-item__cat">Data Engineering</div>
-                        <h4 class="folio-item__title">EV Data Analytics</h4>
-                    </div>
-                    <a href="https://jayeshs.notion.site/EV-Data-Analytics-Project-bce4ace433bf46cfb4ab0cf687803f56?pvs=4" target="_blank" title="EV Data Analytics" class="folio-item__project-link">Project
-                        Link</a>
-                    <div class="folio-item__caption">
-                        <p>Large Scale EV data analytics project that uses modern Data engineering stack</p>
-                    </div>
-                </div>
-            </div> -->
             
-            <div class="column" data-aos="fade-up">
+            <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/beacon.png"
                             title="Beacon EV Charging dApp — click to see the app" data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/beacon-bg.jpg"
-                                srcset="images/portfolio/gallery/beacon-bg.jpg, images/portfolio/gallery/beacon-bg.jpg" alt="">
+                            <img decoding="async" src="images/portfolio/gallery/beacon-bg.jpg" alt="Beacon P2P EV charging dApp thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -596,13 +598,12 @@
                     </div>
                 </div>
             </div> <!-- end column -->
-            <div class="column" data-aos="fade-up">
+            <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/riot.jpg"
-                            Title="Jayesh UX Logo" data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/riot.jpg"
-                                srcset="images/portfolio/gallery/riot.jpg, images/portfolio/riot.jpg" alt="">
+                            title="Social Unrest Forecasting" data-size="1050x700">
+                            <img decoding="async" src="images/portfolio/gallery/riot.jpg" alt="Social Unrest Forecasting project thumbnail">
                         </a>
                     </div>
                     
@@ -614,49 +615,45 @@
                     <a href="https://github.com/JayeshSuryavanshi/social-unrest-forecasting" target="_blank" title="Project Link" class="folio-item__project-link">Project
                         Link</a>
                     <div class="folio-item__caption">
-                        <p>A leakage-controlled study of subnational unrest forecasting on ACLED, UCDP and GDELT data: rolling-origin backtests over 55+ countries against persistence baselines the field rarely beats. Headline finding &mdash; news-text signals are informative but subsumed: they can substitute for curated event histories, but don't improve on them. A rigorous 2026 rebuild of my 2022 masters project.</p>
+                        <p>A leakage-controlled study of subnational unrest forecasting on ACLED, UCDP and GDELT data: rolling-origin backtests over 55 countries against persistence baselines the field rarely beats. Headline finding &mdash; news-text signals are informative but subsumed: they can substitute for curated event histories, but don't improve on them. A rigorous 2026 rebuild of my 2022 master's project.</p>
                     </div>
                 </div>
             </div> <!-- end column -->
-            <div class="column" data-aos="fade-up">
+            <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/geotweet.png"
-                            title="Creative Portfolio" data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/geotweet.png"
-                                srcset="images/portfolio/gallery/geotweet.png, images/portfolio/gallery/geotweet.png"
-                                alt="">
+                            title="GeoSocialPy" data-size="1050x700">
+                            <img decoding="async" src="images/portfolio/gallery/geotweet.png" alt="GeoSocialPy Python package thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
-                        <div class="folio-item__cat">Python package hosted on PyPi</div>
+                        <div class="folio-item__cat">Python package hosted on PyPI</div>
                         <h4 class="folio-item__title">GeoSocialPy</h4>
                     </div>
                     <a href="https://jayeshs.notion.site/jayeshs/GeoSocialPy-7d9cc59a6704460c90b980d7b25d0765" target="_blank" title="Project Link" class="folio-item__project-link">Project
                         Link</a>
                     <div class="folio-item__caption">
-                        <p>Python package for to understand the geographical context of social media activity</p>
+                        <p>A Python package for understanding the geographical context of social media activity.</p>
                     </div>
                 </div>
             </div> <!-- end column -->
-            <div class="column" data-aos="fade-up">
+            <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/walleto.jpg"
-                            title="Gradient Elements" data-size="1050x700">
-                            <img loading="lazy" decoding="async" src="images/portfolio/gallery/walleto.jpg"
-                                srcset="images/portfolio/gallery/walleto.jpg, images/portfolio/walleto.jpg"
-                                alt="">
+                            title="Walleto — Digital Wallet" data-size="1050x700">
+                            <img decoding="async" src="images/portfolio/gallery/walleto.jpg" alt="Walleto full-stack digital wallet thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Full Stack Development</div>
-                        <h4 class="folio-item__title">Walleto-Full Stack Digital Wallet</h4>
+                        <h4 class="folio-item__title">Walleto — Full-Stack Digital Wallet</h4>
                     </div>
                     <a href="https://github.com/JayeshSuryavanshi/Walleto" target="_blank" title="Walleto" class="folio-item__project-link">Project
                         Link</a>
                     <div class="folio-item__caption">
-                        <p>Led development of full-stack digital wallet app, enabling users to connect bank accounts, transactions, pay bills, and earn cashback</p>
+                        <p>Led development of full-stack digital wallet app, enabling users to connect bank accounts, view transactions, pay bills, and earn cashback</p>
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -666,6 +663,8 @@
         </div> <!-- folio-list -->
 
     </section> <!-- end portfolio -->
+
+    </main>
 
   
 
@@ -716,7 +715,7 @@
                         </h5>
                         <ul class="footer-contact-block__list">
                             <li><a href="https://twitter.com/2jayesh3">Twitter</a></li>
-                            <li><a href="https://instagram.com/_jayesh_suryavanshi/">Instagram</a></li>
+                            <li><a href="https://www.instagram.com/jayy.aesh/" target="_blank" rel="noopener">Instagram</a></li>
                             <li><a href="https://www.facebook.com/Jayesh808">Facebook</a></li>
                             <li><a href="https://medium.com/@jayeshsuryavanshi808">Medium</a></li>
                             <li><a href="https://hashnode.com/@JayeshSuryavanshi">Hashnode</a></li>
@@ -729,13 +728,13 @@
 
         <div class="row s-footer__bottom">
             <div class="column large-full ss-copyright">
-                <span>© 2025 Jayesh Suryavanshi</span>
-                <span>Made with ❤️ + some efforts</span>
+                <span>© <span id="copyright-year">2026</span> Jayesh Suryavanshi</span>
+                <span>Made with ❤️ + care</span>
             </div> <!-- end ss-copyright -->
 
             <div class="ss-go-top">
-                <a class="smoothscroll" title="Back to Top" href="#top">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <a class="smoothscroll" title="Back to Top" aria-label="Back to top" href="#top">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path d="M12 0l8 9h-6v15h-4v-15h-6z" /></svg>
                 </a>
             </div> <!-- end ss-go-top -->
@@ -790,5 +789,9 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        var _cy = document.getElementById('copyright-year');
+        if (_cy) { _cy.textContent = new Date().getFullYear(); }
+    </script>
 
 </body>

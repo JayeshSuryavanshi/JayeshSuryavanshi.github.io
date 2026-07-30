@@ -15,6 +15,7 @@
 	src: url('fonts/Product-Sans/ProductSans-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	font-display: swap;
   }
   
   
@@ -23,6 +24,7 @@
   src: url('fonts/Neue Machina/NeueMachina.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
   
   
@@ -3490,3 +3492,50 @@ html.no-csstransitions .hero-content {
     object-fit: cover;
     display: block;
 }
+
+/* ============================================================
+   Accessibility & motion fixes (site audit, 2026-07)
+   ============================================================ */
+
+/* Visible keyboard focus — restores an indicator removed by
+   the theme's outline:0/none rules. */
+:focus-visible {
+  outline: 3px solid #f9861a;
+  outline-offset: 2px;
+}
+
+/* .larger-font — moved out of an inline <style> in <body> */
+.larger-font { font-size: 16px; }
+
+/* Respect users who prefer reduced motion: neutralise the AOS
+   scroll reveals (so nothing stays hidden) and heavy animation. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-aos] { opacity: 1 !important; transform: none !important; }
+}
+
+/* Safety net: if JS/AOS never runs, don't leave content hidden. */
+.no-js [data-aos] { opacity: 1 !important; transform: none !important; }
+
+/* Skip-to-content link — visible only when focused */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  background: #f9861a;
+  color: #0b0a15;
+  padding: 10px 16px;
+  font-weight: 700;
+  border-radius: 0 0 6px 0;
+}
+.skip-link:focus { left: 0; }
+
+/* Hero name accent — preserves the original orange highlight
+   that was previously carried by an <a href="#"> placeholder. */
+.hero-name { color: #f9861a; }
