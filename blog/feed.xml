@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jayesh Suryavanshi — Writing</title>
+    <title>Jayesh Suryavanshi · Writing</title>
     <link>https://www.jayeshsuryavanshi.com/blog/</link>
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
