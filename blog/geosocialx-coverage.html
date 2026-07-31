@@ -109,8 +109,8 @@ ex.coverage(tweets)
         <p>Eighty posts, <strong>1.6%</strong>, carry a real coordinate. Another 720 (14.4%) carry only a place tag. And 4,200, <strong>84% of the corpus, carry no location at all.</strong> That last number is the one every silent pipeline throws away without ever printing. Here it is a returned value, forced into the open:</p>
 
         <figure>
-          <img src="../images/geosocialx-coverage.png" alt="Horizontal bar of 5,000 posts: a 1.6% blue sliver of exact coordinates, a 14.4% rust segment of place-only tags, and an 84% gray segment with no location. A naive map keeps only the sliver; place-resolution reaches 16%; the 84% is reported, not dropped." loading="lazy">
-          <figcaption>The coverage cliff. A naive map keeps the thin blue sliver, 1.6% of the corpus, and implies it speaks for the whole. Place-resolution reaches 16%. The 84% with no location is the point: <code>coverage()</code> returns it instead of deleting it.</figcaption>
+          <img src="../images/geosocialx-coverage.png" alt="A unit chart of 5,000 squares, one per post: a small maroon block of 80 exact-coordinate posts (1.6%), a steel-blue block of 720 place-tagged posts (14.4%), and a large grey block of 4,200 posts with no location (84%)." loading="lazy">
+          <figcaption>One square per post. Exact coordinates (maroon) are just 1.6% of the pull, and a naive map plots only those. Place-resolution recovers the place-tagged squares (steel) to reach 16%. The 84% with no location (grey) is reported by <code>coverage()</code>, not silently dropped.</figcaption>
         </figure>
 
         <h2>Place-resolution: 10&times; more data, honestly labelled</h2>
@@ -131,7 +131,7 @@ GeospatialAnalyzer(pts).summary()
         <p>Eighty points became eight hundred, a <strong>10&times; recovery</strong>, and the map goes from &ldquo;statistically empty&rdquo; to genuinely usable. But it does not become more precise. It becomes <em>fuller and coarser at the same time</em>, and the <code>source</code> flag is what keeps that trade-off visible instead of laundered.</p>
 
         <figure>
-          <img src="../images/geosocialx-maps.png" alt="Two maps of San Francisco from the same 5,000 posts. Left: 80 scattered exact points, 1.6%. Right: the same points plus rust rings at neighborhood centroids sized by post count, 800 points, 16%, fuller but visibly snapped to a handful of coarse locations." loading="lazy">
+          <img src="../images/geosocialx-maps.png" alt="Two maps of San Francisco from the same 5,000 posts. Left: 80 scattered maroon exact-coordinate points, 1.6%. Right: the same points plus steel-blue rings at neighbourhood centroids sized by post count, 800 points, 16%, fuller but visibly snapped to a handful of coarse locations." loading="lazy">
           <figcaption>Same 5,000 posts, two maps. Left is what exact coordinates alone give you: 80 precise-looking dots that read as authoritative and cover 1.6% of the data. Right adds place-resolution: 10&times; the records, but stacked onto neighborhood centroids (the rings), coarse by construction. Both maps still omit the 84% with no location. The difference is that GeoSocialX <em>tells you</em> they&rsquo;re omitted.</figcaption>
         </figure>
 
