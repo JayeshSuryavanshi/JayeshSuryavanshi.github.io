@@ -173,7 +173,9 @@
         <h2>How I'd fine-tune it</h2>
         <p>Tinker is worth understanding because it's <em>not</em> "upload data, click train." It's a <strong>low-level LoRA training API</strong>: you write an ordinary Python loop on a CPU-only box, and Tinker runs your exact <code>forward_backward</code> / <code>optim_step</code> / <code>sample</code> on its GPU cluster, handling sharding and failure recovery. Both Inkling and Inkling-Small are fine-tunable (64K and 256K context options), and it supports SFT, RL (GRPO/PPO), DPO, and distillation.</p>
         <p>A worked example that plays to Inkling's actual strengths — a financial-document assistant that cites its sources and abstains when unsupported (mirroring the Bridgewater case the lab showcased):</p>
-        <pre><code><span class="c"># SFT: teach the format. Effort must match what you serve at.</span>
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">finetune.py</span><span class="lang">python</span></div>
+          <pre><code><span class="c"># SFT: teach the format. Effort must match what you serve at.</span>
 train = svc.create_lora_training_client(
     base_model=<span class="k">"thinkingmachines/Inkling:peft:262144"</span>,  <span class="c"># 256K ctx for long filings</span>
     rank=32,
@@ -188,6 +190,7 @@ renderer = renderers.get_renderer(<span class="k">"inkling"</span>, train.get_to
 <span class="c"># Then RL a calibration reward with the sampling primitives, and export:</span>
 <span class="c">#   save_weights_for_sampler -> weights.download -> weights.build_hf_model -> publish_to_hf_hub</span>
 <span class="c"># Serve the merged model under vLLM:  vllm serve ./merged --tool-call-parser inkling</span></code></pre>
+        </div>
         <p>Order of magnitude: a solid SFT-only domain adapter is <strong>low hundreds of dollars</strong>; add a calibration-RL pass and you're in the <strong>low thousands</strong>. You're not buying raw capability here — you're buying Inkling's calibration prior, long context, and effort dial, then specializing it cheaply. Which is exactly the bet the whole product is built on.</p>
 
         <hr class="rule">

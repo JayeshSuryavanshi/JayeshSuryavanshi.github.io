@@ -74,6 +74,11 @@
         <span>~7&nbsp;min read</span>
       </div>
 
+      <section class="abstract" aria-label="Abstract">
+        <h2>Abstract</h2>
+        <p>Almost every map of &ldquo;what people are posting about&rdquo; is really a map of the small self-selected minority who leave their location on, plotted at full confidence while the majority is silently deleted. This note counts coverage before mapping anything: on a seeded pull of 5,000 posts only 1.6% carried an exact coordinate and 84% carried no location at all, and a single coverage() call reports the missing majority instead of discarding it.</p>
+      </section>
+
       <div class="prose">
 
         <p class="lead">Here is the quiet failure mode at the heart of almost every &ldquo;map of what people are posting about&rdquo; you have ever seen. You pull some posts, keep the ones that happen to carry a location, drop the rest without comment, plot the survivors, and present the result as if it were the geography of the conversation. It is not. It is the geography of the small, self-selected minority who leave their location on, rendered at full confidence, with the majority silently deleted.</p>
@@ -91,12 +96,15 @@
 
         <p>The first call isn&rsquo;t a map. It&rsquo;s a census:</p>
 
-        <pre><code><span class="c"># pip install geosocialx</span>
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">coverage.py</span><span class="lang">python</span></div>
+          <pre><code><span class="c"># pip install geosocialx</span>
 <span class="k">from</span> geosocialx <span class="k">import</span> GeospatialExtractor, GeospatialAnalyzer
 
 ex = GeospatialExtractor()
 ex.coverage(tweets)
 <span class="c"># {'total': 5000, 'with_point': 80, 'place_only': 720, 'no_geo': 4200}</span></code></pre>
+        </div>
 
         <p>Eighty posts, <strong>1.6%</strong>, carry a real coordinate. Another 720 (14.4%) carry only a place tag. And 4,200, <strong>84% of the corpus, carry no location at all.</strong> That last number is the one every silent pipeline throws away without ever printing. Here it is a returned value, forced into the open:</p>
 
@@ -108,7 +116,9 @@ ex.coverage(tweets)
         <h2>Place-resolution: 10&times; more data, honestly labelled</h2>
         <p>The 14.4% with a place tag aren&rsquo;t nothing. A place has a bounding box, and a bounding box has a centroid. GeoSocialX will resolve those place-only posts to their centroid <em>if you pass it the place geometry</em>, and (this is the part that matters) it stamps every resulting point with where it came from: <code>source="exact"</code> or <code>source="place"</code>.</p>
 
-        <pre><code><span class="c"># The naive map most tools draw: exact coordinates only.</span>
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">resolve.py</span><span class="lang">python</span></div>
+          <pre><code><span class="c"># The naive map most tools draw: exact coordinates only.</span>
 naive = ex.extract_points(tweets)                <span class="c"># 80 points  (1.6%)</span>
 
 <span class="c"># Resolve place tags to centroids; each point keeps its source flag.</span>
@@ -116,6 +126,7 @@ pts = ex.extract_points(tweets, places=places)   <span class="c"># 800 points (1
 
 GeospatialAnalyzer(pts).summary()
 <span class="c"># {'count': 800, 'centroid': (-122.42, 37.78), 'span_km': 14.4, ...}</span></code></pre>
+        </div>
 
         <p>Eighty points became eight hundred, a <strong>10&times; recovery</strong>, and the map goes from &ldquo;statistically empty&rdquo; to genuinely usable. But it does not become more precise. It becomes <em>fuller and coarser at the same time</em>, and the <code>source</code> flag is what keeps that trade-off visible instead of laundered.</p>
 
