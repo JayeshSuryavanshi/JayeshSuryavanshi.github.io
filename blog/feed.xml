@@ -13,7 +13,7 @@
       <link>https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html</guid>
       <pubDate>Fri, 31 Jul 2026 15:00:00 GMT</pubDate>
-      <description>Coverage honesty for geotagged social data. Most pipelines map the 1–2% of posts with exact coordinates and call it the geography; count the coverage first and 84% carry no location at all. A worked example with GeoSocialX: place-resolution recovers 10× more than exact coordinates alone, fuller but coarser, and the honest move is to report the hole rather than hide it.</description>
+      <description>Coverage honesty for geotagged social data. Most pipelines map the 1-2% of posts with exact coordinates and call it the geography; count the coverage first and 84% carry no location at all. A worked example with GeoSocialX: place-resolution recovers 10x more than exact coordinates alone, fuller but coarser, and the honest move is to report the hole rather than hide it.</description>
     </item>
 
     <item>
