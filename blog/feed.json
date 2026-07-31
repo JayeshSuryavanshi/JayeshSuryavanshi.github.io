@@ -13,6 +13,22 @@
   ],
   "items": [
     {
+      "id": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
+      "title": "The unmapped majority",
+      "summary": "Coverage honesty for geotagged social data. Most pipelines map the 1–2% of posts with exact coordinates and call it the geography; on a realistic 5,000-post pull, 84% carry no location. Place-resolution recovers 10× more — fuller but coarser — and the honest move is to report the hole. A worked example with GeoSocialX.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-geosocialx.png",
+      "date_published": "2026-07-31T15:00:00Z",
+      "tags": [
+        "geospatial",
+        "gis",
+        "social-media",
+        "open-source",
+        "python",
+        "research-notes"
+      ]
+    },
+    {
       "id": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
       "title": "Informative but subsumed",

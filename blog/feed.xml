@@ -6,7 +6,15 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jul 2026 16:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 15:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>The unmapped majority</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html</guid>
+      <pubDate>Fri, 31 Jul 2026 15:00:00 GMT</pubDate>
+      <description>Coverage honesty for geotagged social data. Most pipelines map the 1–2% of posts with exact coordinates and call it the geography; count the coverage first and 84% carry no location at all. A worked example with GeoSocialX: place-resolution recovers 10× more than exact coordinates alone, fuller but coarser, and the honest move is to report the hole rather than hide it.</description>
+    </item>
 
     <item>
       <title>Informative but subsumed</title>

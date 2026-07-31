@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The unmapped majority — Jayesh Suryavanshi</title>
+  <meta name="description" content="Most geotagged-social pipelines quietly map the 1–2% of posts that carry exact coordinates and call it 'the geography.' Count the coverage first and a different picture appears. A worked example with GeoSocialX: on a realistic 5,000-post city pull, 84% have no location, place-resolution recovers 10× more than exact coordinates alone, and the honest move is to report the hole.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="The unmapped majority">
+  <meta property="og:description" content="Geotagged-social pipelines quietly map the 1–2% with coordinates and call it the geography. Count the coverage first: 84% carry no location, place-resolution recovers 10× more, and the honest move is to report the hole. A worked example with GeoSocialX.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-geosocialx.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="The unmapped majority — coverage honesty for geotagged social data, by Jayesh Suryavanshi">
+  <meta property="article:published_time" content="2026-07-31">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="The unmapped majority">
+  <meta name="twitter:description" content="Geotagged-social pipelines map the 1–2% with coordinates and call it the geography. Count the coverage first — a worked example with GeoSocialX.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-geosocialx.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi — Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
+  <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi — Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The unmapped majority",
+    "description": "Coverage honesty for geotagged social data: count what carries a location before you map it. A worked example with GeoSocialX on a realistic 5,000-post city pull.",
+    "image": "https://www.jayeshsuryavanshi.com/images/og-geosocialx.png",
+    "datePublished": "2026-07-31",
+    "dateModified": "2026-07-31",
+    "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
+    "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
+    "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
+    "url": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html"
+  }
+  </script>
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="here">Writing</a>
+        <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <p class="kicker">Research Notes</p>
+      <h1 class="title">The unmapped majority</h1>
+      <p class="dek">Most tools for geotagged social data quietly map the 1–2% of posts that carry exact coordinates and call it &ldquo;the geography.&rdquo; Count the coverage first and a different picture appears. This is the idea I built <a href="https://pypi.org/project/geosocialx/">GeoSocialX</a> around — and a worked example that shows what the naive map hides.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">&middot;</span>
+        <span>July&nbsp;31,&nbsp;2026</span>
+        <span class="sep">&middot;</span>
+        <span>~7&nbsp;min read</span>
+      </div>
+
+      <div class="prose">
+
+        <p class="lead">Here is the quiet failure mode at the heart of almost every &ldquo;map of what people are posting about&rdquo; you have ever seen. You pull some posts, keep the ones that happen to carry a location, drop the rest without comment, plot the survivors, and present the result as if it were the geography of the conversation. It is not. It is the geography of the small, self-selected minority who leave their location on &mdash; rendered at full confidence, with the majority silently deleted.</p>
+
+        <p>The number that should stop you is how small that minority is. Exact-coordinate geotagging on the Twitter/X API has sat in the low single digits of posts for years &mdash; commonly cited at roughly <strong>1&ndash;2%</strong>.<span class="sn-ref">1</span> A coarser &ldquo;place&rdquo; tag (a city, a neighborhood, a venue) is more common but still a minority. So when a dashboard draws a heatmap of &ldquo;where the discourse is,&rdquo; it is very often drawing 1-in-50 posts and rounding the confidence up to 100%.</p>
+
+        <aside class="sidenote"><span class="sn-num">1</span>The exact rate drifts with platform, endpoint, and era, and it fell further once the free API closed in 2023. The point isn&rsquo;t a precise constant &mdash; it&rsquo;s the order of magnitude: exact coordinates are rare, place tags are a minority, and no-location is the default state of a post.</aside>
+
+        <p>I kept hitting this while building <a href="https://github.com/JayeshSuryavanshi/GeoSocialX">GeoSocialX</a>, a small Python package for the geospatial side of social data. The tempting design is to make the location-carrying records easy to map and say nothing about the rest. I decided the opposite should be the package&rsquo;s primary job: <strong>make the coverage of a corpus a first-class, inspectable output &mdash; before anyone draws a single dot.</strong></p>
+
+        <h2>Count the coverage before you map anything</h2>
+        <p>To show what that changes, I ran the package on a corpus I can describe exactly. It is a synthetic pull of <strong>5,000 posts</strong> across San&nbsp;Francisco, generated with a fixed seed and calibrated to the sparsity above &mdash; a small fraction with exact coordinates, a modest slice with only a place tag, and the large remainder with no location at all.<span class="sn-ref">2</span> Everything below is the real output of the shipping <code>geosocialx</code> 0.8.0 API on that corpus; the script is linked at the end.</p>
+
+        <aside class="sidenote"><span class="sn-num">2</span>Synthetic on purpose. The honest version of this demonstration can&rsquo;t use a real feed &mdash; the whole point is that the interesting data (the un-located majority) is exactly what a real pull won&rsquo;t hand you cleanly. A seeded corpus calibrated to documented rates lets the numbers be reproducible and the argument be about method, not about one city on one week.</aside>
+
+        <p>The first call isn&rsquo;t a map. It&rsquo;s a census:</p>
+
+        <pre><code><span class="c"># pip install geosocialx</span>
+<span class="k">from</span> geosocialx <span class="k">import</span> GeospatialExtractor, GeospatialAnalyzer
+
+ex = GeospatialExtractor()
+ex.coverage(tweets)
+<span class="c"># {'total': 5000, 'with_point': 80, 'place_only': 720, 'no_geo': 4200}</span></code></pre>
+
+        <p>Eighty posts &mdash; <strong>1.6%</strong> &mdash; carry a real coordinate. Another 720 (14.4%) carry only a place tag. And 4,200, <strong>84% of the corpus, carry no location at all.</strong> That last number is the one every silent pipeline throws away without ever printing. Here it is a returned value, forced into the open:</p>
+
+        <figure>
+          <img src="../images/geosocialx-coverage.png" alt="Horizontal bar of 5,000 posts: a 1.6% blue sliver of exact coordinates, a 14.4% rust segment of place-only tags, and an 84% gray segment with no location. A naive map keeps only the sliver; place-resolution reaches 16%; the 84% is reported, not dropped." loading="lazy">
+          <figcaption>The coverage cliff. A naive map keeps the thin blue sliver &mdash; 1.6% of the corpus &mdash; and implies it speaks for the whole. Place-resolution reaches 16%. The 84% with no location is the point: <code>coverage()</code> returns it instead of deleting it.</figcaption>
+        </figure>
+
+        <h2>Place-resolution: 10× more data, honestly labelled</h2>
+        <p>The 14.4% with a place tag aren&rsquo;t nothing &mdash; a place has a bounding box, and a bounding box has a centroid. GeoSocialX will resolve those place-only posts to their centroid <em>if you pass it the place geometry</em>, and &mdash; this is the part that matters &mdash; it stamps every resulting point with where it came from: <code>source="exact"</code> or <code>source="place"</code>.</p>
+
+        <pre><code><span class="c"># The naive map most tools draw: exact coordinates only.</span>
+naive = ex.extract_points(tweets)                <span class="c"># 80 points  (1.6%)</span>
+
+<span class="c"># Resolve place tags to centroids; each point keeps its source flag.</span>
+pts = ex.extract_points(tweets, places=places)   <span class="c"># 800 points (16.0%)</span>
+
+GeospatialAnalyzer(pts).summary()
+<span class="c"># {'count': 800, 'centroid': (-122.42, 37.78), 'span_km': 14.4, ...}</span></code></pre>
+
+        <p>Eighty points became eight hundred &mdash; a <strong>10× recovery</strong> &mdash; and the map goes from &ldquo;statistically empty&rdquo; to genuinely usable. But it does not become more precise. It becomes <em>fuller and coarser at the same time</em>, and the <code>source</code> flag is what keeps that trade-off visible instead of laundered.</p>
+
+        <figure>
+          <img src="../images/geosocialx-maps.png" alt="Two maps of San Francisco from the same 5,000 posts. Left: 80 scattered exact points, 1.6%. Right: the same points plus rust rings at neighborhood centroids sized by post count, 800 points, 16% — fuller but visibly snapped to a handful of coarse locations." loading="lazy">
+          <figcaption>Same 5,000 posts, two maps. Left is what exact coordinates alone give you: 80 precise-looking dots that read as authoritative and cover 1.6% of the data. Right adds place-resolution &mdash; 10× the records, but stacked onto neighborhood centroids (the rings), coarse by construction. Both maps still omit the 84% with no location; the difference is that GeoSocialX <em>tells you</em> they&rsquo;re omitted.</figcaption>
+        </figure>
+
+        <p>Notice what the hotspots become. The busiest grid cell holds 110 posts &mdash; but it sits on the Mission&rsquo;s centroid, not on 110 people. Once most of your mapped points are place-derived, your &ldquo;hotspots&rdquo; are partly an artifact of where place boundaries were drawn. That is a fine thing to report &mdash; and a dangerous thing to imply is precise. The <code>source</code> flag is there so you can filter to <code>"exact"</code> when precision matters, or keep both and say so.</p>
+
+        <div class="callout">
+          <div class="label">What the fuller map still won&rsquo;t tell you</div>
+          <p>Recovering 16% is not the same as being representative. The people who leave coordinates or check into places are not a random sample &mdash; they skew toward events, nightlife, tourism, and the kind of posting that <em>wants</em> to be located. The 84% with no geo aren&rsquo;t missing at random; they are a different population. Coverage honesty doesn&rsquo;t fix that selection bias. It just refuses to hide it &mdash; which is the precondition for reasoning about it at all.</p>
+        </div>
+
+        <h2>Why put this in the library instead of the analysis</h2>
+        <p>Because the silent filter is a <em>default</em>, and defaults win. If reporting coverage is a thing you must remember to do by hand, most pipelines won&rsquo;t, and the ones that skip it look identical to the ones that didn&rsquo;t need to. Making <code>coverage()</code> the natural first call &mdash; and making every point carry its provenance &mdash; moves the honest choice from &ldquo;disciplined analyst remembers&rdquo; to &ldquo;falls out of the API.&rdquo; That is the whole design bet: the tool should make the representative move the easy one.</p>
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>Count coverage before you map.</strong> On a realistic 5,000-post city pull, 1.6% carried exact coordinates and 84% carried no location. A map of the 1.6% is not a map of the conversation.</li>
+            <li><strong>Place-resolution buys 10× the data, not 10× the precision.</strong> Resolving place tags to centroids reached 16% coverage here &mdash; fuller, coarser, and only honest if each point remembers it&rsquo;s a centroid, not a person.</li>
+            <li><strong>The recovered map is still a sample, not the population.</strong> Geotaggers self-select. Reporting the hole doesn&rsquo;t close it &mdash; it just stops you mistaking the visible minority for everyone.</li>
+            <li><strong>Make the honest move the default.</strong> That&rsquo;s the point of shipping it as a library: <code>pip install geosocialx</code>, and coverage is the first thing the tool hands you.</li>
+          </ul>
+        </div>
+
+        <div class="rule"></div>
+
+        <div class="sources">
+          <h3>Reproduce this</h3>
+          <ul>
+            <li>Package &amp; source: <a href="https://github.com/JayeshSuryavanshi/GeoSocialX">github.com/JayeshSuryavanshi/GeoSocialX</a> &middot; <a href="https://pypi.org/project/geosocialx/">PyPI</a> &middot; DOI <a href="https://doi.org/10.5281/zenodo.21726579">10.5281/zenodo.21726579</a></li>
+            <li>Every number and both figures above come from the shipping <code>geosocialx</code> 0.8.0 API on one seeded synthetic corpus &mdash; the generator and figure script are in the post&rsquo;s <a href="https://github.com/JayeshSuryavanshi/GeoSocialX/tree/main/examples">examples</a>.</li>
+            <li>Background on geotag sparsity in social data: the computational-social-science literature on Twitter/X geolocation (Graham, Hale &amp; Gaffney; Morstatter et&nbsp;al. on API sampling) &middot; the AT&nbsp;Protocol <code>community.lexicon.location.geo</code> schema for the free, open alternative.</li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+    <footer class="post-foot">
+      <a class="back" href="index.html">&larr; All writing</a>
+      <p class="made">Numbers and figures generated by the shipping GeoSocialX 0.8.0 on a seeded, reproducible corpus &mdash; no hand-drawn data.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
+  </script>
+</body>
+</html>
