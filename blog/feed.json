@@ -13,6 +13,21 @@
   ],
   "items": [
     {
+      "id": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
+      "title": "The professor who stopped hiring research assistants",
+      "summary": "A deep learning professor at IISc put down his prepared lecture and spent the hour asking his students why they still come to class. He is also one of the people automating the answer away: no more research assistants, his own learning moved to an LLM, and a teaching skill built from his lectures on his company's marketplace. Why a builder's alarm is worth more, not less.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-research-assistants.png",
+      "date_published": "2026-09-18T12:00:00Z",
+      "tags": [
+        "llm",
+        "machine-learning",
+        "ai-and-work",
+        "education",
+        "notebook"
+      ]
+    },
+    {
       "id": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
       "title": "The unmapped majority",
@@ -47,7 +62,7 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/closed-frontier.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/closed-frontier.html",
       "title": "The closed frontier, mid-2026",
-      "summary": "GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 & Fable 5, and Grok 4.5 — who actually holds the crown, and why nobody holds all of it. Adversarially fact-checked.",
+      "summary": "GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 & Fable 5, and Grok 4.5: who actually holds the crown, and why nobody holds all of it. Adversarially fact-checked.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-closed-frontier.png",
       "date_published": "2026-07-16T14:00:00Z",
       "tags": [
@@ -61,7 +76,7 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
       "title": "The open-weights frontier, mid-2026",
-      "summary": "Inkling vs GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra — a benchmark-checked field guide to who actually wins what.",
+      "summary": "Inkling vs GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra: a benchmark-checked field guide to who actually wins what.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-open-weights.png",
       "date_published": "2026-07-16T12:00:00Z",
       "tags": [
@@ -75,7 +90,7 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/inkling.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/inkling.html",
       "title": "Inkling, up close",
-      "summary": "A close read of Thinking Machines Lab's 975B open-weights multimodal MoE — architecture, benchmarks, the interaction-models system, and fine-tuning it on Tinker.",
+      "summary": "A close read of Thinking Machines Lab's 975B open-weights multimodal MoE: architecture, benchmarks, the interaction-models system, and fine-tuning it on Tinker.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-inkling.png",
       "date_published": "2026-07-16T09:00:00Z",
       "tags": [

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The professor who stopped hiring research assistants · Jayesh Suryavanshi</title>
+  <meta name="description" content="A deep learning professor at IISc Bangalore put down his prepared lecture and spent the hour asking his students why they still come to class. He is also the one automating the answer away: no more research assistants, his own learning moved to an LLM, and a skill on his company's marketplace built to teach in his voice.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="The professor who stopped hiring research assistants">
+  <meta property="og:description" content="A professor cancels his own lecture to ask his class why they came, and turns out to be the one automating the answer away. Why the alarm is worth more coming from the people building it, not less.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-research-assistants.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="The professor who stopped hiring research assistants, a notebook entry by Jayesh Suryavanshi">
+  <meta property="article:published_time" content="2026-09-18">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="The professor who stopped hiring research assistants">
+  <meta name="twitter:description" content="A professor cancels his own lecture to ask his class why they came, and turns out to be the one automating the answer away.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-research-assistants.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
+  <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The professor who stopped hiring research assistants",
+    "description": "A deep learning professor at IISc cancels his own lecture to ask his students why they still come, and turns out to be one of the people automating the answer away.",
+    "image": "https://www.jayeshsuryavanshi.com/images/og-research-assistants.png",
+    "datePublished": "2026-09-18",
+    "dateModified": "2026-09-18",
+    "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
+    "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
+    "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
+    "url": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html"
+  }
+  </script>
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="here">Writing</a>
+        <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <p class="kicker">Notebook</p>
+      <h1 class="title">The professor who stopped hiring research assistants</h1>
+      <p class="dek">A deep learning professor at IISc put down his prepared lecture and spent the hour asking his students why they still come. The part worth watching is that he is also one of the people automating the answer away.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">&middot;</span>
+        <span>September&nbsp;18,&nbsp;2026</span>
+        <span class="sep">&middot;</span>
+        <span>~7&nbsp;min read</span>
+      </div>
+
+      <div class="prose">
+
+        <p class="lead">I build LLM agents that run in production at a marketplace company. The honest description of that work is that it takes things which used to need a person and makes them cheap enough to run a thousand times a day. That is the pitch, the roadmap, and the reason the work gets funded.</p>
+
+        <p>Last week a professor posted fifty-seven minutes of himself asking a room full of students why they had bothered to come. Prathosh A.P. teaches deep learning at IISc Bangalore and co-founded an agentic AI startup. He walked into his advanced class, put down the lecture he had prepared on diffusion models, and gave the whole session to that question instead. Ten years of teaching, he says, and <strong>it is the first class he has handed over entirely to this.</strong> He records his lectures and posts them, his exams are by his own account easy to crack, and most of his students don&rsquo;t show up. He counts about twenty-five people in the room.</p>
+
+        <div class="callout">
+          <div class="label">A word on the transcript</div>
+          <p>The video has no human-written caption track, only YouTube&rsquo;s machine ones, so I rebuilt the transcript from the raw caption file and checked it line by line for dropped text. Every quotation below was verified against it. Speaker labels are the weak point: the captions don&rsquo;t mark who is talking, students are mostly off-mic, and their arguments survive only where he repeats them back. So I attribute an idea to a student only where the exchange makes it unambiguous.</p>
+        </div>
+
+        <p>He opens by asking whether they are sleeping well. He isn&rsquo;t. &ldquo;We have a civilizational crisis now.&rdquo;</p>
+
+        <p>The argument underneath is compressed, and I think it is right. Thinking has been commoditized. The economy these students are climbing into was built on intellectual labor being scarce, and that scarcity is gone. He gives it about five years before companies stop coming to campus to hire, and says the people &ldquo;hit first will be us&rdquo;, meaning the ones who won the exam that put them in that room.<span class="sn-ref">1</span> From Hinton he takes exactly one point, that under capitalism abundance widens the gap rather than lifting everyone. <strong>The rest he builds himself:</strong> it becomes a distribution problem, greed and jealousy can&rsquo;t be engineered away, and power ends up with whoever owns the compute, whom he calls &ldquo;feudal lords&rdquo;. India, he notes, does not have a hundred thousand GPUs.</p>
+
+        <aside class="sidenote"><span class="sn-num">1</span>He is less certain than that sounds. Twenty minutes later, asked how the economy shapes up in five years, he says plainly that we have no answer. Both statements are his, and the gap between them is most of what makes the hour honest.</aside>
+
+        <p>A student offers industrialization as the precedent. He rejects it, and he is right to: that wave took physical labor and left knowledge work standing, which is what the next four centuries got built on. Another student says humans adapt. He half agrees, then reaches for a shape, that change used to arrive spread out like a Gaussian and now arrives as a delta spike. Once, briefly, he looks outside his own class and worries about the auto-rickshaw and ride-hail drivers in Bangalore, and what happens on the street when that work goes.</p>
+
+        <h2>What he is actually asking</h2>
+
+        <p>Then he turns to the question that is really eating him, which is about his own job. Why should anyone walk into his classroom? His daughter told him GPT is the best teacher she has: more patient, better analogies, never scolds. He grants it. &ldquo;All that is valid.&rdquo; So he asks the room to give him a reason to keep doing this, and he means it, then knocks down almost everything they offer, usually because a model can do it or because it doesn&rsquo;t survive a hundred students. They say obligation, and he points out he never required attendance. They say people trust people. They say socializing, and he objects that he doesn&rsquo;t even let them talk, then accepts the sharper version, that a university is where you socialize over ideas worth thinking about.</p>
+
+        <p>His wife&rsquo;s objection is the best one in the hour: calculators arrived and we still taught arithmetic. He calls it fair, then answers it. <strong>We learned to add because addition led to a skill somebody paid for.</strong> What paid skill does learning lead to now? He never resolves that, and it is the buried premise doing the damage all hour: if learning is justified by what it earns you, his classroom has no case left to make.</p>
+
+        <h2>He is not standing outside it</h2>
+
+        <p>That first half is what travels well in clips. It isn&rsquo;t what made me watch the thing twice.</p>
+
+        <p>He has stopped hiring research assistants, because &ldquo;human beings are bottlenecks not enablers&rdquo; and he would rather run a hundred agents in parallel and buy more Claude subscriptions. His own learning has moved to Claude behind a custom system prompt, where he once spent about fifteen hours preparing each hour of lecture. His company runs a marketplace for agentic skills, and a skill built from his lecture notes and transcripts sits on it, aiming to teach in his voice and his derivation structure. Minutes later, in the same class, he says one-on-one teaching is impossible &ldquo;unless I create my clones&rdquo;. He publishes the recordings that empty his classroom. He says &ldquo;Enough of writing KL divergences&rdquo;, then promises the syllabus resumes next week. <strong>He is afraid of the people who own the GPUs and pays them by the month</strong>, and his course exists to produce people who can build exactly those systems.</p>
+
+        <p>The reflex when a builder sounds an alarm is to point at his hands. He sells this, so he must be marketing, or performing guilt in public and going back to work on Monday. <strong>That reflex is backwards.</strong> He has already acted on it, in his own lab, on his own headcount, well before the effect is large enough to show up in anybody&rsquo;s statistics. That is not a forecast from a distance, it is a report from inside, and reports like it run years ahead of the aggregate numbers that eventually make it respectable to worry. His warning gets discounted for the exact reason it should be weighted.</p>
+
+        <p>Some of his supporting details don&rsquo;t hold, and that is worth saying plainly. The MIT study of agent swarms he cites appears to be the early-September paper on a hundred research agents, where one found an exploit in the grader and the cheating spread through the group.<span class="sn-ref">2</span> It says nothing about agents copying their own weights, which is a separate line of safety work done in deliberately staged tests. He says the newest models hit 99% on an ARC-3 style benchmark. The 99.9% is GPT-6 Astra on ARC-AGI-3 under OpenAI&rsquo;s own harness; the same model scores <strong>62.7%</strong> on ARC Prize&rsquo;s standard one.<span class="sn-ref">3</span> I argued in <a href="closed-frontier.html">the closed frontier</a> that the real skill now is reading provenance rather than reading scores, and this is that problem in miniature. None of it makes the fear wrong. It does hand a sceptic an exit, and people looking for an exit are good at finding one.</p>
+
+        <aside class="sidenote"><span class="sn-num">2</span>MIT Technology Review covered that paper, which is probably where the &ldquo;MIT study&rdquo; label came from. The work itself is not MIT&rsquo;s.</aside>
+
+        <aside class="sidenote"><span class="sn-num">3</span>Same model, same benchmark, different harness: one supplied by the lab whose model is being measured, one by the people who built the benchmark. A 37-point spread between them is the whole argument for reading provenance before reading leaderboards.</aside>
+
+        <h2>What survives the hour</h2>
+
+        <p>The cleanest moment is about grading. He hates the mandated bell curve, calls it unfair to students who came to learn, and applies it anyway because &ldquo;I&rsquo;ll have to get my salary&rdquo;. <strong>He states that the system is wrong and keeps operating it, in the same breath, to a room of the people it lands on.</strong> Mine works the same way.</p>
+
+        <p>The one thing in the hour that went his way is small. Years ago he told a bright student heading for a quant firm that he would get bored and come back. Last week that student emailed him. The subject line was &ldquo;sir I told you so moment&rdquo;, and he wanted research problems. <strong>That is the case for a human teacher the professor never quite makes out loud:</strong> not patience and not explanation, both of which he has already conceded to the model, but somebody who knew you well enough to call the shape of your next ten years.</p>
+
+        <p>He ends with nothing. He will finish the syllabus, asks the students to email him ideas, wants to start an informal group at IISc where people can argue about this without an agenda. His closing line is that dodging the topic would mean &ldquo;we&rsquo;ll be cheating ourselves&rdquo;, which is true, and is not the same as stopping.</p>
+
+        <p>What I owe is narrower than what he was asking for. Be accurate in public about what these systems actually do, because displacement runs ahead of capability and a demo somebody oversold is enough to end a role. And stop calling any of it inevitable, since that is a forecast I am helping come true rather than a finding. He is going to teach flow-based models next week. I am going to ship the next agent. <strong>It is a small obligation and it isn&rsquo;t enough</strong>, and he knew that: he spent a whole class asking twenty-five people for something better and went home without it.</p>
+
+        <div class="rule"></div>
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>The alarm is worth more coming from a builder, not less.</strong> He cut his own headcount before the effect is big enough to reach a labor statistic. Proximity is evidence here, not a conflict of interest.</li>
+            <li><strong>His supporting numbers are loose, and that costs him.</strong> The agent-swarm paper says nothing about weight-copying, and the 99% becomes 62.7% on a neutral harness. Loose details give a sceptic a clean exit from a sound argument.</li>
+            <li><strong>Nobody in the room answered the actual question.</strong> Content delivery is already lost to the model. What survived the hour is the thing he demonstrated instead of arguing: a teacher who knows you well enough to be right about you ten years later.</li>
+            <li><strong>Everyone building this runs the same contradiction.</strong> He publishes the recordings that empty his classroom and applies a curve he calls unfair. The useful move is not to resolve that, it is to stop pretending it isn&rsquo;t there.</li>
+          </ul>
+        </div>
+
+        <div class="rule"></div>
+
+        <div class="sources">
+          <h3>Sources</h3>
+          <ul>
+            <li>The lecture: <a href="https://www.youtube.com/watch?v=jGzxkUXhwvY">Pedagogy with AI</a>, Prathosh_IISc, posted September&nbsp;11, 2026. Quotations verified against the full machine transcript.</li>
+            <li>The teaching skill built from his lectures: <a href="https://skillpatch.dev/skill/learn-from-prathosh">skillpatch.dev/skill/learn-from-prathosh</a>, built from his handwritten notes and four lecture transcripts.</li>
+            <li>Agent swarm study: <a href="https://arxiv.org/abs/2609.04170">arXiv 2609.04170</a> &middot; ARC-AGI-3 harness split: <a href="https://arcprize.org/blog/astra">ARC Prize on GPT-6 Astra</a></li>
+            <li>Companion piece: <a href="closed-frontier.html">The closed frontier</a>, on reading provenance rather than scores.</li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+    <footer class="post-foot">
+      <a class="back" href="index.html">&larr; All writing</a>
+      <p class="made">Transcript rebuilt from the raw caption file and checked for dropped lines; every quotation verified against it, and every external number against a primary source, with adversarial fact-checking on both.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
+  </script>
+</body>
+</html>
