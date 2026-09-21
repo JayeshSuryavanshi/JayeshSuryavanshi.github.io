@@ -6,7 +6,15 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2026 12:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>The browser is a peripheral</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html</guid>
+      <pubDate>Sun, 20 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Claude Code can drive Chrome, and the documentation covers what it can do without saying how. Reading the shipped binary, the extension bundle and the tool server’s own session logs turns up five hops from tool call to page, two transports where I expected one, a screenshot frame that disagrees with its own declared scale, and the part where your page text leaves the machine. Prefer references to pixels, and assume every returned string was written by the page.</description>
+    </item>
 
     <item>
       <title>The empty classroom</title>

@@ -13,6 +13,19 @@
   ],
   "items": [
     {
+      "id": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
+      "title": "The browser is a peripheral",
+      "summary": "Claude Code can drive Chrome, and the documentation covers what it can do without saying how. Reading the shipped binary, the extension bundle and the tool server’s own session logs turns up five hops from tool call to page, two transports where I expected one, a screenshot frame that disagrees with its own declared scale, and the part where your page text leaves the machine. Prefer references to pixels, and assume every returned string was written by the page.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png",
+      "date_published": "2026-09-20T12:00:00Z",
+      "tags": [
+        "field guide",
+        "agents",
+        "browser automation"
+      ]
+    },
+    {
       "id": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
       "title": "The empty classroom",

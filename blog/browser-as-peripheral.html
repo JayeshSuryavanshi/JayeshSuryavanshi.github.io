@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The browser is a peripheral · Jayesh Suryavanshi</title>
+  <meta name="description" content="Claude Code can drive Chrome. The documentation covers what it can do and stays quiet on how. Reading the shipped binary, the extension bundle and the MCP server's own session logs turns up five hops, two transports, a coordinate frame that disagrees with its own declared scale, and one surprise about where your page text goes.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="The browser is a peripheral">
+  <meta property="og:description" content="How an agent actually reads and clicks a web page: five hops, two transports, accessibility trees instead of pixels, and the part where the page leaves your machine.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="The browser is a peripheral, a field guide by Jayesh Suryavanshi">
+  <meta property="article:published_time" content="2026-09-20">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="The browser is a peripheral">
+  <meta name="twitter:description" content="How an agent actually reads and clicks a web page: five hops, two transports, and the part where the page leaves your machine.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
+  <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The browser is a peripheral",
+    "description": "How an agent actually reads and clicks a web page, read out of the shipped binary and extension bundle rather than the documentation.",
+    "image": "https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png",
+    "datePublished": "2026-09-20",
+    "dateModified": "2026-09-20",
+    "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
+    "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
+    "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
+    "url": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html"
+  }
+  </script>
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="here">Writing</a>
+        <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <p class="kicker">Field Guide</p>
+      <h1 class="title">The browser is a peripheral</h1>
+      <p class="dek">Claude Code can drive Chrome. The documentation is good about what it can do and quiet about how. So I read the binary, the extension bundle and the tool server&rsquo;s own logs, and found five hops, two transports, and one thing about where page text goes that I did not expect.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">&middot;</span>
+        <span>September&nbsp;20,&nbsp;2026</span>
+        <span class="sep">&middot;</span>
+        <span>~9&nbsp;min read</span>
+      </div>
+
+      <section class="abstract" aria-label="Abstract">
+        <h2>Abstract</h2>
+        <p>The agent never touches the browser. It emits a tool call that crosses five hops to reach a page, and the page answers as either an accessibility tree or a screenshot. Reading the shipped CLI, the extension bundle and the tool server&rsquo;s session logs turns up two separate transports rather than one, a screenshot coordinate frame that disagrees with its own declared scale about a third of the time, and the fact that on this path the page content leaves the machine for a hosted relay as clear JSON inside TLS. Roughly half of the boundary cannot be verified on macOS at all. This note says which half, and why that matters more than the architecture diagram.</p>
+      </section>
+
+      <div class="prose">
+
+        <p class="lead">I use the browser tools in Claude Code most weeks, usually for the boring end of the job: check that a deploy actually rendered, read a console error out of a page that only breaks when logged in, fill a form I do not want to fill again. It works well enough that I had never asked what happens in between. Then somebody asked me and I found I could describe the capability and not the mechanism, which is the tell that I had been reading documentation instead of the thing.</p>
+
+        <div class="callout">
+          <div class="label">How I checked, and what I could not</div>
+          <p>Everything below about the command-line side is read out of the shipped CLI, version 2.1.278, plus the tool server&rsquo;s own session logs, which it writes in the clear under <code>~/Library/Caches/claude-cli-nodejs/</code>, and the live process and socket table. That part I consider evidenced.</p>
+          <p>The browser side is not in the same class. <strong>macOS file protection blocks every read under the Chrome profile directory</strong>, even with the sandbox off: <code>stat</code> works, opening a file does not. So the extension analysis comes from a fresh Web Store download of the same version string as the installed copy, not from the installed bytes. I did not confirm the two are byte-identical, and I never captured a live frame on the wire. Where I am reading code rather than watching behaviour, I say so.</p>
+        </div>
+
+        <h2>Five hops to a click</h2>
+
+        <p>The useful reframing is in the title. The model is not in the browser and does not reach into it. It emits a tool call, the same shape as any other tool call, and something downstream turns that into a click. The browser is a device on the end of a wire.</p>
+
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">one tool call</span><span class="lang">path</span></div>
+          <pre><code>model
+ └─ read_page / computer / navigate ...
+     └─ chrome tool server   <span class="c"># in-process, inside the CLI. not a subprocess</span>
+         └─ wss://bridge.&lt;vendor-relay&gt;/chrome/&lt;account&gt;   <span class="c"># leaves the machine</span>
+             └─ extension service worker   <span class="c"># MV3, host_permissions &lt;all_urls&gt;</span>
+                 ├─ content script: accessibility-tree.js
+                 └─ chrome.debugger   <span class="c"># clicks, typing, screenshots</span>
+                     └─ the page</code></pre>
+        </div>
+
+        <p>Two details in there are worth pulling out. The tool server runs <strong>inside the CLI process</strong>, not as a child of it: the session log says <code>In-process Chrome MCP server started</code> and then reports a stdio transport connecting in four milliseconds, which is an in-memory pair, not a pipe.<span class="sn-ref">1</span> And the content script is injected at <code>document_start</code>, in every frame, on every URL. Nothing about that is unusual for an extension of this kind, but it is the answer to &ldquo;when does it start looking&rdquo;: before your page runs.</p>
+
+        <aside class="sidenote"><span class="sn-num">1</span>Twenty-two of these logs sit on my laptop across six project directories. They are plain JSON lines and they are the single most useful artifact for this kind of question, because the server writes down what it negotiated rather than what it was configured to prefer.</aside>
+
+        <h2>How a page becomes something a model can read</h2>
+
+        <p>There are two channels, and they are not interchangeable.</p>
+
+        <p>The structured one returns an <strong>accessibility tree</strong> with opaque reference tokens, <code>ref_0</code>, <code>ref_1</code>, and so on. It is capped: fifteen levels deep, ten thousand elements, fifty thousand characters. Password fields and hidden inputs come back as a redaction marker rather than a value. A second tool skips the tree and walks ten content selectors in priority order, first match wins, falling back to the whole body.</p>
+
+        <p>The visual one returns a screenshot as a short text handle plus a separate base64 image block. Across my own transcripts those ran from about three kilobytes to a hundred and sixty-seven, almost always JPEG.</p>
+
+        <table>
+          <thead>
+            <tr><th>What crosses</th><th>Shape</th><th>Targeting</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Accessibility tree</td><td>text, capped and redacted</td><td><code>ref_N</code> tokens</td></tr>
+            <tr><td>Extracted page text</td><td>text, selector-chosen</td><td>none</td></tr>
+            <tr><td>Screenshot</td><td>handle + base64 image</td><td>x, y in the image frame</td></tr>
+            <tr><td>Console, network</td><td>text, filterable</td><td>none</td></tr>
+          </tbody>
+        </table>
+
+        <p>The reference system is the interesting design choice, and I think it is the right one, because <strong>the coordinate story does not hold up.</strong> Going back over eighty-one annotated screenshots in my own sessions, twenty-eight had a delivered width that did not match the scale the annotation itself declared. The same &ldquo;0.6 scale&rdquo; label produced ratios of 0.600, 0.667 and 0.800 on different captures.<span class="sn-ref">2</span> The screenshot frame is also not reliably the same as the viewport the structured read reports. If you are wiring these tools into anything you intend to trust, prefer a reference over a coordinate wherever the tool offers both. Pixels are a fallback, not a foundation.</p>
+
+        <aside class="sidenote"><span class="sn-num">2</span>I want to be careful here: this is a mismatch between an image and the label describing it, measured after the fact. I did not instrument the capture, so I cannot say whether the scaling or the annotation is the part that is wrong. Either way it is not a number to build on.</aside>
+
+        <h2>Where the page actually goes</h2>
+
+        <p>This is the part I did not expect, and the part I got wrong on the first pass before checking it properly.</p>
+
+        <p>I assumed the browser was driven locally. There is every reason to think so: the CLI registers a native messaging host with seven different browsers, and a matching helper process really does sit there holding a unix socket with private permissions, one per process id. That machinery exists, it works, and the code that would encrypt payloads end to end lives on exactly that path.</p>
+
+        <p>It is not the path the CLI uses. The transport selector checks for a bridge configuration first, and the factory that builds the context sets that configuration unconditionally, so the websocket branch always wins and <strong>the local socket pool is unreachable</strong> from this client. It also never sets the options that would turn on the sealing, the proactive dialing or the peer-credential check. On my machine the live socket has exactly one holder, the desktop app&rsquo;s helper, and <em>nothing connected to it</em>. Two transports exist. Which one you are on depends on which client you are running, and the answer for the command line is the remote one.</p>
+
+        <p>So the frame goes out over a websocket to a vendor-hosted relay, addressed by account, authenticated by an access token in the opening message. Tool calls and their results are matched by a request id. And the sealing does not apply: every reference to it in that module sits in the local-socket pairing code, none in the websocket client, which builds its frame and serialises the arguments as they are. <strong>Page text, accessibility trees and base64 screenshots cross as clear JSON inside TLS to a machine that is not yours.</strong></p>
+
+        <p>I read that out of the binary rather than off the wire, so treat it as a strong code-level claim and not a packet capture. It is also not a vulnerability and I am not presenting it as one. TLS is doing its job and the relay is the vendor&rsquo;s own. But it does change the answer to a practical question, which is <em>which tabs you point this at</em>. &ldquo;The agent reads the page locally&rdquo; would have been a reasonable thing to assume and it is not what happens.</p>
+
+        <h2>What is actually watching</h2>
+
+        <p>Everything on the return path is written by the page. Not just the obvious text and screenshots, but the console, the network bodies, the tab titles and URLs appended to nearly every result, and, my favourite, the confirmation string after a form fill, which helpfully echoes the field&rsquo;s previous value. A hostile page controls all of it.</p>
+
+        <p>There are gates, and they sit in different places: per-site grants and blocked categories inside the extension, an approval mode with a classifier that inspects each outgoing call, and account identity on the connection itself. Documented protected actions still interrupt even on a site you have blanket-approved, and a documented prohibited list refuses outright, including the nicely circular entry for completing instructions found in web content.</p>
+
+        <p>The gap worth naming: <strong>nothing in the command-line binary inspects the content coming back.</strong> The probes that scan tool results for injections are real and documented, but they are not in this artifact, which carries one generic warning sentence in the system prompt and a classifier pointed at the outgoing call. That layer lives elsewhere, server side or on another surface. If your mental model was &ldquo;something on my laptop is checking the page before the model reads it&rdquo;, that is not what I found.</p>
+
+        <p>The published robustness numbers deserve the same care. There are at least four separate evaluations across about a year: an early suite of a hundred and twenty-three cases, an adaptive best-of-N attacker, a harness the vendor retired because it had been saturated, and a current red-team suite. The grader changed. The denominator changed to attacks that reached the model. Quoting the early figure and the current one as a single trend line would be wrong, which is the same provenance problem I wrote about in <a href="closed-frontier.html">the closed frontier</a>: the number is fine, the comparison is the thing that breaks. The vendor&rsquo;s own framing is the honest one, that a low single-digit success rate still represents meaningful risk.</p>
+
+        <h2>If you are about to use it</h2>
+
+        <p>Prefer references over pixel coordinates. Treat every returned string as untrusted input, including the ones that look like the tool talking rather than the page. Assume the content of any tab you open leaves the machine. And keep a separate browser profile for it, which is the vendor&rsquo;s own recommendation and the cheapest control available.</p>
+
+        <p>The honest close is the limit rather than the finding. The command-line half of this I can stand behind, because I read the running artifact and its own logs. The browser half I read from a store download, because the operating system would not let me open the copy that is actually running. <strong>Two halves of one system, described at two very different confidences, and the one users care about is the weaker one.</strong> If somebody can read the installed bundle on a machine without that restriction, the in-page mechanism is where I would look first.</p>
+
+        <div class="rule"></div>
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>The model drives the browser as a device, not as a browser.</strong> Five hops from tool call to page, with the tool server running inside the CLI process rather than beside it, and a content script already injected before your page runs.</li>
+            <li><strong>Two transports exist and the command line uses the remote one.</strong> The local native-messaging path is real, works, and is where the end-to-end encryption lives, but the bridge config is set unconditionally so the local pool is never reached.</li>
+            <li><strong>Page content leaves the machine in clear JSON inside TLS.</strong> Read from the binary, not from the wire. Not a vulnerability, but it changes which tabs you should point this at.</li>
+            <li><strong>Nothing local checks what comes back.</strong> Result-scanning probes are documented and are not in this artifact. Every returned string, including tool-sounding confirmations, is page-authored.</li>
+            <li><strong>Prefer references to coordinates.</strong> A third of the screenshots I checked disagreed with their own declared scale, and the image frame is not reliably the reported viewport.</li>
+          </ul>
+        </div>
+
+        <div class="rule"></div>
+
+        <div class="sources">
+          <h3>Sources</h3>
+          <ul>
+            <li>Primary: the shipped CLI 2.1.278, its <code>mcp-logs-claude-in-chrome</code> session logs, the live process and socket table, and the extension bundle at the version string installed here. Read on macOS, September&nbsp;20, 2026.</li>
+            <li>Browser tool surface and known failure modes: <a href="https://code.claude.com/docs/en/chrome">code.claude.com/docs/en/chrome</a></li>
+            <li>Permission model, protected and prohibited actions, blocked categories: <a href="https://support.claude.com/en/articles/12902446-claude-in-chrome-permissions-guide">permissions guide</a> &middot; <a href="https://support.claude.com/en/articles/12902428-use-claude-in-chrome-safely">using it safely</a></li>
+            <li>Injection evaluations and defence layers, across four different suites: <a href="https://claude.com/blog/claude-for-chrome">Aug 2025</a> &middot; <a href="https://www.anthropic.com/research/prompt-injection-defenses">Nov 2025 research</a> &middot; <a href="https://claude.com/blog/claude-in-chrome-generally-available">GA post</a></li>
+            <li>Companion piece: <a href="closed-frontier.html">The closed frontier</a>, on reading provenance before reading numbers.</li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+    <footer class="post-foot">
+      <a class="back" href="index.html">&larr; All writing</a>
+      <p class="made">Read from the shipped binary, the tool server&rsquo;s own session logs and the extension bundle, across four parallel investigations with an adversarial refutation pass on each. That pass overturned this note&rsquo;s original transport conclusion, which is why the local-socket paragraph is in here at all.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
+  </script>
+</body>
+</html>
