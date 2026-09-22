@@ -125,6 +125,8 @@
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#services" title="Skills">Skills</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
+                    <li><a class="smoothscroll larger-font" href="#open-source" title="Open source contributions">Open Source</a></li>
+                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#portfolio" title="Projects">Projects</a></li>
                     <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="larger-font" href="blog/" title="Writing & studies">Writing</a></li>
@@ -514,13 +516,133 @@
     </section> <!-- end s-services -->
 
 
+    <!-- open source
+    ================================================== -->
+    <section id="open-source" class="s-services target-section h-dark-bg">
+
+        <div class="row s-services__content">
+
+            <div class="vert-line"></div>
+
+            <div class="column large-6 s-services__leftcol">
+                <div class="section-intro" data-num="03">
+                    <h3 class="subhead">Open Source</h3>
+
+                    <h1 class="display-1">
+                        Code I have shipped into libraries other people depend on.
+                    </h1>
+                </div>
+
+                <p class="lead">
+                    Four pull requests merged into maintained scientific Python libraries, each reviewed and
+                    accepted by the people who run them. One of them shipped as a named estimator in a
+                    release. Alongside two packages of my own on PyPI.
+                </p>
+            </div> <!-- end s-services--leftcol -->
+
+            <div class="column large-6">
+                <ul class="services-list">
+                    <li class="services-list__item is-active">
+                        <div class="services-list__item-header">
+                            <h5>aeon &middot; MADRID anomaly detector</h5>
+                        </div>
+                        <div class="services-list__item-body">
+                            <p>
+                                A multi-length discord detector for time series, contributed as a new estimator to
+                                <a href="https://github.com/aeon-toolkit/aeon" target="_blank" rel="noopener">aeon</a>
+                                and merged in September 2026. It shipped in the
+                                <a href="https://github.com/aeon-toolkit/aeon/releases/tag/v1.6.0" target="_blank" rel="noopener">v1.6.0 release</a>,
+                                whose notes read &ldquo;New estimators, including the ExtendedIsolationForest and MADRID
+                                anomaly detectors&rdquo;. I am listed in the project&rsquo;s contributors file.
+                                <a href="https://github.com/aeon-toolkit/aeon/pull/3702" target="_blank" rel="noopener">PR #3702</a>
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                    <li class="services-list__item">
+                        <div class="services-list__item-header">
+                            <h5>PyOD &middot; save and load round-trip coverage</h5>
+                        </div>
+                        <div class="services-list__item-body">
+                            <p>
+                                Test coverage proving that all 23 detectors in
+                                <a href="https://github.com/yzhao062/pyod" target="_blank" rel="noopener">PyOD</a>,
+                                the most widely used anomaly detection library in Python, survive a
+                                save, load and clone round trip. Merged by the library&rsquo;s creator in August 2026,
+                                closing a long-standing issue.
+                                <a href="https://github.com/yzhao062/pyod/pull/708" target="_blank" rel="noopener">PR #708</a>
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                    <li class="services-list__item">
+                        <div class="services-list__item-header">
+                            <h5>category_encoders &middot; GrayEncoder correctness fix</h5>
+                        </div>
+                        <div class="services-list__item-body">
+                            <p>
+                                <code>GrayEncoder.inverse_transform</code> did not recover the original values it had
+                                encoded, so a documented round trip silently returned the wrong answer. Fixed with a
+                                regression test and merged by the lead maintainer of
+                                <a href="https://github.com/scikit-learn-contrib/category_encoders" target="_blank" rel="noopener">scikit-learn-contrib/category_encoders</a>.
+                                <a href="https://github.com/scikit-learn-contrib/category_encoders/pull/499" target="_blank" rel="noopener">PR #499</a>
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                    <li class="services-list__item">
+                        <div class="services-list__item-header">
+                            <h5>scikit-dimension &middot; uncentered lPCA</h5>
+                        </div>
+                        <div class="services-list__item-body">
+                            <p>
+                                Added a <code>center</code> option to the lPCA intrinsic-dimension estimator, so it can
+                                run on uncentered data where the origin carries meaning rather than forcing a
+                                recentering that changes the estimate.
+                                <a href="https://github.com/scikit-learn-contrib/scikit-dimension/pull/41" target="_blank" rel="noopener">PR #41</a>
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                    <li class="services-list__item">
+                        <div class="services-list__item-header">
+                            <h5>Packages I maintain</h5>
+                        </div>
+                        <div class="services-list__item-body">
+                            <p>
+                                <a href="https://pypi.org/project/graphspot/" target="_blank" rel="noopener">graphspot</a>
+                                is inductive graph anomaly detection with honest flat baselines and a core that does not
+                                require torch, which the comparable libraries do without declaring it.
+                                <a href="https://pypi.org/project/geosocialx/" target="_blank" rel="noopener">GeoSocialX</a>
+                                maps the geography of geotagged social data and reports its coverage before it maps
+                                anything, because most posts carry no location at all. Both install from PyPI.
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                    <li class="services-list__item">
+                        <div class="services-list__item-header">
+                            <h5>In review</h5>
+                        </div>
+                        <div class="services-list__item-body">
+                            <p>
+                                Twelve further pull requests are open with maintainers, across
+                                <a href="https://github.com/scikit-learn/scikit-learn/pull/34629" target="_blank" rel="noopener">scikit-learn</a>,
+                                PyOD, river, imbalanced-learn, hiclass, pythresh, DeepOD and aeon. Two new detectors,
+                                the rest correctness fixes. Open is not merged, so I count them separately.
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                </ul> <!-- end services-list -->
+            </div>
+
+        </div> <!-- s-services__content -->
+
+    </section> <!-- end s-services -->
+
+
     <!-- portfolio
     ================================================== -->
     <section id="portfolio" class="s-portfolio target-section">
 
         <div class="row s-portfolio__header">
             <div class="column large-6 medium-8 tab-full">
-                <div class="section-intro" data-num="03" data-aos="fade-up">
+                <div class="section-intro" data-num="04" data-aos="fade-up">
                     <h3 class="subhead">Projects</h3>
                     <h1 class="display-1">
                         Some of my notable projects I've worked on.
