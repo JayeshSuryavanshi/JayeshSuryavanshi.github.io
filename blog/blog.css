@@ -1,338 +1,617 @@
 /* ==========================================================================
-   Writing — "Engineered preprint"
-   Typeset-paper bones (centered title block, bordered abstract, numbered
-   sections and figures, justified serif, references, footnotes) wearing
-   engineered monospace chrome (mono masthead with a cursor block, // kicker,
-   dark terminal code panels, mono figure/table labels, numbered takeaway
-   chips). One sober journal-maroon accent. System fonts only, no webfonts.
+   Writing, "instrument panel"
+
+   Direction: clean modern technical. One neutral grotesque (Instrument Sans)
+   for everything a reader reads, one mono (IBM Plex Mono) for everything a
+   machine produced: section numbers, filenames, code, citation refs.
+   Cool near white ground, hairline structure, a single cobalt accent used
+   only for links, numbers and state.
+
+   Surface language is a hierarchy, not one card repeated:
+     clickable thing   white card, hairline, faint lift on hover
+     apparatus panel   flat cool tint, hairline, no shadow (abstract, method,
+                       bottom line)
+     machine output    recessed light panel in light mode, raised panel in
+                       dark mode (code)
+   The one loud move: section numbers hang in the left margin on wide
+   screens, giving the page a numbered spine. Everything else stays quiet.
+
+   No webfont is required. Instrument Sans and IBM Plex Mono are loaded from
+   Google Fonts when the page links them; the system stack below carries the
+   design on its own if they never arrive.
    ========================================================================== */
 
 :root {
-  --paper:      #fbfaf6;   /* warm near-white sheet */
-  --paper-tint: #f1eee6;   /* faint panel fill (callouts) */
-  --paper-deep: #ece7da;   /* inline-code fill */
-  --plate:      #faf8f3;   /* figure plate, matches the figures */
-  --ink:        #191816;
-  --ink-soft:   #555049;   /* AA-safe secondary */
-  --ink-faint:  #817a6e;   /* labels / meta */
-  --faint:      #8a867a;   /* alias — posts reference var(--faint) inline */
-  --rule:       #ddd8cc;
-  --rule-soft:  #ebe6da;
-  --rule-strong:#2a2824;
+  color-scheme: light dark;
 
-  --accent:     #7a1c2b;   /* sober journal maroon — the single accent */
-  --accent-2:   #5e141f;   /* darker maroon for hover */
-  --accent-wash:rgba(122,28,43,.07);
+  --ground:     #f8f9fb;   /* page */
+  --surface:    #ffffff;   /* cards, figure plates */
+  --panel:      #f2f4f8;   /* apparatus panels */
+  --code-bg:    #f4f6f9;   /* machine output, recessed in light mode */
+  --code-bar:   #eef1f6;
 
-  --good:       #2f7a4f;
-  --warn:       #9c531f;   /* rust — table cautions */
+  --ink:        #101720;
+  --ink-2:      #424c5a;   /* secondary prose, panel body */
+  --ink-3:      #656f7d;   /* meta, captions */
+  --faint:      #656f7d;   /* alias: a few posts set color:var(--faint) inline */
 
-  /* dark terminal code panel (warm-neutral to sit under maroon) */
-  --term-bg:  #171310;  --term-fg: #d8cfc6;  --term-dim: #8a7f75;
-  --term-key: #e0a488;  --term-str: #c7b89f;
+  --line:       #e3e7ee;   /* hairline */
+  --line-2:     #cfd6e0;   /* stronger rule */
 
-  --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Source Serif 4",
-           Georgia, Cambria, "Times New Roman", serif;
-  --mono:  "SF Mono", ui-monospace, "JetBrains Mono", "IBM Plex Mono",
-           Menlo, Consolas, monospace;
+  --accent:     #2b62e4;
+  --accent-2:   #1c46b4;   /* hover, pressed */
+  --accent-dim: #5b84ea;
+  --wash:       rgba(43, 98, 228, .07);
+  --wash-soft:  rgba(43, 98, 228, .035);
+  --wash-panel: rgba(43, 98, 228, .05);   /* abstract */
 
-  --measure: 680px;   /* reading column */
-  --gutter:  290px;   /* sidenote width in the right margin */
-  --gap:     20px;
+  --good:       #0c6b4e;   /* 5.62:1 on its wash */
+  --warn:       #9a5b12;
+  --good-wash:  rgba(14, 124, 90, .07);
+  --warn-wash:  rgba(154, 91, 18, .07);
+
+  --code-fg:    #1e2732;
+  --code-c:     #5f6b79;   /* 5.02:1 on --code-bg */
+  --link-line:  rgba(43, 98, 228, .32);
+  --code-k:     #1f4fc0;
+
+  --shadow:     0 1px 2px rgba(16, 24, 40, .04), 0 1px 1px rgba(16, 24, 40, .03);
+  --shadow-up:  0 2px 4px rgba(16, 24, 40, .05), 0 8px 24px rgba(16, 24, 40, .06);
+
+  --sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo,
+          Consolas, monospace;
+
+  --measure: 660px;   /* reading column, about 78 characters */
+  --rail:    272px;   /* sidenote column, right margin */
+  --rail-gap: 26px;
+  --hang:    58px;    /* left margin for the numbered spine */
+  --r-sm:    6px;
+  --r-md:    10px;
+  --r-lg:    12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground:    #0b0e14;
+    --surface:   #11151d;
+    --panel:     #141924;
+    --code-bg:   #161c26;   /* raised above the page, not an inversion */
+    --code-bar:  #1b222d;
+
+    --ink:       #e7ebf1;
+    --ink-2:     #b2bbc8;
+    --ink-3:     #8a94a3;
+    --faint:     #8a94a3;
+
+    --line:      #232a35;
+    --line-2:    #333c4a;
+
+    --accent:    #8db2ff;
+    --accent-2:  #b6ccff;
+    --accent-dim:#6d8dd4;
+    --wash:      rgba(141, 178, 255, .11);
+    --wash-soft: rgba(141, 178, 255, .05);
+    --wash-panel: rgba(141, 178, 255, .055);
+
+    --good:      #4cc08e;
+    --warn:      #d79a4a;
+    --good-wash: rgba(76, 192, 142, .10);
+    --warn-wash: rgba(215, 154, 74, .10);
+
+    --code-fg:   #dde4ee;
+    --code-c:    #7f8b9c;
+    --link-line: rgba(141, 178, 255, .32);
+    --code-k:    #9cc0ff;
+
+    --shadow:    0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-up: 0 2px 4px rgba(0, 0, 0, .35), 0 10px 28px rgba(0, 0, 0, .45);
+  }
 }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
-  margin: 0; background: var(--paper); color: var(--ink);
-  font-family: var(--serif); font-size: 19px; line-height: 1.62;
-  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
-  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.66;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-::selection { background: var(--accent-wash); color: var(--ink); }
-a { color: var(--accent); text-decoration: none; transition: color .15s ease, border-color .15s ease; }
+
+::selection { background: var(--wash); color: var(--ink); }
+
+a { color: var(--accent); text-decoration: none; transition: color .14s ease, border-color .14s ease; }
 a:hover { color: var(--accent-2); }
 
-.wrap { position: relative; width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap { position: relative; width: 100%; max-width: 1104px; margin: 0 auto; padding: 0 32px; }
 
 #progress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
   background: var(--accent); z-index: 50; transition: width .1s linear;
 }
 
-/* ---- masthead (mono, cursor block) ------------------------------------- */
+/* =====================  masthead  ======================================= */
+
 .masthead {
-  display: flex; align-items: baseline; justify-content: space-between;
-  flex-wrap: wrap; gap: 10px 22px; padding: 28px 0 18px;
-  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px 24px;
+  padding: 22px 0 18px;
+  border-bottom: 1px solid var(--line);
 }
 .brand {
-  font-family: var(--mono); font-weight: 600; font-size: 15px;
-  letter-spacing: .01em; color: var(--ink); display: inline-flex; align-items: baseline;
-}
-.brand::before {
-  content: ""; display: inline-block; width: .52em; height: .82em;
-  background: var(--accent); margin-right: .5em; transform: translateY(.08em);
+  font-size: 15px; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink);
 }
 .brand:hover { color: var(--ink); }
 .brand .dot { color: var(--accent); }
-.masthead nav {
-  display: flex; flex-wrap: wrap; gap: 8px 20px;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
-}
-.masthead nav a { color: var(--ink-faint); padding-bottom: 2px; }
-.masthead nav a:hover { color: var(--ink); }
-.masthead nav a.here { color: var(--ink); border-bottom: 2px solid var(--accent); }
 
-/* ---- title block (centered, paper) ------------------------------------- */
-article { max-width: var(--measure); }
+.masthead nav { display: flex; flex-wrap: wrap; gap: 4px 6px; font-size: 14px; margin-right: -10px; }
+.masthead nav a {
+  color: var(--ink-3); font-weight: 500;
+  padding: 5px 10px; border-radius: var(--r-sm);
+  transition: color .14s ease, background .14s ease;
+}
+.masthead nav a:hover { color: var(--ink); background: var(--panel); }
+.masthead nav a.here { color: var(--accent); background: var(--wash-soft); }
+
+/* =====================  post header  ==================================== */
+
+article, article ~ .post-foot { max-width: var(--measure); }
+/* the listing page has no <article>, so declare it rather than rely on omission */
+.post-list ~ .post-foot { max-width: none; }
 
 .kicker {
-  text-align: center; font-family: var(--mono); font-size: 12px;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--accent);
-  margin: 58px 0 18px; font-weight: 600;
+  display: inline-block; margin: 54px 0 20px;
+  padding: 4px 10px; border-radius: var(--r-sm);
+  background: var(--wash); color: var(--accent);
+  font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .01em;
+  line-height: 1.5;
 }
-.kicker::before { content: "// "; color: var(--ink-faint); }
-h1.title {
-  text-align: center; font-family: var(--serif); font-weight: 700;
-  font-size: clamp(33px, 5.4vw, 48px); line-height: 1.1;
-  letter-spacing: -.012em; margin: 0 0 18px; color: var(--ink);
-}
-.dek {
-  text-align: center; font-size: 20px; line-height: 1.5; color: var(--ink-soft);
-  font-style: italic; margin: 0 auto 26px; max-width: 34rem;
-}
-.byline {
-  display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .02em; color: var(--ink-faint);
-  padding-bottom: 22px; border-bottom: 1px solid var(--rule);
-}
-.byline .sep { opacity: .5; }
-.byline strong { color: var(--ink-soft); font-weight: 600; }
 
-/* ---- abstract (opt-in: any post that adds <section class="abstract">) --- */
+h1.title {
+  margin: 0 0 18px;
+  font-size: clamp(33px, 4.6vw, 45px); font-weight: 600;
+  line-height: 1.09; letter-spacing: -.024em; color: var(--ink);
+}
+
+.dek {
+  margin: 0 0 26px; max-width: 33em;
+  font-size: 20px; line-height: 1.5; color: var(--ink-2);
+}
+
+.byline {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px;
+  padding: 14px 0 16px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px; color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.byline .sep { display: none; }
+.byline strong { color: var(--ink); font-weight: 600; }
+
+/* =====================  apparatus panels  =============================== */
+
 .abstract {
-  border: 1px solid var(--rule-strong); background: #fff;
-  padding: 16px 24px 18px; margin: 30px auto 6px; max-width: 600px;
+  margin: 30px 0 4px; padding: 20px 24px;
+  background: var(--wash-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
 }
 .abstract h2 {
-  text-align: center; font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px;
+  margin: 0 0 10px;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .005em; color: var(--accent);
 }
-.abstract p {
-  margin: 0; font-size: 16px; line-height: 1.55;
-  text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+.abstract p { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); }
+
+.callout {
+  position: relative; overflow: hidden;
+  margin: 34px 0; padding: 20px 24px 20px 26px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
 }
+.callout::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent-dim);
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+}
+.callout .label {
+  margin: 0 0 10px;
+  font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.4;
+}
+.callout p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.callout p + p { margin-top: 12px; }
+.callout strong { color: var(--ink); font-weight: 600; }
 
-/* ---- prose ------------------------------------------------------------- */
-.prose { counter-reset: sec fig; max-width: var(--measure); padding: 8px 0 20px; }
-.prose > p:first-of-type { margin-top: 34px; }
-.prose p { margin: 0 0 22px; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
-.prose strong { color: var(--ink); font-weight: 700; }
-.prose em { color: var(--ink); }
-.prose a { border-bottom: 1px solid rgba(122,28,43,.3); }
-.prose a:hover { border-color: var(--accent-2); }
+/* =====================  prose  ========================================== */
 
-.prose ul, .prose ol { margin: 0 0 22px; padding-left: 22px; }
+.prose { counter-reset: sec fig; max-width: var(--measure); padding: 6px 0 16px; }
+.prose > p:first-of-type { margin-top: 30px; }
+.prose p { margin: 0 0 21px; }
+.prose strong { color: var(--ink); font-weight: 600; }
+.prose em { color: var(--ink); font-style: italic; }
+
+.prose a { border-bottom: 1px solid var(--link-line); }
+.prose a:hover { border-bottom-color: var(--accent-2); }
+
+.prose ul, .prose ol { margin: 0 0 21px; padding-left: 20px; }
 .prose li { margin: 0 0 9px; padding-left: 4px; }
 .prose li::marker { color: var(--accent); }
 
-/* numbered section headings (only direct children of .prose) */
+.lead { font-size: 19.5px; line-height: 1.6; color: var(--ink-2); }
+
 .prose > h2 {
-  font-family: var(--serif); font-weight: 700; font-size: 26px; line-height: 1.25;
-  letter-spacing: -.008em; margin: 52px 0 14px; padding-top: 16px;
-  border-top: 1px solid var(--rule-strong); color: var(--ink); scroll-margin-top: 20px;
+  position: relative;
+  margin: 56px 0 16px;
+  font-size: 25px; font-weight: 600; line-height: 1.25; letter-spacing: -.017em;
+  color: var(--ink); scroll-margin-top: 24px;
 }
 .prose > h2::before {
   counter-increment: sec; content: counter(sec);
-  font-family: var(--mono); font-size: .58em; font-weight: 700;
-  color: var(--accent); margin-right: .95rem; vertical-align: .16em;
+  display: inline-block; margin-right: .8rem;
+  font-family: var(--mono); font-size: 14.5px; font-weight: 500;
+  color: var(--accent); vertical-align: .1em;
+  font-variant-numeric: tabular-nums;
 }
 .prose h3 {
-  font-family: var(--serif); font-weight: 700; font-style: italic;
-  font-size: 19px; margin: 34px 0 10px; color: var(--ink);
+  margin: 36px 0 10px;
+  font-size: 19.5px; font-weight: 600; letter-spacing: -.012em; color: var(--ink);
 }
 
-.lead { font-size: 20px; line-height: 1.6; color: var(--ink); }
-.lead::first-letter {
-  float: left; font-weight: 700; font-size: 3.15em; line-height: .8;
-  padding: 6px 10px 0 0; color: var(--accent); font-family: var(--serif);
-}
-
-/* pull quote */
 .prose blockquote {
-  margin: 32px 0; padding: 2px 0 2px 22px; border-left: 3px solid var(--accent);
-  font-size: 21px; line-height: 1.5; color: var(--ink); font-style: italic;
-  text-align: left;
+  margin: 30px 0; padding: 0 0 0 22px;
+  border-left: 2px solid var(--accent-dim);
+  font-size: 19.5px; line-height: 1.55; color: var(--ink);
 }
-.prose blockquote cite { display: block; margin-top: 12px; font-family: var(--mono); font-size: 12px; font-style: normal; color: var(--ink-faint); }
+.prose blockquote cite {
+  display: block; margin-top: 12px;
+  font-size: 13px; font-style: normal; color: var(--ink-3);
+}
 
-/* ---- footnote references + margin sidenotes (mono) --------------------- */
+hr.rule, .rule {
+  border: 0; border-top: 1px solid var(--line);
+  margin: 44px 0; height: 0;
+}
+
+/* =====================  refs and margin notes  ========================== */
+
 .sn-ref {
-  font-family: var(--mono); font-size: .6em; font-weight: 700;
-  color: var(--accent); vertical-align: super; line-height: 0; padding: 0 1px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  color: var(--accent); vertical-align: super; line-height: 0;
+  padding-left: 2px;
 }
+
 .sidenote {
-  display: block; margin: 16px 0; padding: 3px 0 3px 16px;
-  border-left: 2px solid var(--rule); font-family: var(--mono);
-  font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); text-align: left;
+  display: block; margin: 18px 0; padding: 2px 0 2px 16px;
+  border-left: 1px solid var(--line-2);
+  font-size: 14.5px; line-height: 1.58; color: var(--ink-3);
 }
-.sidenote .sn-num { color: var(--accent); font-weight: 700; margin-right: 7px; }
-.sidenote a { border-bottom: 1px solid rgba(122,28,43,.3); }
+.sidenote .sn-num {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  color: var(--accent); margin-right: 8px;
+}
+.sidenote a { border-bottom: 1px solid var(--line-2); }
 
-/* ---- method / note callout --------------------------------------------- */
-.callout {
-  margin: 32px 0; padding: 18px 22px; background: var(--paper-tint);
-  border: 1px solid var(--rule); border-left: 4px solid var(--accent);
-}
-.callout .label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 9px; font-weight: 700;
-}
-.callout p { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--ink-soft); text-align: left; }
-.callout p + p { margin-top: 12px; }
-.callout strong { color: var(--ink); }
+/* =====================  tables  ========================================= */
 
-/* ---- tables (booktabs, mono) ------------------------------------------- */
-.table-scroll { overflow-x: auto; margin: 28px 0; }
-.prose table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13.5px; line-height: 1.5; min-width: 480px; font-variant-numeric: tabular-nums; }
+.table-scroll { overflow-x: auto; margin: 30px 0; scrollbar-width: thin; }
+/* a table that was not wrapped still must not push the page wide */
+.prose > table { display: block; max-width: 100%; overflow-x: auto; }
+.table-scroll table { min-width: 0; }
+
+.prose table {
+  width: 100%; margin: 30px 0;
+  border-collapse: collapse;
+  font-size: 14.5px; line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+.table-scroll table { margin: 0; }
 .prose thead th {
-  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
-  text-align: left; color: var(--ink-soft); font-weight: 700; padding: 11px 16px;
-  border-top: 2px solid var(--rule-strong); border-bottom: 1px solid var(--rule-strong);
+  padding: 0 10px 9px;
+  text-align: left; font-size: 13px; font-weight: 600; color: var(--ink-3);
+  border-bottom: 1px solid var(--line-2);
 }
-.prose tbody td { padding: 10px 16px; border-bottom: 1px solid var(--rule-soft); color: var(--ink-soft); vertical-align: top; }
-.prose tbody tr:last-child td { border-bottom: 2px solid var(--rule-strong); }
-.prose tbody td:first-child { color: var(--ink); font-weight: 600; }
-.prose td.win { background: var(--accent-wash); }
-.prose td.win, .prose td.win strong, .prose .win { color: var(--accent); font-weight: 700; }
-.prose td.warn, .prose td.warn strong, .prose .warn { color: var(--warn); font-weight: 700; }
+.prose thead th:first-child, .prose tbody td:first-child { padding-left: 0; }
+.prose tbody td {
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2); vertical-align: top;
+}
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose tbody td:first-child { color: var(--ink); font-weight: 500; }
 
-/* ---- inline code ------------------------------------------------------- */
+.prose td.win { background: var(--good-wash); }
+.prose td.win, .prose td.win strong, .prose td.win:first-child, .prose .win {
+  color: var(--good); font-weight: 600;
+}
+.prose td.warn { background: var(--warn-wash); }
+.prose td.warn, .prose td.warn strong, .prose td.warn:first-child, .prose .warn {
+  color: var(--warn); font-weight: 600;
+}
+
+/* =====================  code  =========================================== */
+
 .prose :not(pre) > code {
-  font-family: var(--mono); font-size: .8em; background: var(--paper-deep);
-  color: var(--accent-2); padding: 2px 6px; border-radius: 3px;
+  font-family: var(--mono); font-size: .84em;
+  background: var(--code-bg); color: var(--code-fg);
+  padding: 1.5px 2px; border-radius: 4px;
+  overflow-wrap: break-word; box-decoration-break: clone;
 }
 
-/* ---- code: dark terminal panel ----------------------------------------- */
 .prose .code {
-  margin: 26px 0; border: 1px solid #050403; border-radius: 5px; overflow: hidden;
-  background: var(--term-bg);
+  margin: 28px 0;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
 .prose .code-bar {
-  display: flex; align-items: center; gap: .6rem; padding: 8px 13px;
-  border-bottom: 1px solid #050403; color: var(--term-dim);
-  font-family: var(--mono); font-size: 11px; letter-spacing: .02em;
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 14px;
+  background: var(--code-bar);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 12px; color: var(--ink-3);
 }
-.prose .code-bar .dots { display: flex; gap: 5px; }
-.prose .code-bar .dots i { width: 8px; height: 8px; border-radius: 50%; background: #38302b; display: block; }
-.prose .code-bar .file { color: var(--term-fg); }
-.prose .code-bar .lang { margin-left: auto; color: var(--term-dim); }
+.prose .code-bar .dots { display: none; }
+.prose .code-bar .file { color: var(--ink-2); font-weight: 500; }
+.prose .code-bar .lang {
+  margin-left: auto; padding: 2px 7px; border-radius: 5px;
+  background: var(--ground); color: var(--ink-3);
+  font-size: 11px;
+}
+
 .prose pre {
-  margin: 26px 0; padding: 16px 20px; overflow-x: auto;
-  background: var(--term-bg); border: 1px solid #050403; border-radius: 5px;
-  font-family: var(--mono); font-size: 13.5px; line-height: 1.62; color: var(--term-fg);
+  margin: 28px 0; padding: 18px 20px;
+  overflow-x: auto;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  font-family: var(--mono); font-size: 13px; line-height: 1.62;
+  color: var(--code-fg);
   -webkit-hyphens: none; hyphens: none;
+  tab-size: 2;
 }
-.prose .code pre { margin: 0; border: 0; border-radius: 0; }
-.prose pre code { color: inherit; background: none; padding: 0; font-size: inherit; }
-.prose pre .c { color: var(--term-dim); font-style: italic; }
-.prose pre .k { color: var(--term-key); }
+.prose .code pre { margin: 0; border: 0; border-radius: 0; background: none; padding-bottom: 20px; }
+.prose pre code {
+  font-size: inherit; color: inherit; font-family: inherit;
+  background: none; border: 0; padding: 0;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.prose pre .c { color: var(--code-c); font-style: italic; }
+.prose pre .k { color: var(--code-k); }
 
-hr.rule, .rule { border: 0; border-top: 1px solid var(--rule); margin: 50px 0; height: 0; }
+/* =====================  figures  ======================================== */
 
-/* ---- figures ----------------------------------------------------------- */
-.prose figure { counter-increment: fig; margin: 30px 0; }
+.prose figure { counter-increment: fig; margin: 32px 0; }
 .prose figure img {
-  display: block; width: 100%; height: auto; background: var(--plate);
-  border: 1px solid var(--rule); padding: 10px; box-sizing: border-box;
+  display: block; width: 100%; height: auto;
+  background: var(--ground);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px;
 }
+/* the charts are light artwork with their own pale ground, so in dark mode the
+   plate stays light and the whole figure reads as a mounted print */
+@media (prefers-color-scheme: dark) {
+  .prose figure img { background: var(--ground); border-color: #2c3440; }
+}
+
 .prose figcaption {
-  margin-top: .65rem; font-size: 15px; line-height: 1.5; color: var(--ink-soft);
-  text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+  margin-top: 12px;
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-3);
 }
 .prose figcaption::before {
-  content: "Figure " counter(fig) ". "; font-weight: 700; color: var(--ink);
+  content: "Figure " counter(fig) ".";
+  margin-right: .4em; font-weight: 600; color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
-/* ---- takeaways (numbered chips) ---------------------------------------- */
-.takeaways { border: 1px solid var(--rule-strong); background: #fff; padding: 22px 26px 6px; margin: 30px 0; }
-.takeaways h2 {
-  font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--ink); margin: 0 0 16px; padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule);
+/* =====================  bottom line  =================================== */
+
+.takeaways {
+  margin: 32px 0; padding: 22px 26px 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
 }
-.takeaways h2::before { content: "\203a  "; color: var(--accent); }
+.takeaways h2 {
+  margin: 0 0 18px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px; font-weight: 600; letter-spacing: .005em; color: var(--ink);
+}
 .takeaways ul, .takeaways ol { list-style: none; counter-reset: tk; padding: 0; margin: 0; }
 .takeaways li {
-  counter-increment: tk; position: relative; padding-left: 3rem;
-  margin: 0 0 18px; line-height: 1.56; text-align: left;
+  counter-increment: tk; position: relative;
+  margin: 0 0 18px; padding-left: 3rem;
+  font-size: 16px; line-height: 1.58;
 }
 .takeaways li::marker { content: none; }
 .takeaways li::before {
-  content: counter(tk, decimal-leading-zero); position: absolute; left: 0; top: .05em;
-  font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--accent);
-  border: 1px solid var(--rule-strong); padding: 1px 6px; background: var(--paper);
+  content: counter(tk, decimal-leading-zero);
+  position: absolute; left: 0; top: .18em;
+  padding: 1px 6px; border-radius: 5px;
+  background: var(--wash); color: var(--accent-2);
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
+.takeaways strong { color: var(--ink); font-weight: 600; }
 
-/* ---- references / sources ---------------------------------------------- */
-.sources { margin-top: 24px; }
+/* =====================  sources  ======================================== */
+
+.sources { margin-top: 26px; }
 .sources h3 {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--ink-soft); margin: 0 0 14px; font-weight: 700;
+  margin: 0 0 14px;
+  font-size: 13px; font-weight: 600; color: var(--ink-3);
 }
-.sources ul { list-style: none; counter-reset: src; padding: 0; margin: 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.6; color: var(--ink-faint); }
-.sources li { position: relative; counter-increment: src; padding-left: 2rem; margin-bottom: 9px; }
-.sources li::before { content: "[" counter(src) "]"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-.sources a { color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
-.sources a:hover { color: var(--accent); }
+.sources ul {
+  list-style: none; counter-reset: src; padding: 0; margin: 0;
+  font-size: 14.5px; line-height: 1.6; color: var(--ink-3);
+}
+.sources li {
+  position: relative; counter-increment: src;
+  padding-left: 2.2rem; margin-bottom: 10px;
+}
+.sources li::before {
+  content: "[" counter(src) "]";
+  position: absolute; left: 0; top: .04em;
+  font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.sources a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+.sources a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-/* ---- article footer ---------------------------------------------------- */
-.post-foot { max-width: var(--measure); margin: 20px 0 0; padding: 26px 0 70px; border-top: 2px solid var(--rule-strong); }
-.post-foot a { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
-.post-foot a:hover { color: var(--accent); }
-.post-foot .made, .post-foot > span { display: block; margin-top: 14px; font-family: var(--mono); font-size: 12px; line-height: 1.55; color: var(--ink-faint); }
+/* =====================  article footer  ================================= */
 
-/* =====================  blog index (listing)  ========================== */
-.index-hero { max-width: var(--measure); padding: 60px 0 8px; text-align: center; }
+.post-foot {
+  margin: 24px 0 0; padding: 22px 0 76px;
+  border-top: 1px solid var(--line);
+}
+.post-foot a, .post-foot .back { font-size: 14.5px; font-weight: 500; color: var(--accent); }
+.post-foot a:hover, .post-foot .back:hover { color: var(--accent-2); }
+.post-foot .made, .post-foot > span {
+  display: block; margin-top: 14px; max-width: 62ch;
+  font-size: 13.5px; line-height: 1.6; color: var(--ink-3);
+}
+
+/* =====================  listing  ======================================== */
+
+.index-hero { padding: 52px 0 0; max-width: var(--measure); }
 .index-hero h1 {
-  font-family: var(--serif); font-weight: 700; font-size: clamp(38px, 6.4vw, 56px);
-  line-height: 1.04; letter-spacing: -.018em; margin: 0 0 16px; color: var(--ink);
+  margin: 0 0 14px;
+  font-size: clamp(34px, 5vw, 46px); font-weight: 600;
+  line-height: 1.06; letter-spacing: -.026em; color: var(--ink);
 }
-.index-hero p { font-size: 19px; font-style: italic; color: var(--ink-soft); margin: 0 auto; max-width: 44ch; }
+.index-hero p { margin: 0; max-width: 60ch; font-size: 18px; line-height: 1.6; color: var(--ink-2); }
 
-.post-list { list-style: none; padding: 0; margin: 30px 0 56px; max-width: var(--measure); }
-.post-list li { border-top: 1px solid var(--rule); }
-.post-list li:last-child { border-bottom: 1px solid var(--rule); }
-.post-list a.card { display: block; padding: 28px 0; color: var(--ink); transition: padding-left .2s ease; }
-.post-list a.card:hover { padding-left: 10px; color: var(--ink); }
-.post-list .p-meta { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 11px; }
-.post-list .p-meta::before { content: "// "; color: var(--ink-faint); }
-.post-list .p-title { font-family: var(--serif); font-weight: 700; font-size: 26px; letter-spacing: -.008em; line-height: 1.2; margin: 0 0 9px; color: var(--ink); }
-.post-list .p-dek { font-size: 16px; line-height: 1.55; color: var(--ink-soft); margin: 0; max-width: 62ch; }
+.post-list {
+  list-style: none; padding: 0;
+  margin: 34px 0 30px;
+  display: grid; gap: 14px;
+}
+.post-list a.card {
+  display: block; height: 100%;
+  padding: 22px 24px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  color: var(--ink-2);
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+.post-list a.card:hover {
+  border-color: var(--accent-dim);
+  box-shadow: var(--shadow-up);
+  transform: translateY(-1px);
+}
+.post-list .p-meta {
+  display: inline-block; margin-bottom: 14px;
+  padding: 3px 9px; border-radius: var(--r-sm);
+  background: var(--panel);
+  font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  line-height: 1.5;
+}
+.post-list .p-title {
+  margin: 0 0 9px;
+  font-size: 21px; font-weight: 600; line-height: 1.28; letter-spacing: -.018em;
+  color: var(--ink);
+  transition: color .16s ease;
+}
 .post-list a.card:hover .p-title { color: var(--accent); }
+.post-list .p-dek { margin: 0; max-width: 500px; font-size: 15.5px; line-height: 1.58; color: var(--ink-3); }
 
-/* ---- Tufte margin notes: only when there's room ------------------------ */
-@media (min-width: 1120px) {
-  .sidenote {
-    float: right; clear: right; width: var(--gutter);
-    margin: 5px calc(-1 * (var(--gutter) + var(--gap))) 20px 0;
-    padding: 0 0 0 14px; border-left: 1px solid var(--rule);
+/* newest post reads as the lead item once there are two columns: it keeps the
+   whole row and splits into label plus title on the left, summary on the right */
+@media (min-width: 1000px) {
+  .post-list { grid-template-columns: 1fr 1fr; }
+  .post-list li:first-child { grid-column: 1 / -1; }
+
+  /* the newest post is the lead item. it stays plain block flow on purpose:
+     an earlier two-column version let the summary span two grid rows, which
+     stretched the first row and dropped a dead gap above the title whose size
+     tracked the summary length. stacked, it cannot reshape when you publish. */
+  .post-list li:first-child a.card { padding: 30px 32px 32px; }
+  .post-list li:first-child .p-title {
+    font-size: 34px; line-height: 1.14; letter-spacing: -.028em;
+    margin: 14px 0 0;
+  }
+  .post-list li:first-child .p-dek {
+    font-size: 16.5px; max-width: 600px; margin: 13px 0 0;
   }
 }
 
-/* ---- responsive -------------------------------------------------------- */
-@media (max-width: 640px) {
-  body { font-size: 17.5px; line-height: 1.62; }
-  .wrap { padding: 0 22px; }
-  .kicker { margin-top: 42px; }
-  .dek { font-size: 18px; }
-  .prose p, .prose figcaption, .abstract p { text-align: left; hyphens: none; }
-  .prose > h2 { font-size: 23px; margin-top: 44px; }
-  .masthead { padding-top: 22px; }
-  .masthead nav { gap: 14px; }
-  .callout, .takeaways { padding-left: 20px; padding-right: 20px; }
-  .lead::first-letter { font-size: 2.7em; }
-  .takeaways li { padding-left: 2.6rem; }
+/* =====================  wide: numbered spine, margin notes  ============= */
+
+@media (min-width: 1104px) {
+  article, article ~ .post-foot { margin-left: var(--hang); }
+
+  .prose > h2::before {
+    position: absolute; left: calc(-1 * var(--hang)); top: .42em;
+    width: 40px; margin: 0; text-align: right;
+    font-size: 14px; vertical-align: baseline;
+  }
+
+  .sidenote {
+    float: right; clear: right; width: var(--rail);
+    margin: 6px calc(-1 * (var(--rail) + var(--rail-gap))) 22px 0;
+    padding: 0 0 0 16px;
+    border-left: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+}
+
+/* =====================  narrow  ========================================= */
+
+@media (max-width: 760px) {
+  .wrap { padding: 0 20px; }
+  body { font-size: 16.5px; }
+
+  /* pull the first nav pill back so its label lines up with the brand */
+  .masthead { padding-bottom: 14px; }
+  .masthead nav { margin-left: -10px; }
+
+  .kicker { margin-top: 38px; }
+  h1.title { font-size: clamp(28px, 7.6vw, 34px); letter-spacing: -.02em; }
+  .dek { font-size: 17.5px; }
+  .byline { gap: 4px 18px; font-size: 13px; }
+
+  .abstract, .callout, .takeaways { padding-left: 18px; padding-right: 18px; }
+  .callout { padding-left: 20px; }
+  .abstract p, .callout p { font-size: 15.5px; }
+
+  .prose > h2 { font-size: 21.5px; margin-top: 46px; }
+  .lead { font-size: 18px; }
+  .prose blockquote { font-size: 18px; padding-left: 18px; }
+
+  .prose table { font-size: 13.5px; }
+  .prose thead th { padding: 0 10px 8px; font-size: 12px; }
+  .prose tbody td { padding: 10px; }
+  .prose pre { font-size: 12.5px; padding: 14px 16px; }
+  .prose .code-bar { padding: 8px 12px; font-size: 11.5px; }
+
+  .takeaways li { padding-left: 2.7rem; font-size: 15px; }
+  .index-hero { padding-top: 38px; }
+  .index-hero p { font-size: 17px; }
+  .post-list { margin-top: 26px; }
+  .post-list a.card { padding: 20px 20px 22px; }
+  .post-list .p-title { font-size: 19.5px; }
+  .post-foot { padding-bottom: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }

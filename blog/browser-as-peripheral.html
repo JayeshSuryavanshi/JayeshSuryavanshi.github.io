@@ -46,6 +46,9 @@
     "url": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html"
   }
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="blog.css">
 </head>
 <body>
@@ -117,6 +120,7 @@
 
         <p>The visual one returns a screenshot as a short text handle plus a separate base64 image block. Across my own transcripts those ran from about three kilobytes to a hundred and sixty-seven, almost always JPEG.</p>
 
+        <div class="table-scroll">
         <table>
           <thead>
             <tr><th>What crosses</th><th>Shape</th><th>Targeting</th></tr>
@@ -128,6 +132,7 @@
             <tr><td>Console, network</td><td>text, filterable</td><td>none</td></tr>
           </tbody>
         </table>
+        </div>
 
         <p>The reference system is the interesting design choice, and I think it is the right one, because <strong>the coordinate story does not hold up.</strong> Going back over eighty-one annotated screenshots in my own sessions, twenty-eight had a delivered width that did not match the scale the annotation itself declared. The same &ldquo;0.6 scale&rdquo; label produced ratios of 0.600, 0.667 and 0.800 on different captures.<span class="sn-ref">2</span> The screenshot frame is also not reliably the same as the viewport the structured read reports. If you are wiring these tools into anything you intend to trust, prefer a reference over a coordinate wherever the tool offers both. Pixels are a fallback, not a foundation.</p>
 
