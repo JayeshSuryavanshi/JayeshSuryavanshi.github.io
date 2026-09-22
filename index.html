@@ -88,7 +88,11 @@
          em so it tracks the headline's responsive type scale, and nudged off the
          baseline because the mark carries a descender the text does not.
          aria-label on the svg keeps the sentence readable now the word is art. */
-      .hero-ebay { display: inline-block; height: .82em; width: auto; vertical-align: -.14em; }
+      .hero-ebay { display: inline-block; height: .82em; width: auto; vertical-align: -.14em;
+                   /* the y ends in a diagonal that opens optical space, so the
+                      following period reads as orphaned at the mechanically
+                      correct spacing. pull it back a touch. em, so it scales. */
+                   margin-right: -.06em; }
     </style>
 </head>
 
