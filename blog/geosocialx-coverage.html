@@ -49,7 +49,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=2">
+  <link rel="stylesheet" href="blog.css?v=3">
+  <script>
+    /* scheme boot. runs before first paint so a pinned theme never flashes the
+       other one. with no pinned choice the attribute stays off and the page
+       follows prefers-color-scheme, which is also the no JavaScript path.
+       the js class only reveals the switcher, which is inert without script */
+    (function () {
+      var r = document.documentElement;
+      r.className += (r.className ? ' ' : '') + 'js';
+      try {
+        var t = localStorage.getItem('blog-theme');
+        if (t === 'light' || t === 'dark' || t === 'reading') { r.setAttribute('data-theme', t); }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div id="progress"></div>
@@ -63,6 +77,11 @@
         <a href="index.html" class="here">Writing</a>
         <a href="mailto:jayeshsuryavanshi808@gmail.com">Contact</a>
       </nav>
+      <div class="theme-switch" role="group" aria-label="Colour scheme">
+        <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+        <button type="button" data-theme-set="reading" aria-pressed="false">Reading</button>
+      </div>
     </header>
 
     <article>
@@ -191,5 +210,50 @@ GeospatialAnalyzer(pts).summary()
       tick();
     })();
   </script>
+  <script>
+    /* the scheme switcher. the pinned choice lives in localStorage, and every
+       access is guarded because storage throws in private mode and when site
+       data is blocked. with nothing pinned the buttons show whichever scheme
+       the operating system is asking for, and follow it if it changes */
+    (function () {
+      var KEY = 'blog-theme';
+      var OK = { light: 1, dark: 1, reading: 1 };
+      var root = document.documentElement;
+      var group = document.querySelector('.theme-switch');
+      if (!group) { return; }
+      var buttons = group.querySelectorAll('button[data-theme-set]');
+      var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+      /* the attribute on <html> is the source of truth, not storage: the boot
+         script has already copied any pinned choice onto it, and when storage
+         is unavailable the buttons still agree with what the page is showing */
+      function pinned() { var t = root.getAttribute('data-theme'); return OK[t] ? t : null; }
+      function mark() {
+        var active = pinned() || ((mq && mq.matches) ? 'dark' : 'light');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].setAttribute('aria-pressed',
+            buttons[i].getAttribute('data-theme-set') === active ? 'true' : 'false');
+        }
+      }
+      function pick(name) {
+        if (!OK[name]) { return; }
+        root.setAttribute('data-theme', name);
+        try { localStorage.setItem(KEY, name); } catch (e) {}
+        mark();
+      }
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+          pick(this.getAttribute('data-theme-set'));
+        });
+      }
+      mark();
+      if (mq) {
+        var follow = function () { if (!pinned()) { mark(); } };
+        if (mq.addEventListener) { mq.addEventListener('change', follow); }
+        else if (mq.addListener) { mq.addListener(follow); }
+      }
+    })();
+  </script>
 </body>
+
 </html>
