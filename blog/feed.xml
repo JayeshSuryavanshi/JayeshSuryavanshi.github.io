@@ -6,8 +6,17 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>The wrong opponent</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/wrong-opponent.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/wrong-opponent.html</guid>
+      <pubDate>Tue, 22 Sep 2026 12:00:00 GMT</pubDate>
+      <category>Field Guide</category>
+      <description>Jev ships with two headline multipliers and neither one names its opponent. Arithmetic on TypeSafe&#x27;s own published cells pins them to two different opponents, one of which is more accurate than Jev. Sixteen configurations on that chart and not one small model. I ran the missing baseline on gold labels myself.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-wrong-opponent.png" length="103510" type="image/png"/>
+    </item>
     <item>
       <title>The browser is a peripheral</title>
       <link>https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html</link>

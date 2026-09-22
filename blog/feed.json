@@ -13,6 +13,17 @@
   ],
   "items": [
     {
+      "id": "https://www.jayeshsuryavanshi.com/blog/wrong-opponent.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/wrong-opponent.html",
+      "title": "The wrong opponent",
+      "summary": "Jev ships with two headline multipliers and neither one names its opponent. Arithmetic on TypeSafe's own published cells pins them to two different opponents, one of which is more accurate than Jev. Sixteen configurations on that chart and not one small model. I ran the missing baseline on gold labels myself.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-wrong-opponent.png",
+      "date_published": "2026-09-22T12:00:00Z",
+      "tags": [
+        "field-guide"
+      ]
+    },
+    {
       "id": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
       "title": "The browser is a peripheral",
