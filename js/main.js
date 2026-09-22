@@ -146,25 +146,39 @@
     * ------------------------------------------------------ */
     const ssAccordion = function() {
 
-        const $allItems = $('.services-list__item');
-        const $allPanels = $allItems.children('.services-list__item-body');
+        // Scoped per list. The original queried .services-list__item globally
+        // and then hid every panel after index 0, so once a second accordion
+        // existed on the page only one panel survived and it always belonged to
+        // the first list. The Open Source section therefore rendered entirely
+        // collapsed despite its is-active marker, hiding all of its links, and
+        // clicking either list closed the other.
+        $('.services-list').each(function() {
 
-        $allPanels.slice(1).hide();
+            const $list = $(this),
+                  $items = $list.children('.services-list__item'),
+                  $panels = $items.children('.services-list__item-body'),
+                  $marked = $items.filter('.is-active').first(),
+                  $open = $marked.length ? $marked : $items.first();
 
-        $allItems.on('click', '.services-list__item-header', function() {
+            $panels.hide();
+            $items.removeClass('is-active');
+            $open.addClass('is-active').children('.services-list__item-body').show();
 
-            const $this = $(this),
-                  $curItem = $this.parent(),
-                  $curPanel =  $this.next();
+            $list.on('click', '.services-list__item-header', function() {
 
-            if(!$curItem.hasClass('is-active')){
-                $allPanels.slideUp();
-                $curPanel.slideDown();
-                $allItems.removeClass('is-active');
-                $curItem.addClass('is-active');
-            }
-            
-            return false;
+                const $this = $(this),
+                      $curItem = $this.parent(),
+                      $curPanel = $this.next();
+
+                if (!$curItem.hasClass('is-active')) {
+                    $panels.slideUp();
+                    $curPanel.slideDown();
+                    $items.removeClass('is-active');
+                    $curItem.addClass('is-active');
+                }
+
+                return false;
+            });
         });
     };
 

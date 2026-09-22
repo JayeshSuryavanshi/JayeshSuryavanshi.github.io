@@ -533,7 +533,7 @@
             <div class="vert-line"></div>
 
             <div class="column large-6 s-services__leftcol">
-                <div class="section-intro" data-num="03">
+                <div class="section-intro" data-num="03" data-aos="fade-up">
                     <h3 class="subhead">Open Source</h3>
 
                     <h1 class="display-1">
@@ -541,7 +541,7 @@
                     </h1>
                 </div>
 
-                <p class="lead">
+                <p class="lead" data-aos="fade-up">
                     Four pull requests merged into maintained scientific Python libraries, each reviewed and
                     accepted by the people who run them. One of them shipped as a named estimator in a
                     release. Alongside two packages of my own on PyPI.
@@ -549,7 +549,7 @@
             </div> <!-- end s-services--leftcol -->
 
             <div class="column large-6">
-                <ul class="services-list">
+                <ul class="services-list" data-aos="fade-up">
                     <li class="services-list__item is-active">
                         <div class="services-list__item-header">
                             <h5>aeon &middot; MADRID anomaly detector</h5>
@@ -572,11 +572,11 @@
                         </div>
                         <div class="services-list__item-body">
                             <p>
-                                Test coverage proving that all 23 detectors in
+                                Test coverage across the torch-free core detectors of
                                 <a href="https://github.com/yzhao062/pyod" target="_blank" rel="noopener">PyOD</a>,
-                                the most widely used anomaly detection library in Python, survive a
-                                save, load and clone round trip. Merged by the library&rsquo;s creator in August 2026,
-                                closing a long-standing issue.
+                                the most widely used anomaly detection library in Python: 23 of them are
+                                proven to survive a save and load round trip, and 21 a clone round trip.
+                                Merged by the library&rsquo;s creator in August 2026, closing a long-standing issue.
                                 <a href="https://github.com/yzhao062/pyod/pull/708" target="_blank" rel="noopener">PR #708</a>
                             </p>
                         </div>
@@ -616,7 +616,10 @@
                             <p>
                                 <a href="https://pypi.org/project/graphspot/" target="_blank" rel="noopener">graphspot</a>
                                 is inductive graph anomaly detection with honest flat baselines and a core that does not
-                                require torch, which the comparable libraries do without declaring it.
+                                require torch, which the comparable libraries do without declaring it. It ships
+                                flat baselines beside the graph models on purpose, because a detector on raw
+                                features is a genuinely hard baseline: on Reddit, the BOND benchmark has LOF
+                                outscoring every deep graph model.
                                 <a href="https://pypi.org/project/geosocialx/" target="_blank" rel="noopener">GeoSocialX</a>
                                 maps the geography of geotagged social data and reports its coverage before it maps
                                 anything, because most posts carry no location at all. Both install from PyPI.
@@ -631,8 +634,8 @@
                             <p>
                                 Twelve further pull requests are open with maintainers, across
                                 <a href="https://github.com/scikit-learn/scikit-learn/pull/34629" target="_blank" rel="noopener">scikit-learn</a>,
-                                PyOD, river, imbalanced-learn, hiclass, pythresh, DeepOD and aeon. Two new detectors,
-                                the rest correctness fixes. Open is not merged, so I count them separately.
+                                PyOD, river, imbalanced-learn, hiclass, pythresh, DeepOD and aeon. Four add new
+                                detectors, the other eight are correctness fixes. Open is not merged, so I count them separately.
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
@@ -678,7 +681,7 @@
                     <a href="https://github.com/JayeshSuryavanshi/graphspot" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link</a>
                     <div class="folio-item__caption">
-                        <p>Inductive graph anomaly detection (on PyPI as graphspot), with a core that installs and runs without torch. It ships flat baselines next to the graph models on purpose, because on several standard benchmarks a simple detector on raw features still beats the deep ones. The thumbnail is real output: OddBall, unsupervised, scoring a neighbourhood of the Tolokers graph.</p>
+                        <p>Inductive graph anomaly detection (on PyPI as graphspot), with a core that installs and runs without torch. It ships flat baselines next to the graph models on purpose, because a detector on raw features is a genuinely hard baseline to beat. The thumbnail is real output: OddBall, unsupervised, scoring a neighbourhood of the Tolokers graph.</p>
                     </div>
                 </div>
             </div>
@@ -695,10 +698,10 @@
                         <div class="folio-item__cat">Machine Learning</div>
                         <h4 class="folio-item__title">Lyft Motion Prediction for Autonomous Vehicles</h4>
                     </div>
-                    <a href="https://github.com/JayeshSuryavanshi/Lyft-Motion-Prediction-Submission" target="_blank" title="Project Link" class="folio-item__project-link">Project
+                    <a href="https://github.com/JayeshSuryavanshi/l5-motion-prediction-study" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link</a>
                     <div class="folio-item__caption">
-                        <p>Project implemented as a part of Lyft's Prediction challenge on Kaggle</p>
+                        <p>Motion prediction on the Lyft Level 5 dataset, rebuilt as a study of what the task looks like under a single-laptop compute budget rather than a leaderboard run.</p>
                     </div>
                 </div>
             </div><!-- end column -->
