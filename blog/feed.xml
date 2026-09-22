@@ -13,55 +13,63 @@
       <link>https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html</guid>
       <pubDate>Sun, 20 Sep 2026 12:00:00 GMT</pubDate>
-      <description>Claude Code can drive Chrome, and the documentation covers what it can do without saying how. Reading the shipped binary, the extension bundle and the tool server’s own session logs turns up five hops from tool call to page, two transports where I expected one, a screenshot frame that disagrees with its own declared scale, and the part where your page text leaves the machine. Prefer references to pixels, and assume every returned string was written by the page.</description>
+      <category>Field Guide</category>
+      <description>Claude Code can drive Chrome. The documentation covers what it can do and stays quiet on how. Reading the shipped binary, the extension bundle and the MCP server&#x27;s own session logs turns up five hops, two transports, a coordinate frame that disagrees with its own declared scale, and one surprise about where your page text goes.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png" length="114163" type="image/png"/>
     </item>
-
     <item>
       <title>The empty classroom</title>
       <link>https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html</guid>
       <pubDate>Fri, 18 Sep 2026 12:00:00 GMT</pubDate>
-      <description>A deep learning professor at IISc Bangalore put down his prepared lecture and spent the hour asking his students why they still come to class. He is also one of the people automating the answer away: no more research assistants, his own learning moved to an LLM, and a teaching skill built from his lectures on his company's marketplace. Why a builder's alarm is worth more, not less, and where his supporting numbers slip.</description>
+      <category>Notebook</category>
+      <description>A deep learning professor at IISc Bangalore put down his prepared lecture and spent the hour asking his students why they still come to class. He is also the one automating the answer away: no more research assistants, his own learning moved to an LLM, and a skill on his company&#x27;s marketplace built to teach in his voice.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-research-assistants.png" length="115954" type="image/png"/>
     </item>
-
     <item>
       <title>The unmapped majority</title>
       <link>https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html</guid>
-      <pubDate>Fri, 31 Jul 2026 15:00:00 GMT</pubDate>
-      <description>Coverage honesty for geotagged social data. Most pipelines map the 1-2% of posts with exact coordinates and call it the geography; count the coverage first and 84% carry no location at all. A worked example with GeoSocialX: place-resolution recovers 10x more than exact coordinates alone, fuller but coarser, and the honest move is to report the hole rather than hide it.</description>
+      <pubDate>Fri, 31 Jul 2026 12:00:00 GMT</pubDate>
+      <category>Research Notes</category>
+      <description>Most geotagged-social pipelines quietly map the 1-2% of posts that carry exact coordinates and call it &#x27;the geography.&#x27; Count the coverage first and a different picture appears. A worked example with GeoSocialX: on a realistic 5,000-post city pull, 84% have no location, place-resolution recovers 10x more than exact coordinates alone, and the honest move is to report the hole.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-geosocialx.png" length="143001" type="image/png"/>
     </item>
-
     <item>
       <title>Informative but subsumed</title>
       <link>https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html</guid>
-      <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
-      <description>What news text really adds to unrest forecasting, measured on a leakage-controlled benchmark: 336M events, 55 countries, and a text-signal ladder up to neural embeddings of 1.37M headlines. The semantics of news are already in the event record; the small real complement is the arithmetic of coverage.</description>
+      <pubDate>Sun, 26 Jul 2026 12:00:00 GMT</pubDate>
+      <category>Research Notes</category>
+      <description>What news text really adds to unrest forecasting, measured properly: 336M events, 55 countries, leakage-controlled out-of-time backtests, and a signal ladder from tone counts to neural headline embeddings. The semantics of news are already in the event record.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-subsumed.png" length="97597" type="image/png"/>
     </item>
-
     <item>
       <title>The closed frontier, mid-2026</title>
       <link>https://www.jayeshsuryavanshi.com/blog/closed-frontier.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/closed-frontier.html</guid>
-      <pubDate>Thu, 16 Jul 2026 14:00:00 GMT</pubDate>
-      <description>GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 and Fable 5, and Grok 4.5: who actually holds the crown at the closed frontier, and why nobody holds all of it. Adversarially fact-checked: two of five headline claims came back qualified.</description>
+      <pubDate>Thu, 16 Jul 2026 12:00:00 GMT</pubDate>
+      <category>Field Guide</category>
+      <description>GPT-5.6 Sol, Gemini 3.1 Pro, Claude Opus 4.8 &amp; Fable 5, and Grok 4.5, who actually holds the crown at the closed frontier, and why nobody holds all of it. A benchmark-checked, adversarially fact-checked field guide.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-closed-frontier.png" length="114153" type="image/png"/>
     </item>
-
+    <item>
+      <title>Inkling, up close</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/inkling.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/inkling.html</guid>
+      <pubDate>Thu, 16 Jul 2026 12:00:00 GMT</pubDate>
+      <category>Model Study</category>
+      <description>A close technical read of Thinking Machines Lab&#x27;s Inkling: a 975B-parameter open-weights multimodal MoE. What&#x27;s actually new in the architecture, where it really lands on benchmarks, the interaction-models system it was built for, and how to fine-tune it on Tinker.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-inkling.png" length="113541" type="image/png"/>
+    </item>
     <item>
       <title>The open-weights frontier, mid-2026</title>
       <link>https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html</guid>
       <pubDate>Thu, 16 Jul 2026 12:00:00 GMT</pubDate>
-      <description>Inkling vs GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra: a benchmark-checked field guide to who actually wins what, and how far the open tier has closed the gap to the closed frontier.</description>
-    </item>
-
-    <item>
-      <title>Inkling, up close</title>
-      <link>https://www.jayeshsuryavanshi.com/blog/inkling.html</link>
-      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/inkling.html</guid>
-      <pubDate>Thu, 16 Jul 2026 09:00:00 GMT</pubDate>
-      <description>A close read of Thinking Machines Lab's 975B open-weights multimodal MoE: what's actually new in the architecture, where it really lands on benchmarks, the real-time system it was built for, and how I'd fine-tune it on Tinker.</description>
+      <category>Field Guide</category>
+      <description>Five open-weights models (Inkling, GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra) and who actually wins what. A benchmark-checked field guide to the state of open models in mid-2026.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-open-weights.png" length="132067" type="image/png"/>
     </item>
 
   </channel>

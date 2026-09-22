@@ -16,27 +16,21 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/browser-as-peripheral.html",
       "title": "The browser is a peripheral",
-      "summary": "Claude Code can drive Chrome, and the documentation covers what it can do without saying how. Reading the shipped binary, the extension bundle and the tool server’s own session logs turns up five hops from tool call to page, two transports where I expected one, a screenshot frame that disagrees with its own declared scale, and the part where your page text leaves the machine. Prefer references to pixels, and assume every returned string was written by the page.",
+      "summary": "Claude Code can drive Chrome. The documentation covers what it can do and stays quiet on how. Reading the shipped binary, the extension bundle and the MCP server's own session logs turns up five hops, two transports, a coordinate frame that disagrees with its own declared scale, and one surprise about where your page text goes.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png",
       "date_published": "2026-09-20T12:00:00Z",
       "tags": [
-        "field guide",
-        "agents",
-        "browser automation"
+        "field-guide"
       ]
     },
     {
       "id": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/stopped-hiring-research-assistants.html",
       "title": "The empty classroom",
-      "summary": "A deep learning professor at IISc put down his prepared lecture and spent the hour asking his students why they still come to class. He is also one of the people automating the answer away: no more research assistants, his own learning moved to an LLM, and a teaching skill built from his lectures on his company's marketplace. Why a builder's alarm is worth more, not less.",
+      "summary": "A deep learning professor at IISc Bangalore put down his prepared lecture and spent the hour asking his students why they still come to class. He is also the one automating the answer away: no more research assistants, his own learning moved to an LLM, and a skill on his company's marketplace built to teach in his voice.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-research-assistants.png",
       "date_published": "2026-09-18T12:00:00Z",
       "tags": [
-        "llm",
-        "machine-learning",
-        "ai-and-work",
-        "education",
         "notebook"
       ]
     },
@@ -44,15 +38,10 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
       "title": "The unmapped majority",
-      "summary": "Coverage honesty for geotagged social data. Most pipelines map the 1-2% of posts with exact coordinates and call it the geography; on a realistic 5,000-post pull, 84% carry no location. Place-resolution recovers 10x more, fuller but coarser, and the honest move is to report the hole. A worked example with GeoSocialX.",
+      "summary": "Most geotagged-social pipelines quietly map the 1-2% of posts that carry exact coordinates and call it 'the geography.' Count the coverage first and a different picture appears. A worked example with GeoSocialX: on a realistic 5,000-post city pull, 84% have no location, place-resolution recovers 10x more than exact coordinates alone, and the honest move is to report the hole.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-geosocialx.png",
-      "date_published": "2026-07-31T15:00:00Z",
+      "date_published": "2026-07-31T12:00:00Z",
       "tags": [
-        "geospatial",
-        "gis",
-        "social-media",
-        "open-source",
-        "python",
         "research-notes"
       ]
     },
@@ -60,14 +49,10 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
       "title": "Informative but subsumed",
-      "summary": "What news text really adds to unrest forecasting, measured on a leakage-controlled benchmark: 336M events, 55 countries, and a text-signal ladder up to neural embeddings of 1.37M headlines. The semantics of news are already in the event record.",
+      "summary": "What news text really adds to unrest forecasting, measured properly: 336M events, 55 countries, leakage-controlled out-of-time backtests, and a signal ladder from tone counts to neural headline embeddings. The semantics of news are already in the event record.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-subsumed.png",
-      "date_published": "2026-07-26T16:00:00Z",
+      "date_published": "2026-07-26T12:00:00Z",
       "tags": [
-        "machine-learning",
-        "forecasting",
-        "benchmarks",
-        "computational-social-science",
         "research-notes"
       ]
     },
@@ -75,42 +60,33 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/closed-frontier.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/closed-frontier.html",
       "title": "The closed frontier, mid-2026",
-      "summary": "GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 & Fable 5, and Grok 4.5: who actually holds the crown, and why nobody holds all of it. Adversarially fact-checked.",
+      "summary": "GPT-5.6 Sol, Gemini 3.1 Pro, Claude Opus 4.8 & Fable 5, and Grok 4.5, who actually holds the crown at the closed frontier, and why nobody holds all of it. A benchmark-checked, adversarially fact-checked field guide.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-closed-frontier.png",
-      "date_published": "2026-07-16T14:00:00Z",
-      "tags": [
-        "machine-learning",
-        "llm",
-        "benchmarks",
-        "frontier-models"
-      ]
-    },
-    {
-      "id": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
-      "url": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
-      "title": "The open-weights frontier, mid-2026",
-      "summary": "Inkling vs GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra: a benchmark-checked field guide to who actually wins what.",
-      "image": "https://www.jayeshsuryavanshi.com/images/og-open-weights.png",
       "date_published": "2026-07-16T12:00:00Z",
       "tags": [
-        "machine-learning",
-        "open-weights",
-        "llm",
-        "benchmarks"
+        "field-guide"
       ]
     },
     {
       "id": "https://www.jayeshsuryavanshi.com/blog/inkling.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/inkling.html",
       "title": "Inkling, up close",
-      "summary": "A close read of Thinking Machines Lab's 975B open-weights multimodal MoE: architecture, benchmarks, the interaction-models system, and fine-tuning it on Tinker.",
+      "summary": "A close technical read of Thinking Machines Lab's Inkling: a 975B-parameter open-weights multimodal MoE. What's actually new in the architecture, where it really lands on benchmarks, the interaction-models system it was built for, and how to fine-tune it on Tinker.",
       "image": "https://www.jayeshsuryavanshi.com/images/og-inkling.png",
-      "date_published": "2026-07-16T09:00:00Z",
+      "date_published": "2026-07-16T12:00:00Z",
       "tags": [
-        "machine-learning",
-        "llm",
-        "thinking-machines",
-        "inkling"
+        "model-study"
+      ]
+    },
+    {
+      "id": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/open-weights-frontier.html",
+      "title": "The open-weights frontier, mid-2026",
+      "summary": "Five open-weights models (Inkling, GLM 5.2, Kimi K2.7, DeepSeek V4, and Nemotron 3 Ultra) and who actually wins what. A benchmark-checked field guide to the state of open models in mid-2026.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-open-weights.png",
+      "date_published": "2026-07-16T12:00:00Z",
+      "tags": [
+        "field-guide"
       ]
     }
   ]

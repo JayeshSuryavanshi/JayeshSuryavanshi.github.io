@@ -931,7 +931,10 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
   display: inline-block;
-  font-family: "Work Sans", sans-serif;
+  /* was "Work Sans", which this site never loads: no @font-face and the Google
+     import is commented out, so the label fell back to Helvetica and was the
+     only text on the page outside the identity. */
+  font-family: "Neue Machina", sans-serif;
   font-weight: 600;
   font-size: 1.3rem;
   text-transform: uppercase;
@@ -2714,7 +2717,7 @@ html.no-csstransitions .hero-content {
 .services-list__item-header h5::before {
   content: counter(ctr, decimal-leading-zero) ".";
   counter-increment: ctr;
-  font-family: "Work Sans", sans-serif;
+  font-family: "Neue Machina", sans-serif;   /* was the unloaded "Work Sans" */
   font-weight: 600;
   font-size: .5em;
   line-height: 1;
