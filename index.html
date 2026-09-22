@@ -131,17 +131,11 @@
             <nav class="row header-nav-wrap">
                 <ul class="header-nav">
                     <li><a class="smoothscroll larger-font" href="#hero" title="Home">Home</a></li>
-                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#about" title="About">About me</a></li>
-                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#services" title="Skills">Skills</a></li>
-                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#open-source" title="Open source contributions">Open Source</a></li>
-                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="smoothscroll larger-font" href="#portfolio" title="Projects">Projects</a></li>
-                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="larger-font" href="blog/" title="Writing & studies">Writing</a></li>
-                    <li><a class="smoothscroll larger-font" href="#hero">/</a></li>
                     <li><a class="larger-font" href="mailto:jayeshksuryavanshi@gmail.com" title="Contact Jayesh">Contact</a></li>
 
                 </ul>
@@ -161,7 +155,10 @@
     ================================================== -->
     <section id="hero" class="s-hero target-section" data-parallax="scroll" data-position-y=center>
         <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" poster="/images/hero-poster.jpg" preload="metadata">
-            <source src="/images/hero.mp4" type="video/mp4">
+            <!-- Gated: this file is 4.1 MB, 83% of the page weight, and object-fit
+                 crops most of it away on a portrait phone. Below 901px the poster
+                 carries the hero instead. -->
+            <source media="(min-width: 901px)" src="/images/hero.mp4" type="video/mp4">
         </video>
 
         <div class="row hero-content">

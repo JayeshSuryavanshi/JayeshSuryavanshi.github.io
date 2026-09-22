@@ -24,22 +24,37 @@
 
         $("html").addClass('ss-preload');
 
-        $WIN.on('load', function() {
+        const reveal = function() {
+            if (reveal.done) { return; }
+            reveal.done = true;
 
-            // force page scroll position to top at page refresh
-            $('html, body').animate({ scrollTop: 0 }, 'normal');
+            // Only jump to the top when there is no hash to honour. The old
+            // unconditional reset discarded every deep link on the site, so
+            // /#about landed on the hero video.
+            if (!window.location.hash) {
+                $('html, body').scrollTop(0);
+            }
 
-            // will first fade out the loading animation 
-            $("#loader").fadeOut("slow", function() {
-                // will fade out the whole DIV that covers the website.
-                $("#preloader").delay(300).fadeOut("slow");
-            }); 
-            
-            // for hero content animations 
+            $("#loader").fadeOut(120, function() {
+                $("#preloader").fadeOut(150, function() {
+                    // Re-apply the hash now the cover is gone: the browser's
+                    // own scroll happened while the overlay was still up.
+                    if (window.location.hash) {
+                        var target = document.querySelector(window.location.hash);
+                        if (target) { target.scrollIntoView(); }
+                    }
+                });
+            });
+
             $("html").removeClass('ss-preload');
             $("html").addClass('ss-loaded');
+        };
 
-        });
+        // Do not wait on window load: on a phone connection that sits behind a
+        // 4 MB video, which held the cover up for about 7 seconds. Reveal at
+        // DOMContentLoaded with a hard cap so a slow asset can never trap it.
+        $(document).ready(reveal);
+        setTimeout(reveal, 1500);
     };
 
 
@@ -251,8 +266,20 @@
             easing: 'ease-in-out',
             delay: 300,
             once: true,
-            disable: 'mobile'
+            // Capability test, not a UA sniff. The old disable:'mobile' string
+            // left iPads in their default desktop-UA mode animating, where 18
+            // elements stayed stuck at opacity 0.
+            disable: function() {
+                return window.matchMedia('(pointer: coarse)').matches
+                    || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            }
         });
+
+        // Elements already inside the viewport on load can be left at opacity 0
+        // by AOS's first pass, because it runs before layout settles. Force a
+        // recalculation once it has.
+        $WIN.on('load', function() { if (window.AOS) { AOS.refreshHard(); } });
+        setTimeout(function() { if (window.AOS) { AOS.refreshHard(); } }, 600);
 
     };
 

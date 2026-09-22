@@ -2175,6 +2175,26 @@ input::-moz-focus-inner {
   background-color: #f9861a;
 }
 
+/* The nav used literal "/" links as separators, which on a phone became six
+ * full-width targets that scrolled the visitor back to the hero. They are gone
+ * from the markup; this draws the separation instead. */
+.header-nav li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media screen and (min-width: 1001px) {
+  .header-nav li + li {
+    border-top: 0;
+  }
+}
+
+/* floor for a tall menu on a short phone */
+.header-content {
+  max-height: 100vh;
+  max-height: 100svh;
+  overflow-y: auto;
+}
+
 /* -------------------------------------------------------------------
  * ## animate intro content
  * ------------------------------------------------------------------- */
@@ -2574,14 +2594,25 @@ html.no-csstransitions .hero-content {
 
 @media screen and (max-width:800px) {
   .s-about__section--profile {
-    padding-top: 20rem;
+    padding-top: 8rem;
     padding-bottom: 0;
     min-height: 0;
   }
 
-  .s-about__section--profile::before,
-  .s-about__section--profile .profile-pic {
+  .s-about__section--profile::before {
     display: none;
+  }
+
+  /* The portrait comes back, in flow. It used to be display:none while the
+   * 20rem of space reserved for it stayed behind as a blank 189px band. */
+  .s-about__section--profile .profile-pic {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 62vw;
+    max-width: 300px;
+    margin: 0 0 3.2rem;
   }
 
   .position {
@@ -2998,6 +3029,49 @@ html.no-csstransitions .hero-content {
 }
 
 .folio-item:hover .folio-item__info {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* A touch device has no hover, so the project name, category and link were
+ * never revealed and all seven cards read as unlabelled photographs. Show the
+ * block permanently where hover does not exist, and give it its own scrim
+ * since it is white text sitting over a photograph. */
+@media (hover: none), (pointer: coarse) {
+  .folio-item__info,
+  .folio-item__project-link {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Scrim goes on the image, not on the text block. A background on the info
+   * block alone renders as a floating band, and it was not enough over a light
+   * image: the graphspot card is a pale chart, so white text on it failed. */
+  .folio-item__thumb {
+    position: relative;
+  }
+
+  .folio-item__thumb::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0) 72%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0) 72%);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* keyboard equivalent of the hover reveal */
+.folio-item:focus-within .folio-item__info,
+.folio-item:focus-within .folio-item__project-link {
   opacity: 1;
   visibility: visible;
   -webkit-transform: translate3d(0, 0, 0);

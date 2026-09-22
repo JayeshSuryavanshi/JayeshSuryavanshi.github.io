@@ -501,7 +501,7 @@ hr.rule, .rule {
 
 .prose pre {
   margin: 28px 0; padding: 18px 20px;
-  overflow-x: auto;
+  overflow-x: auto; scrollbar-width: thin;
   background: var(--code-bg);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
@@ -514,7 +514,11 @@ hr.rule, .rule {
 .prose pre code {
   font-size: inherit; color: inherit; font-family: inherit;
   background: none; border: 0; padding: 0;
-  white-space: pre-wrap; overflow-wrap: anywhere;
+  /* Must stay `pre`. An earlier pass set pre-wrap to stop silent clipping, but
+     that defeats the overflow-x:auto above: the ASCII diagrams then wrap to
+     column 0 and lose the indentation that carries their meaning. Scrolling is
+     the correct behaviour; the thin scrollbar below is the affordance. */
+  white-space: pre; overflow-wrap: normal;
 }
 .prose pre .c { color: var(--code-c); font-style: italic; }
 .prose pre .k { color: var(--code-k); }
