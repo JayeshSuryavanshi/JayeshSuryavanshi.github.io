@@ -529,8 +529,10 @@ hr.rule, .rule {
   border-radius: var(--r-md);
   padding: 12px;
 }
-/* the charts are light artwork with their own pale ground, so in dark mode the
-   plate stays light and the whole figure reads as a mounted print.
+/* the charts are light artwork carrying their own pale ground, so the plate is
+   set to the page ground in every theme. that makes the 12px mat disappear into
+   the page and the chart read as a single mounted print, instead of the bright
+   halo you get when a light mat sits inside a darker frame.
    stated twice for the same reason the dark tokens are: auto dark, then the
    pinned dark theme */
 @media (prefers-color-scheme: dark) {
