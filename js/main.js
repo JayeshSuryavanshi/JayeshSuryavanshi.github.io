@@ -39,8 +39,11 @@
                 $("#preloader").fadeOut(150, function() {
                     // Re-apply the hash now the cover is gone: the browser's
                     // own scroll happened while the overlay was still up.
+                    // By id, not querySelector: a hash like #about?utm=x or #0
+                    // is not a valid selector and would throw.
                     if (window.location.hash) {
-                        var target = document.querySelector(window.location.hash);
+                        var target = null;
+                        try { target = document.getElementById(decodeURIComponent(window.location.hash.slice(1))); } catch (e) {}
                         if (target) { target.scrollIntoView(); }
                     }
                 });
