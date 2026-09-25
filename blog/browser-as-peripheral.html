@@ -24,11 +24,13 @@
   <meta name="twitter:title" content="The browser is a peripheral">
   <meta name="twitter:description" content="How an agent actually reads and clicks a web page: five hops, two transports, and the part where the page leaves your machine.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-browser-peripheral.png">
+  <meta name="twitter:image:alt" content="The browser is a peripheral, a field guide by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
   <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
   <script type="application/ld+json">
@@ -49,7 +51,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=4">
+  <link rel="stylesheet" href="blog.css?v=5">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -71,10 +73,10 @@
   <div class="wrap">
 
     <header class="masthead">
-      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="index.html" class="here">Writing</a>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
       </nav>
       <div class="theme-switch" role="group" aria-label="Colour scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
@@ -83,6 +85,7 @@
       </div>
     </header>
 
+    <main id="main">
     <article>
       <p class="kicker">Field Guide</p>
       <h1 class="title">The browser is a peripheral</h1>
@@ -116,7 +119,7 @@
 
         <div class="code">
           <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">one tool call</span><span class="lang">path</span></div>
-          <pre><code>model
+          <pre tabindex="0" role="region" aria-label="Code: one tool call"><code>model
  └─ read_page / computer / navigate ...
      └─ chrome tool server   <span class="c"># in-process, inside the CLI. not a subprocess</span>
          └─ wss://bridge.&lt;vendor-relay&gt;/chrome/&lt;account&gt;   <span class="c"># leaves the machine</span>
@@ -212,9 +215,10 @@
 
       </div>
     </article>
+    </main>
 
     <footer class="post-foot">
-      <a class="back" href="index.html">&larr; All writing</a>
+      <a class="back" href="./">&larr; All writing</a>
       <p class="made">Read from the shipped binary, the tool server&rsquo;s own session logs and the extension bundle, across four parallel investigations with an adversarial refutation pass on each. That pass overturned this note&rsquo;s original transport conclusion, which is why the local-socket paragraph is in here at all.</p>
     </footer>
 

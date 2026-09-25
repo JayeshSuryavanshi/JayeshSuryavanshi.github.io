@@ -24,11 +24,13 @@
   <meta name="twitter:title" content="The closed frontier, mid-2026">
   <meta name="twitter:description" content="GPT-5.6, Gemini 3.1 Pro, Claude Opus 4.8 & Fable 5, Grok 4.5: who wins what, and why nobody sweeps.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-closed-frontier.png">
+  <meta name="twitter:image:alt" content="The closed frontier, mid-2026, a study by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
   <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
   <script type="application/ld+json">
@@ -49,7 +51,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=4">
+  <link rel="stylesheet" href="blog.css?v=5">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -71,10 +73,10 @@
   <div class="wrap">
 
     <header class="masthead">
-      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="index.html" class="here">Writing</a>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
       </nav>
       <div class="theme-switch" role="group" aria-label="Colour scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
@@ -83,6 +85,7 @@
       </div>
     </header>
 
+    <main id="main">
     <article>
       <p class="kicker">Field Guide</p>
       <h1 class="title">The closed frontier, mid-2026</h1>
@@ -151,7 +154,7 @@
         <h2>The scoreboard</h2>
         <p>Category winner is <strong>bold</strong>. "v" = vendor-reported, "ind" = independent. Nearly every score up here is vendor-or-AA-collated, not a clean third-party rerun: read it as a map, not a photo.</p>
 
-        <div class="table-scroll">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Closed-frontier scoreboard">
         <table>
           <thead><tr>
             <th>Dimension</th><th>GPT-5.6&nbsp;Sol</th><th>Gemini&nbsp;3.1&nbsp;Pro</th><th>Claude&nbsp;4.8&nbsp;/&nbsp;Fable&nbsp;5</th><th>Grok&nbsp;4.5</th>
@@ -206,9 +209,10 @@
 
       </div>
     </article>
+    </main>
 
     <footer class="post-foot">
-      <a class="back" href="index.html">← All writing</a>
+      <a class="back" href="./">← All writing</a>
       <p class="made">Researched with a 10-agent harness and adversarial fact-checking: two of five headline claims came back qualified, not confirmed. Numbers cross-checked against independent leaderboards, July&nbsp;2026.</p>
     </footer>
 

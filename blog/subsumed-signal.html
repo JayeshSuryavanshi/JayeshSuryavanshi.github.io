@@ -24,11 +24,13 @@
   <meta name="twitter:title" content="Informative but subsumed">
   <meta name="twitter:description" content="What news text really adds to unrest forecasting: 336M events, 55 countries, and a text-signal ladder up to neural embeddings.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-subsumed.png">
+  <meta name="twitter:image:alt" content="Informative but subsumed, a study by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
   <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
   <script type="application/ld+json">
@@ -39,7 +41,7 @@
     "description": "What news text really adds to unrest forecasting: 336M events, 55 countries, leakage-controlled evaluation, and a text-signal ladder up to neural embeddings.",
     "image": "https://www.jayeshsuryavanshi.com/images/og-subsumed.png",
     "datePublished": "2026-07-26",
-    "dateModified": "2026-07-26",
+    "dateModified": "2026-09-22",
     "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
     "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
     "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/subsumed-signal.html",
@@ -49,7 +51,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=4">
+  <link rel="stylesheet" href="blog.css?v=5">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -71,10 +73,10 @@
   <div class="wrap">
 
     <header class="masthead">
-      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="index.html" class="here">Writing</a>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
       </nav>
       <div class="theme-switch" role="group" aria-label="Colour scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
@@ -83,6 +85,7 @@
       </div>
     </header>
 
+    <main id="main">
     <article>
       <p class="kicker">Research Notes</p>
       <h1 class="title">Informative but subsumed</h1>
@@ -115,7 +118,7 @@
 
         <h2>What&rsquo;s forecastable at all</h2>
         <figure>
-          <img src="../images/subsumed-regime-map.png?v=2" alt="Dot plot: AUPRC by regime and scorer on a log scale. Occurrence ~0.8, escalation ~0.18, onset ~0.025 barely above its 0.018 base rate." loading="lazy">
+          <img src="../images/subsumed-regime-map.webp?v=3" alt="Dot plot: AUPRC by regime and scorer on a log scale. Occurrence ~0.8, escalation ~0.18, onset ~0.025 barely above its 0.018 base rate." loading="lazy">
           <figcaption>The regime map. Out-of-time AUPRC on a log scale, across 87,472 test region-months for occurrence and escalation and 27,565 for onset&rsquo;s calm risk set. Dashed rails are base rates, the score of a no-skill model. Onset is the cliff on the right, and persistence lands exactly on the rail there.</figcaption>
         </figure>
         <p>Skill collapses by an order of magnitude at each step. <em>Where violence already burns</em>, next month is very learnable (0.80 AUPRC against a 0.53 persistence baseline). <em>Whether it spikes</em> is much harder but real (0.175 vs 0.107). And <em>onset</em>, eruption after two calm years, is close to unforecastable for everything tested: the best model reaches 0.025 against a 0.018 base rate, and persistence is <em>completely blind</em> there by construction, since every region in the risk set looks identical to it. The case that matters most is the case nobody can call.</p>
@@ -124,7 +127,7 @@
         <p>Onto that scaffold goes every text signal constructible from open news data, in increasing order of representational depth: GDELT&rsquo;s machine-coded tone and article volume; its thematic tags; topic models over event narratives; precipitation anomalies as a non-news control; and, because &ldquo;your text signals were too shallow&rdquo; is the correct objection to everything above, <strong>neural sentence embeddings of 1.37&nbsp;million human-written headlines</strong>, harvested from the URL slugs of the 336&nbsp;million GDELT events joined to the panel by pure geography.<span class="sn-ref">3</span></p>
         <aside class="sidenote"><span class="sn-num">3</span>No name-matching between datasets: each event is assigned to the nearest region centroid by great-circle distance with a 200&nbsp;km cap. The embedding representation (pooling + PCA) is fitted on pre-2017 months only, so no test-era text shapes the features.</aside>
         <figure>
-          <img src="../images/subsumed-forest.png?v=2" alt="Forest plot of news-text marginal AUPRC with confidence intervals: six tight multi-country intervals near zero (escalation just above), two much wider single-country intervals." loading="lazy">
+          <img src="../images/subsumed-forest.webp?v=3" alt="Forest plot of news-text marginal AUPRC with confidence intervals: six tight multi-country intervals near zero (escalation just above), two much wider single-country intervals." loading="lazy">
           <figcaption>What text adds on top of event history, with 90% block-bootstrap CIs. Green: the only regime where both model families agree it&rsquo;s positive. Gray: single-country intervals on the same axis, wide enough to hide the true effect entirely. The multi-country rows are recomputed from the shipped per-row predictions; the two India rows are the recorded block bootstrap from the robustness run.</figcaption>
         </figure>
         <p>Three results, each of which survived label-sensitivity sweeps, dual-family checks, and 90% intervals:</p>
@@ -167,20 +170,26 @@
 
       </div>
     </article>
+    </main>
 
     <footer class="post-foot">
-      <a class="back" href="index.html">&larr; All writing</a>
-      <span>Built with an agentic research pipeline doing the heavy lifting, every number above traces to a released prediction file.</span>
+      <a class="back" href="./">&larr; All writing</a>
+      <p class="made">Built with an agentic research pipeline doing the heavy lifting. Every number above traces to a released prediction file.</p>
     </footer>
 
   </div>
 
   <script>
-    const bar = document.getElementById('progress');
-    addEventListener('scroll', () => {
-      const h = document.documentElement;
-      bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
-    }, { passive: true });
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
   </script>
   <script>
     /* the scheme switcher. the pinned choice lives in localStorage, and every

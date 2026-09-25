@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Inkling, up close: a technical study · Jayesh Suryavanshi</title>
+  <title>Inkling, up close · Jayesh Suryavanshi</title>
   <meta name="description" content="A close technical read of Thinking Machines Lab's Inkling: a 975B-parameter open-weights multimodal MoE. What's actually new in the architecture, where it really lands on benchmarks, the interaction-models system it was built for, and how to fine-tune it on Tinker.">
   <meta name="author" content="Jayesh Suryavanshi">
   <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/inkling.html">
@@ -10,7 +10,7 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/inkling.html">
   <meta property="og:site_name" content="Jayesh Suryavanshi">
-  <meta property="og:title" content="Inkling, up close: a technical study">
+  <meta property="og:title" content="Inkling, up close">
   <meta property="og:description" content="A close technical read of Thinking Machines Lab's 975B open-weights multimodal MoE, what's new, where it really lands, and how I'd fine-tune it.">
   <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-inkling.png">
   <meta property="og:image:width" content="2400">
@@ -21,21 +21,23 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@2jayesh3">
   <meta name="twitter:creator" content="@2jayesh3">
-  <meta name="twitter:title" content="Inkling, up close: a technical study">
+  <meta name="twitter:title" content="Inkling, up close">
   <meta name="twitter:description" content="A close technical read of Thinking Machines Lab's 975B open-weights multimodal MoE, what's new, where it really lands, and how I'd fine-tune it.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-inkling.png">
+  <meta name="twitter:image:alt" content="Inkling, up close: a model study by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
   <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Inkling, up close: a technical study",
+    "headline": "Inkling, up close",
     "description": "A close technical read of Thinking Machines Lab's 975B open-weights multimodal MoE, what's new, where it really lands, and how I'd fine-tune it.",
     "image": "https://www.jayeshsuryavanshi.com/images/og-inkling.png",
     "datePublished": "2026-07-16",
@@ -49,7 +51,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=4">
+  <link rel="stylesheet" href="blog.css?v=5">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -71,10 +73,10 @@
   <div class="wrap">
 
     <header class="masthead">
-      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="index.html" class="here">Writing</a>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
       </nav>
       <div class="theme-switch" role="group" aria-label="Colour scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
@@ -83,6 +85,7 @@
       </div>
     </header>
 
+    <main id="main">
     <article>
       <p class="kicker">Model Study</p>
       <h1 class="title">Inkling, up close</h1>
@@ -148,7 +151,7 @@
 
         <aside class="sidenote"><span class="sn-num">3</span>Inkling's maximum test-time-compute ceiling, so the default-effort scores you'd actually see in production sit lower than everything in the table below.</aside>
 
-        <div class="table-scroll">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Benchmark comparison">
         <table>
           <thead><tr><th>Benchmark</th><th>Inkling</th><th>Closed frontier</th><th>Open peer · Nemotron&nbsp;3&nbsp;Ultra</th></tr></thead>
           <tbody>
@@ -202,7 +205,7 @@
         <p>A worked example that plays to Inkling's actual strengths, a financial-document assistant that cites its sources and abstains when unsupported (mirroring the Bridgewater case the lab showcased):</p>
         <div class="code">
           <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">finetune.py</span><span class="lang">python</span></div>
-          <pre><code><span class="c"># SFT: teach the format. Effort must match what you serve at.</span>
+          <pre tabindex="0" role="region" aria-label="Code: finetune.py"><code><span class="c"># SFT: teach the format. Effort must match what you serve at.</span>
 train = svc.create_lora_training_client(
     base_model=<span class="k">"thinkingmachines/Inkling:peft:262144"</span>,  <span class="c"># 256K ctx for long filings</span>
     rank=32,
@@ -244,9 +247,10 @@ renderer = renderers.get_renderer(<span class="k">"inkling"</span>, train.get_to
 
       </div>
     </article>
+    </main>
 
     <footer class="post-foot">
-      <a class="back" href="index.html">← All writing</a>
+      <a class="back" href="./">← All writing</a>
       <p class="made">Researched with a multi-agent harness and adversarial fact-checking · numbers verified against primary sources as of July&nbsp;2026.</p>
     </footer>
 

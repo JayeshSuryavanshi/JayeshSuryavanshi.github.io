@@ -294,9 +294,12 @@ a:hover { color: var(--accent-2); }
 
 /* =====================  post header  ==================================== */
 
-article, article ~ .post-foot { max-width: var(--measure); }
+article { max-width: var(--measure); }
+/* <main> wraps the article, so the footer is main's sibling. its own rule, so a
+   browser without :has() loses only the footer width, never the article's */
+main:has(> article) ~ .post-foot { max-width: var(--measure); }
 /* the listing page has no <article>, so declare it rather than rely on omission */
-.post-list ~ .post-foot { max-width: none; }
+main:has(> .post-list) ~ .post-foot { max-width: none; }
 
 .kicker {
   display: inline-block; margin: 54px 0 20px;
@@ -358,8 +361,8 @@ h1.title {
   margin: 0 0 10px;
   font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.4;
 }
-.callout p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
-.callout p + p { margin-top: 12px; }
+.prose .callout p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.prose .callout p + p { margin-top: 12px; }
 .callout strong { color: var(--ink); font-weight: 600; }
 
 /* =====================  prose  ========================================== */
@@ -370,8 +373,8 @@ h1.title {
 .prose strong { color: var(--ink); font-weight: 600; }
 .prose em { color: var(--ink); font-style: italic; }
 
-.prose a { border-bottom: 1px solid var(--link-line); }
-.prose a:hover { border-bottom-color: var(--accent-2); }
+.prose a, .dek a { border-bottom: 1px solid var(--link-line); }
+.prose a:hover, .dek a:hover { border-bottom-color: var(--accent-2); }
 
 .prose ul, .prose ol { margin: 0 0 21px; padding-left: 20px; }
 .prose li { margin: 0 0 9px; padding-left: 4px; }
@@ -468,6 +471,15 @@ hr.rule, .rule {
   color: var(--warn); font-weight: 600;
 }
 
+/* row labels stay put while a wide table scrolls under them on a phone. the
+   opaque ground is what the values slide beneath; it matches the page in
+   every theme, so where nothing overflows this changes nothing. the hairline
+   marking the pinned edge is added in the narrow block only */
+.table-scroll th:first-child, .table-scroll td:first-child {
+  position: sticky; left: 0; z-index: 1;
+  background: var(--ground);
+}
+
 /* =====================  code  =========================================== */
 
 .prose :not(pre) > code {
@@ -511,6 +523,8 @@ hr.rule, .rule {
   tab-size: 2;
 }
 .prose .code pre { margin: 0; border: 0; border-radius: 0; background: none; padding-bottom: 20px; }
+/* scrolling panels take keyboard focus. .code clips overflow, so draw the ring inside */
+.prose .code pre:focus-visible { outline-offset: -2px; border-radius: 0 0 calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px); }
 .prose pre code {
   font-size: inherit; color: inherit; font-family: inherit;
   background: none; border: 0; padding: 0;
@@ -598,6 +612,7 @@ hr.rule, .rule {
 .sources li {
   position: relative; counter-increment: src;
   padding-left: 2.2rem; margin-bottom: 10px;
+  overflow-wrap: anywhere;   /* a bare repo URL is wider than a 320px column */
 }
 .sources li::before {
   content: "[" counter(src) "]";
@@ -690,7 +705,8 @@ hr.rule, .rule {
 /* =====================  wide: numbered spine, margin notes  ============= */
 
 @media (min-width: 1104px) {
-  article, article ~ .post-foot { margin-left: var(--hang); }
+  article { margin-left: var(--hang); }
+  main:has(> article) ~ .post-foot { margin-left: var(--hang); }
 
   .prose > h2::before {
     position: absolute; left: calc(-1 * var(--hang)); top: .42em;
@@ -716,6 +732,11 @@ hr.rule, .rule {
   /* pull the first nav pill back so its label lines up with the brand */
   .masthead { padding-bottom: 14px; }
   .masthead nav { margin-left: -10px; }
+  /* 44px touch targets. horizontal padding stays 10px so the nav keeps the
+     brand's row at 320; the switcher already has a row of its own */
+  .masthead nav a { padding: 10px 10px; }
+  :root.js .theme-switch { gap: 4px; }
+  .theme-switch button { min-width: 44px; min-height: 44px; }
 
   .kicker { margin-top: 38px; }
   h1.title { font-size: clamp(28px, 7.6vw, 34px); letter-spacing: -.02em; }
@@ -724,7 +745,7 @@ hr.rule, .rule {
 
   .abstract, .callout, .takeaways { padding-left: 18px; padding-right: 18px; }
   .callout { padding-left: 20px; }
-  .abstract p, .callout p { font-size: 15.5px; }
+  .abstract p, .prose .callout p { font-size: 15.5px; }
 
   .prose > h2 { font-size: 21.5px; margin-top: 46px; }
   .lead { font-size: 18px; }
@@ -733,6 +754,7 @@ hr.rule, .rule {
   .prose table { font-size: 13.5px; }
   .prose thead th { padding: 0 10px 8px; font-size: 12px; }
   .prose tbody td { padding: 10px; }
+  .table-scroll th:first-child, .table-scroll td:first-child { background: linear-gradient(to left, var(--line) 1px, var(--ground) 1px); }
   .prose pre { font-size: 12.5px; padding: 14px 16px; }
   .prose .code-bar { padding: 8px 12px; font-size: 11.5px; }
 
@@ -830,6 +852,7 @@ hr.rule, .rule {
 :root[data-theme="reading"] .prose blockquote { font-size: 20.5px; line-height: 1.6; }
 :root[data-theme="reading"] .abstract p { font-size: 17.5px; line-height: 1.68; }    /* was 16.5px / 1.6 */
 :root[data-theme="reading"] .callout p { font-size: 17px; line-height: 1.66; }       /* was 16px / 1.6 */
+:root[data-theme="reading"] .prose .callout p { margin-bottom: 0; }   /* the .prose p bump above must not reach callouts */
 :root[data-theme="reading"] .takeaways li { font-size: 17px; line-height: 1.66; }    /* was 16px / 1.58 */
 :root[data-theme="reading"] .sidenote { font-size: 15px; line-height: 1.62; }        /* was 14.5px / 1.58 */
 :root[data-theme="reading"] .prose figcaption { font-size: 15px; line-height: 1.6; }

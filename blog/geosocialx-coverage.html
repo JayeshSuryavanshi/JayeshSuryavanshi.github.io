@@ -24,11 +24,13 @@
   <meta name="twitter:title" content="The unmapped majority">
   <meta name="twitter:description" content="Geotagged-social pipelines map the 1-2% with coordinates and call it the geography. Count the coverage first. A worked example with GeoSocialX.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-geosocialx.png">
+  <meta name="twitter:image:alt" content="The unmapped majority: coverage honesty for geotagged social data, by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
   <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
   <script type="application/ld+json">
@@ -39,7 +41,7 @@
     "description": "Coverage honesty for geotagged social data: count what carries a location before you map it. A worked example with GeoSocialX on a realistic 5,000-post city pull.",
     "image": "https://www.jayeshsuryavanshi.com/images/og-geosocialx.png",
     "datePublished": "2026-07-31",
-    "dateModified": "2026-07-31",
+    "dateModified": "2026-09-22",
     "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
     "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
     "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/geosocialx-coverage.html",
@@ -49,7 +51,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=4">
+  <link rel="stylesheet" href="blog.css?v=5">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -71,10 +73,10 @@
   <div class="wrap">
 
     <header class="masthead">
-      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="index.html" class="here">Writing</a>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
       </nav>
       <div class="theme-switch" role="group" aria-label="Colour scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
@@ -83,6 +85,7 @@
       </div>
     </header>
 
+    <main id="main">
     <article>
       <p class="kicker">Research Notes</p>
       <h1 class="title">The unmapped majority</h1>
@@ -119,7 +122,7 @@
 
         <div class="code">
           <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">coverage.py</span><span class="lang">python</span></div>
-          <pre><code><span class="c"># pip install geosocialx</span>
+          <pre tabindex="0" role="region" aria-label="Code: coverage.py"><code><span class="c"># pip install geosocialx</span>
 <span class="k">from</span> geosocialx <span class="k">import</span> GeospatialExtractor, GeospatialAnalyzer
 
 ex = GeospatialExtractor()
@@ -130,7 +133,7 @@ ex.coverage(tweets)
         <p>Eighty posts, <strong>1.6%</strong>, carry a real coordinate. Another 720 (14.4%) carry only a place tag. And 4,200, <strong>84% of the corpus, carry no location at all.</strong> That last number is the one every silent pipeline throws away without ever printing. Here it is a returned value, forced into the open:</p>
 
         <figure>
-          <img src="../images/geosocialx-coverage.png" alt="A unit chart of 5,000 squares, one per post: a small blue block of 80 exact-coordinate posts (1.6%), a slate block of 720 place-tagged posts (14.4%), and a large grey block of 4,200 posts with no location (84%)." loading="lazy">
+          <img src="../images/geosocialx-coverage.webp?v=3" alt="A unit chart of 5,000 squares, one per post: a small blue block of 80 exact-coordinate posts (1.6%), a slate block of 720 place-tagged posts (14.4%), and a large grey block of 4,200 posts with no location (84%)." loading="lazy">
           <figcaption>One square per post. Exact coordinates (blue) are just 1.6% of the pull, and a naive map plots only those. Place-resolution recovers the place-tagged squares (slate) to reach 16%. The 84% with no location (grey) is reported by <code>coverage()</code>, not silently dropped.</figcaption>
         </figure>
 
@@ -139,7 +142,7 @@ ex.coverage(tweets)
 
         <div class="code">
           <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">resolve.py</span><span class="lang">python</span></div>
-          <pre><code><span class="c"># The naive map most tools draw: exact coordinates only.</span>
+          <pre tabindex="0" role="region" aria-label="Code: resolve.py"><code><span class="c"># The naive map most tools draw: exact coordinates only.</span>
 naive = ex.extract_points(tweets)                <span class="c"># 80 points  (1.6%)</span>
 
 <span class="c"># Resolve place tags to centroids; each point keeps its source flag.</span>
@@ -152,7 +155,7 @@ GeospatialAnalyzer(pts).summary()
         <p>Eighty points became eight hundred, a <strong>10&times; recovery</strong>, and the map goes from &ldquo;statistically empty&rdquo; to genuinely usable. But it does not become more precise. It becomes <em>fuller and coarser at the same time</em>, and the <code>source</code> flag is what keeps that trade-off visible instead of laundered.</p>
 
         <figure>
-          <img src="../images/geosocialx-maps.png?v=2" alt="Two maps of San Francisco from the same 5,000 posts. Left: 80 scattered blue exact-coordinate points, 1.6%. Right: the same points plus slate rings at neighbourhood centroids sized by post count, 800 points, 16%, fuller but visibly snapped to a handful of coarse locations." loading="lazy">
+          <img src="../images/geosocialx-maps.webp?v=3" alt="Two maps of San Francisco from the same 5,000 posts. Left: 80 scattered blue exact-coordinate points, 1.6%. Right: the same points plus slate rings at neighbourhood centroids sized by post count, 800 points, 16%, fuller but visibly snapped to a handful of coarse locations." loading="lazy">
           <figcaption>Same 5,000 posts, two maps. Left is what exact coordinates alone give you: 80 precise-looking dots that read as authoritative and cover 1.6% of the data. Right adds place-resolution: 10&times; the records, but stacked onto neighborhood centroids (the rings), coarse by construction. Both maps still omit the 84% with no location. The difference is that GeoSocialX <em>tells you</em> they&rsquo;re omitted.</figcaption>
         </figure>
 
@@ -189,9 +192,10 @@ GeospatialAnalyzer(pts).summary()
 
       </div>
     </article>
+    </main>
 
     <footer class="post-foot">
-      <a class="back" href="index.html">&larr; All writing</a>
+      <a class="back" href="./">&larr; All writing</a>
       <p class="made">Numbers and figures generated by the shipping GeoSocialX 0.8.0 on a seeded, reproducible corpus, with no hand-drawn data.</p>
     </footer>
 

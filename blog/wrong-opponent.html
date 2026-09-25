@@ -24,11 +24,13 @@
   <meta name="twitter:title" content="The wrong opponent">
   <meta name="twitter:description" content="Two headline multipliers, two different opponents, and no small model anywhere on the chart. Plus the truncation bug behind the most-cited number against small encoders.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-wrong-opponent.png">
+  <meta name="twitter:image:alt" content="The wrong opponent, a field guide by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
   <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
   <script type="application/ld+json">
@@ -49,7 +51,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=4">
+  <link rel="stylesheet" href="blog.css?v=5">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -71,10 +73,10 @@
   <div class="wrap">
 
     <header class="masthead">
-      <a class="brand" href="../index.html">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="index.html" class="here">Writing</a>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
       </nav>
       <div class="theme-switch" role="group" aria-label="Colour scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
@@ -83,6 +85,7 @@
       </div>
     </header>
 
+    <main id="main">
     <article>
       <p class="kicker">Field Guide</p>
       <h1 class="title">The wrong opponent</h1>
@@ -92,7 +95,7 @@
         <span class="sep">&middot;</span>
         <span>September&nbsp;22,&nbsp;2026</span>
         <span class="sep">&middot;</span>
-        <span>~14&nbsp;min read</span>
+        <span>~16&nbsp;min read</span>
       </div>
 
       <section class="abstract" aria-label="Abstract">
@@ -103,7 +106,7 @@
       <div class="prose">
         <p class="lead">TypeSafe released Jev a week ago and the two numbers on the homepage are 193.6x faster and 444.6x cheaper. I believe both of them, roughly, in the way you believe a number that has been rounded in a friendly direction. What I could not work out from the homepage was faster and cheaper <em>than what</em>. Neither figure names an opponent. So I went and read the benchmark they come from, did the arithmetic on the published cells, and then ran the comparison that is missing from it on my own laptop.</p>
 
-        <p>The short version: the two headlines are measured against two different models, one of which is more accurate than Jev. The comparison set contains sixteen configurations and every single one is a frontier LLM. And when somebody finally did run a small model against Jev on a neutral harness, the small model landed inside Jev's accuracy band, led it on the composite score, and the cost gap collapsed from four hundred and forty five to about six.</p>
+        <p>The short version: the two headlines are measured against two different models, one of which is more accurate than Jev. The comparison set contains sixteen configurations and every single one is a frontier LLM. And when somebody finally did run a small model against Jev on a neutral harness, the small model landed inside Jev's accuracy band, led it on the composite score, and the cost gap collapsed from four hundred and forty-five to about six.</p>
 
         <div class="callout">
           <div class="label">What I ran, and what I did not</div>
@@ -120,7 +123,7 @@
 
         <aside class="sidenote"><span class="sn-num">1</span>They also flag the direction of the bias themselves: <em>"We use the average of GPT-6 Astra and Fable 5.1 as the reference answer, which biases answers towards OpenAI and Anthropic's models,"</em> and then <em>"We likely underestimate the relative performance of our model and DeepSeek's models."</em> That is a vendor arguing against its own scoreboard, which I have not seen often.</aside>
 
-        <p>The problem is who else is on the chart. I counted the opponents: sixteen configurations, all of them frontier LLMs, run either through TypeSafe's own wrapper or as one shot prompts. No encoder. No BERT-family model. No fitted classifier. No small instruction model. Nothing that a team with labelled data would actually reach for.</p>
+        <p>The problem is who else is on the chart. I counted the opponents: sixteen configurations, all of them frontier LLMs, run either through TypeSafe's own wrapper or as one-shot prompts. No encoder. No BERT-family model. No fitted classifier. No small instruction model. Nothing that a team with labelled data would actually reach for.</p>
 
         <p>Which is odd, because TypeSafe's own cookbook tells <em>you</em> to add TF-IDF and embedding baselines before trusting a result. The advice is right. It just was not taken on the launch benchmark.</p>
 
@@ -186,7 +189,7 @@
 
         <p>Then the real test, banking77 intent classification, 77 options, all 3,076 test examples, against gold labels rather than consensus labels. I ran it twice, because partway through I discovered that how you spell the option strings is not a cosmetic choice. The next section explains why. The results first:</p>
 
-        <div class="table-scroll">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Option-string results">
           <table>
             <thead>
               <tr><th>Option strings</th><th>Accuracy, 77-way</th><th>Calibration error</th><th>Latency, median</th></tr>
@@ -198,7 +201,7 @@
           </table>
         </div>
 
-        <p><p>Condition A is the faithful reproduction, and their headline holds. I get <strong>0.8992</strong> (2766/3076), 95% interval [0.888, 0.909], against the card's claimed 0.916. That reads like a 1.7-point shortfall until you look at how their test set is built. They shuffle each source and take a slice, and with 1,500 test states spread across three datasets the banking77 intent figure rests on roughly 500 examples rather than the 1,500 the card implies. At that size a 0.916 carries an interval of about [0.888, 0.937], which contains my number without strain (two-proportion z = 1.17, p = 0.24). So this is not a discrepancy. It is the same result on six times the data, and I would rather say so than manufacture a gap out of a sample-size difference.</p>
+        <p>Condition A is the faithful reproduction, and their headline holds. I get <strong>0.8992</strong> (2766/3076), 95% interval [0.888, 0.909], against the card's claimed 0.916. That reads like a 1.7-point shortfall until you look at how their test set is built. They shuffle each source and take a slice, and with 1,500 test states spread across three datasets the banking77 intent figure rests on roughly 500 examples rather than the 1,500 the card implies. At that size a 0.916 carries an interval of about [0.888, 0.937], which contains my number without strain (two-proportion z = 1.17, p = 0.24). So this is not a discrepancy. It is the same result on six times the data, and I would rather say so than manufacture a gap out of a sample-size difference.</p>
 
         <p>Condition B is where it gets interesting, and not in the way I expected. Same 77 labels, same meanings, underscores left in, context raised until they fit. Accuracy holds up: <strong>0.8901</strong>, statistically indistinguishable from condition A (z = 1.16, p = 0.24). I had assumed that was the whole story, that formatting costs you feasibility and nothing else. Then I looked at the calibration column.</p>
 
@@ -206,9 +209,9 @@
 
         <p>I want to state that result narrowly, because condition B changes two things at once: the spelling and the sequence length.<span class="sn-ref">3</span> The mechanism is almost certainly the temperature. This model ships a single post-hoc temperature of 1.05, fitted on a validation split in the format its authors used. Feed it a distribution that split did not contain and the scaling is no longer the right scaling. So the honest claim is not "underscores are bad". It is that a confidence number carries an unstated dependency on the input format it was calibrated against, and changing that format silently invalidates it.</p>
 
-        <aside class="sidenote"><span class="sn-num">3</span>Length alone should not be the cause. The backbone sets <code>position_biased_input: false</code> and uses relative attention with 256 position buckets, so it has no hard ceiling at 512, and the project's own training default was a 8192-token context, meaning sequences this long were in distribution during training. But I did not run the third arm that would separate the two, spaced options padded to the same length, so I cannot fully rule length out.</aside>
+        <aside class="sidenote"><span class="sn-num">3</span>Length alone should not be the cause. The backbone sets <code>position_biased_input: false</code> and uses relative attention with 256 position buckets, so it has no hard ceiling at 512, and the project's own training default was an 8192-token context, meaning sequences this long were in distribution during training. But I did not run the third arm that would separate the two, spaced options padded to the same length, so I cannot fully rule length out.</aside>
 
-        <p>Either way it matters more than a point of accuracy, because calibrated confidence is the entire reason to buy a typed-decision model instead of asking an LLM to emit JSON. A silent formatting choice in glue code left the headline metric intact and quietly degraded the one you would actually build a review queue on. Nobody would catch that from an accuracy dashboard.</p></p>
+        <p>Either way it matters more than a point of accuracy, because calibrated confidence is the entire reason to buy a typed-decision model instead of asking an LLM to emit JSON. A silent formatting choice in glue code left the headline metric intact and quietly degraded the one you would actually build a review queue on. Nobody would catch that from an accuracy dashboard.</p>
 
         <h2>The trap that explains 51.7%</h2>
 
@@ -218,7 +221,7 @@
 
         <div class="code">
           <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">tokens for one 77-option question</span><span class="lang">measured</span></div>
-          <pre><code>options as "activate my card"   median 356   over 512:     0 / 3076
+          <pre tabindex="0" role="region" aria-label="Output: tokens for one 77-option question"><code>options as "activate my card"   median 356   over 512:     0 / 3076
 options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
         </div>
 
@@ -238,7 +241,7 @@ options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
 
         <p>Three regimes, three different right answers, and the leaderboards only cover one of them.</p>
 
-        <p><strong>Your task is fixed and you have labels.</strong> Train the encoder. On banking77 a 22M-parameter supervised encoder gets 93.2% at 8 ms on CPU against Jev's 80.1% zero shot, which is somebody else's measurement, not mine. There is no contest and there should not be, because one of them was shown the answers. Self-hosting has a floor though: the open model only beats Jev's list price above roughly 14% GPU duty cycle, which is about 188 million decisions a month. Below that, paying for the API is the cheaper engineering decision, and a network round trip of 69 to 105 ms erases the compute advantage anyway.</p>
+        <p><strong>Your task is fixed and you have labels.</strong> Train the encoder. On banking77 a 22M-parameter supervised encoder gets 93.2% at 8 ms on CPU against Jev's 80.1% zero-shot, which is somebody else's measurement, not mine. There is no contest and there should not be, because one of them was shown the answers. Self-hosting has a floor though: the open model only beats Jev's list price above roughly 14% GPU duty cycle, which is about 188 million decisions a month. Below that, paying for the API is the cheaper engineering decision, and a network round trip of 69 to 105 ms erases the compute advantage anyway.</p>
 
         <p><strong>Your questions change at runtime.</strong> This is the case Jev is actually built for, and the case the encoder loses badly. An honest critic on Hacker News put the steelman better than the marketing did: you are competitive with Jev <em>"only if you fine tune on the train dataset and calibrate per question,"</em> whereas TypeSafe has <em>"an API model that works on any problem without fine tuning, and that is the key."</em> The open reproduction concedes the same thing in its own numbers, 0.854 in domain falling to 0.690 once the instructions and option sets change, and it leads its limitations with "It reads the question only partly."</p>
 
@@ -276,9 +279,10 @@ options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
 
       </div>
     </article>
+    </main>
 
     <footer class="post-foot">
-      <a class="back" href="index.html">&larr; All writing</a>
+      <a class="back" href="./">&larr; All writing</a>
       <p class="made">Vendor claims read from published material rather than tested: I never created a TypeSafe account, and the post says so where it matters. The arithmetic on their eval table is mine. The banking77 numbers, the token counts and the encoder diff are my own measurements on an M1 Pro. Built from five parallel research lanes with an adversarial verification pass, which killed the version of this post that claimed the community encoder wins.</p>
     </footer>
 
