@@ -18,16 +18,20 @@
     <meta property="og:site_name" content="Jayesh Suryavanshi">
     <meta property="og:title" content="Jayesh Suryavanshi | ML Engineer at eBay · LLM Agents & GenAI">
     <meta property="og:description" content="ML Engineer at eBay building production LLM agents and GenAI systems: MCP servers, multi-agent platforms, and ML at marketplace scale.">
-    <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-jayesh.jpg">
-    <meta property="og:image:alt" content="Portrait of Jayesh Suryavanshi">
+    <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-home.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="2400">
+    <meta property="og:image:height" content="1260">
+    <meta property="og:image:alt" content="Illustrated portrait of Jayesh Suryavanshi with the line: I build LLM agents &amp; GenAI in production at eBay.">
 
     <!-- Twitter Card
     ================================================== -->
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@2jayesh3">
     <meta name="twitter:title" content="Jayesh Suryavanshi | ML Engineer at eBay · LLM Agents & GenAI">
     <meta name="twitter:description" content="ML Engineer at eBay building production LLM agents and GenAI systems: MCP servers, multi-agent platforms, and ML at marketplace scale.">
-    <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-jayesh.jpg">
+    <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-home.jpg">
+    <meta name="twitter:image:alt" content="Illustrated portrait of Jayesh Suryavanshi with the line: I build LLM agents &amp; GenAI in production at eBay.">
     <meta name="twitter:creator" content="@2jayesh3">
 
     <!-- mobile specific
@@ -36,13 +40,13 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/base.css?v=2">
+    <link rel="stylesheet" href="css/main.css?v=2">
+    <link rel="stylesheet" href="css/vendor.css?v=2">
 
     <!-- script
     ================================================== -->
-    <script src="js/modernizr.js"></script>
+    <script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, 'js');</script>
 
     <!-- favicons
     ================================================== -->
@@ -66,11 +70,11 @@
       "jobTitle": "Machine Learning Engineer, 3",
       "worksFor": { "@type": "Organization", "name": "eBay" },
       "url": "https://www.jayeshsuryavanshi.com/",
-      "image": "https://www.jayeshsuryavanshi.com/images/og-jayesh.jpg",
+      "image": "https://www.jayeshsuryavanshi.com/images/jayesh-portrait.webp",
       "email": "mailto:jayeshksuryavanshi@gmail.com",
       "alumniOf": [
         { "@type": "CollegeOrUniversity", "name": "University at Buffalo, SUNY" },
-        { "@type": "CollegeOrUniversity", "name": "University of Pune" }
+        { "@type": "CollegeOrUniversity", "name": "Savitribai Phule Pune University" }
       ],
       "knowsAbout": ["LLM agents", "Generative AI", "Machine Learning", "MCP", "Data Engineering"],
       "sameAs": [
@@ -93,6 +97,9 @@
                       following period reads as orphaned at the mechanically
                       correct spacing. pull it back a touch. em, so it scales. */
                    margin-right: -.06em; }
+      /* an inline svg always allows a break after it, which left the period
+         alone on its own line at some widths. keep the mark and the dot together. */
+      .hero-ebay-wrap { white-space: nowrap; }
     </style>
 </head>
 
@@ -121,17 +128,19 @@
     <header class="s-header">
 
         <div class="header-logo">
-            <a href="index.html">
+            <a href="./">
                 <img src="images/logo.svg" alt="Homepage">
             </a>
         </div>
 
-        <div class="header-content">
+        <button type="button" class="header-menu-toggle" aria-expanded="false" aria-controls="site-nav"><span>Menu</span></button>
+
+        <div class="header-content" id="site-nav">
 
             <nav class="row header-nav-wrap">
                 <ul class="header-nav">
                     <li><a class="smoothscroll larger-font" href="#hero" title="Home">Home</a></li>
-                    <li><a class="smoothscroll larger-font" href="#about" title="About">About me</a></li>
+                    <li><a class="smoothscroll larger-font" href="#about" title="About">About Me</a></li>
                     <li><a class="smoothscroll larger-font" href="#services" title="Skills">Skills</a></li>
                     <li><a class="smoothscroll larger-font" href="#open-source" title="Open source contributions">Open Source</a></li>
                     <li><a class="smoothscroll larger-font" href="#portfolio" title="Projects">Projects</a></li>
@@ -144,8 +153,6 @@
 
         </div> <!-- end header-content -->
 
-        <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
-
     </header>
 
     <main id="main">
@@ -153,9 +160,9 @@
 
     <!-- hero
     ================================================== -->
-    <section id="hero" class="s-hero target-section" data-parallax="scroll" data-position-y=center>
-        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" poster="/images/hero-poster.jpg" preload="metadata">
-            <!-- Gated: this file is 4.1 MB, 83% of the page weight, and object-fit
+    <section id="hero" class="s-hero target-section">
+        <video aria-hidden="true" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" poster="/images/hero-poster.webp" preload="metadata">
+            <!-- Gated: this file is 2.8 MB, the bulk of the page weight, and object-fit
                  crops most of it away on a portrait phone. Below 901px the poster
                  carries the hero instead. -->
             <source media="(min-width: 901px)" src="/images/hero.mp4" type="video/mp4">
@@ -169,25 +176,25 @@
                 <h1>
                     I'm <span class="hero-name">Jayesh Suryavanshi.</span><br>
                     I build LLM agents &amp; GenAI<br>
-                    in production at <svg class="hero-ebay" role="img" aria-label="eBay" viewBox="0 0 1000 400.75" xmlns="http://www.w3.org/2000/svg" focusable="false"><path fill="#ffbc13" d="m 633.07803,212.53323 c -45.43873,1.48929 -73.6715,9.689 -73.6715,39.61897 0,19.37591 15.44713,40.38162 54.66334,40.38162 52.57698,0 80.64259,-28.65902 80.64259,-75.66331 l 0.003,-5.16994 c -18.43302,0 -41.16414,0.16089 -61.63704,0.83266 z m 111.75103,62.10248 c 0,14.58313 0.42155,28.9782 1.69406,41.94092 h -46.61408 c -1.24325,-10.67368 -1.6972,-21.27945 -1.6972,-31.56656 -25.20195,30.97941 -55.17735,39.88537 -96.76149,39.88537 -61.67674,0 -94.70072,-32.59982 -94.70072,-70.30689 0,-54.61215 44.91583,-73.86739 122.89013,-75.65391 21.32332,-0.48686 45.27419,-0.55894 65.07531,-0.55894 l -0.003,-5.33606 c 0,-36.56098 -23.44364,-51.59335 -64.06765,-51.59335 -30.15876,0 -52.38579,12.48057 -54.6764,34.0468 h -52.65168 c 5.57217,-53.77165 62.06643,-67.37115 111.74005,-67.37115 59.50837,0 109.77228,21.17288 109.77228,84.11481 z"/><path fill="#f12c2d" d="m 199.63633,185.86602 c -1.94427,-46.87735 -35.77951,-64.41973 -71.94139,-64.41973 -38.99421,0 -70.12667,19.7327 -75.58026,64.41973 z M 51.034408,219.1909 c 2.704332,45.48365 34.069782,72.38437 77.197532,72.38437 29.88033,0 56.45979,-12.17498 65.35948,-38.66041 h 51.68424 c -10.05205,53.73979 -67.15384,71.98058 -116.303,71.98058 C 39.606424,324.89544 0,275.67889 0,209.30653 0,136.24203 40.965642,88.12194 129.78809,88.12194 c 70.69867,0 122.49992,36.99926 122.49992,117.75572 v 13.31324 z"/><path fill="#0968f6" d="m 380.83181,290.6235 c 46.57228,0 78.44078,-33.52181 78.44078,-84.10854 0,-50.58203 -31.8685,-84.10854 -78.44078,-84.10854 -46.31058,0 -78.44392,33.52651 -78.44392,84.10854 0,50.58673 32.13334,84.10854 78.44392,84.10854 z M 252.2854,0 h 50.10249 l -0.005,125.87707 c 24.55682,-29.25975 58.38892,-37.75513 91.68976,-37.75513 55.83503,0 117.85132,37.6773 117.85132,119.02875 0,68.12232 -49.32155,117.74475 -118.78114,117.74475 -36.35726,0 -70.58062,-13.04265 -91.68663,-38.88294 0,10.32107 -0.57618,20.72364 -1.70503,30.56413 h -49.17162 c 0.85513,-15.90944 1.70555,-35.7184 1.70555,-51.74693 z"/><path fill="#93c822" d="M 1000,96.45747 845.05541,400.75099 H 788.94926 L 833.49578,316.25589 716.89033,96.45747 h 58.6266 l 85.80469,171.73057 85.56283,-171.73057 z"/></svg>.
+                    in production at <span class="hero-ebay-wrap"><svg class="hero-ebay" role="img" aria-label="eBay" viewBox="0 0 1000 400.75" xmlns="http://www.w3.org/2000/svg" focusable="false"><path fill="#ffbc13" d="m 633.07803,212.53323 c -45.43873,1.48929 -73.6715,9.689 -73.6715,39.61897 0,19.37591 15.44713,40.38162 54.66334,40.38162 52.57698,0 80.64259,-28.65902 80.64259,-75.66331 l 0.003,-5.16994 c -18.43302,0 -41.16414,0.16089 -61.63704,0.83266 z m 111.75103,62.10248 c 0,14.58313 0.42155,28.9782 1.69406,41.94092 h -46.61408 c -1.24325,-10.67368 -1.6972,-21.27945 -1.6972,-31.56656 -25.20195,30.97941 -55.17735,39.88537 -96.76149,39.88537 -61.67674,0 -94.70072,-32.59982 -94.70072,-70.30689 0,-54.61215 44.91583,-73.86739 122.89013,-75.65391 21.32332,-0.48686 45.27419,-0.55894 65.07531,-0.55894 l -0.003,-5.33606 c 0,-36.56098 -23.44364,-51.59335 -64.06765,-51.59335 -30.15876,0 -52.38579,12.48057 -54.6764,34.0468 h -52.65168 c 5.57217,-53.77165 62.06643,-67.37115 111.74005,-67.37115 59.50837,0 109.77228,21.17288 109.77228,84.11481 z"/><path fill="#f12c2d" d="m 199.63633,185.86602 c -1.94427,-46.87735 -35.77951,-64.41973 -71.94139,-64.41973 -38.99421,0 -70.12667,19.7327 -75.58026,64.41973 z M 51.034408,219.1909 c 2.704332,45.48365 34.069782,72.38437 77.197532,72.38437 29.88033,0 56.45979,-12.17498 65.35948,-38.66041 h 51.68424 c -10.05205,53.73979 -67.15384,71.98058 -116.303,71.98058 C 39.606424,324.89544 0,275.67889 0,209.30653 0,136.24203 40.965642,88.12194 129.78809,88.12194 c 70.69867,0 122.49992,36.99926 122.49992,117.75572 v 13.31324 z"/><path fill="#0968f6" d="m 380.83181,290.6235 c 46.57228,0 78.44078,-33.52181 78.44078,-84.10854 0,-50.58203 -31.8685,-84.10854 -78.44078,-84.10854 -46.31058,0 -78.44392,33.52651 -78.44392,84.10854 0,50.58673 32.13334,84.10854 78.44392,84.10854 z M 252.2854,0 h 50.10249 l -0.005,125.87707 c 24.55682,-29.25975 58.38892,-37.75513 91.68976,-37.75513 55.83503,0 117.85132,37.6773 117.85132,119.02875 0,68.12232 -49.32155,117.74475 -118.78114,117.74475 -36.35726,0 -70.58062,-13.04265 -91.68663,-38.88294 0,10.32107 -0.57618,20.72364 -1.70503,30.56413 h -49.17162 c 0.85513,-15.90944 1.70555,-35.7184 1.70555,-51.74693 z"/><path fill="#93c822" d="M 1000,96.45747 845.05541,400.75099 H 788.94926 L 833.49578,316.25589 716.89033,96.45747 h 58.6266 l 85.80469,171.73057 85.56283,-171.73057 z"/></svg>.</span>
                 </h1>
                 
 
                 <ul class="hero-social">
                     <li>
-                        <a href="blog/" title="Model studies &amp; field notes">➜Writing</a>
+                        <a href="blog/" title="Model studies &amp; field notes"><span aria-hidden="true">➜</span>Writing</a>
                     </li>
                     <li>
-                        <a href="https://www.linkedin.com/in/jayeshsuryavanshi/" target="_blank" title="">➜LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/jayeshsuryavanshi/" target="_blank" rel="noopener" title=""><span aria-hidden="true">➜</span>LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
                     </li>
                     <li>
-                        <a href="https://github.com/JayeshSuryavanshi" target="_blank" title="">➜Github</a>
+                        <a href="https://github.com/JayeshSuryavanshi" target="_blank" rel="noopener" title=""><span aria-hidden="true">➜</span>GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
                     </li>
                     <li>
-                        <a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener" title="">➜Hugging Face</a>
+                        <a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener" title=""><span aria-hidden="true">➜</span>Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a>
                     </li>
                     <li>
-                        <a href="https://github.com/JayeshSuryavanshi?tab=repositories" target="_blank" title="">➜Projects</a>
+                        <a href="https://github.com/JayeshSuryavanshi?tab=repositories" target="_blank" rel="noopener" title=""><span aria-hidden="true">➜</span>Projects<span class="visually-hidden"> (opens in a new tab)</span></a>
                     </li>
 
                 </ul> <!-- end hero-social -->
@@ -202,6 +209,8 @@
                     <path d="M12 24l-8-9h6v-15h4v15h6z" /></svg>
             </a>
         </div> <!-- end hero-scroll -->
+
+        <button type="button" class="hero-video-toggle" hidden><span class="hero-video-toggle__icon" aria-hidden="true"></span><span class="hero-video-toggle__label">Pause video</span></button>
 
     </section> <!-- end s-hero -->
 
@@ -218,12 +227,12 @@
                 <div class="column large-6 medium-8 tab-full">
 
                     <div class="section-intro" data-num="01" data-aos="fade-up">
-                        <h3 class="subhead">About Me</h3>
-                        <h1 class="display-1">I build LLM agents and the systems that make them work in production.</h1>
+                        <p class="subhead">About Me</p>
+                        <h2 class="display-1">I build LLM agents and the systems that make them work in production.</h2>
                     </div>
 
                     <div class="profile-pic" data-aos="fade-up">
-                        <img src="images/jayesh-portrait.webp?v=2" width="1024" height="1024" loading="lazy" decoding="async" alt="Illustrated portrait of Jayesh Suryavanshi">
+                        <img src="images/jayesh-portrait.webp?v=3" width="800" height="800" loading="lazy" decoding="async" alt="Illustrated portrait of Jayesh Suryavanshi">
                     </div>
 
                     <h2 data-aos="fade-up">About Me</h2><br>
@@ -237,14 +246,15 @@
                     </p>
 
                     <h2>Technical Skills</h2> <br>
+                    <ul class="skills-list">
+                        <li><b>LLM &amp; Agentic Systems:</b> Claude (Anthropic API), Azure OpenAI, Vertex AI, MCP (Model Context Protocol), agent orchestration, RAG, prompt engineering, LLM evals</li>
+                        <li><b>Machine Learning &amp; NLP:</b> PyTorch, TensorFlow, Hugging Face Transformers, XGBoost, spaCy, NLTK</li>
+                        <li><b>Programming Languages:</b> Python, Java, SQL, Scala, Go, Bash</li>
+                        <li><b>Data &amp; Distributed Systems:</b> Spark, Hadoop, Hive, Kafka, Flink, ETL, Pandas, NumPy</li>
+                        <li><b>Cloud &amp; CI/CD:</b> AWS, Docker, Kubernetes, Terraform, Jenkins, Ansible</li>
+                    </ul>
                     <p>
-                        • <b>LLM &amp; Agentic Systems:</b> Claude (Anthropic API), Azure OpenAI, Vertex AI, MCP (Model Context Protocol), agent orchestration, RAG, prompt engineering, LLM evals<br>
-                        • <b>Machine Learning &amp; NLP:</b> PyTorch, TensorFlow, Hugging Face Transformers, XGBoost, spaCy, NLTK<br>
-                        • <b>Programming Languages:</b> Python, Java, SQL, Scala, Go, Bash<br>
-                        • <b>Data &amp; Distributed Systems:</b> Spark, Hadoop, Hive, Kafka, Flink, ETL, Pandas, NumPy<br>
-                        • <b>Cloud &amp; CI/CD:</b> AWS, Docker, Kubernetes, Terraform, Jenkins, Ansible<br>
-                        <br>
-                        <a href="https://www.linkedin.com/in/jayeshsuryavanshi/">more ➜</a>
+                        <a href="https://www.linkedin.com/in/jayeshsuryavanshi/">more<span class="visually-hidden"> on LinkedIn</span> <span aria-hidden="true">➜</span></a>
                     </p>
 
                 </div>
@@ -256,7 +266,7 @@
 
             <div class="row">
                 <div class="column">
-                    <h2 data-aos="fade-up">Career 👨🏻‍💻</h2>
+                    <h2 data-aos="fade-up">Career <span aria-hidden="true">👨🏻‍💻</span></h2>
                 </div>
             </div>
 
@@ -265,10 +275,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://www.ebay.com/">eBay</a> </span>
                                 <span class="position__pos">Machine Learning Engineer, 3</span>
-                            </h6>
+                            </h3>
                             <div class="position__timeframe">
                                 October 2024 - Present
                             </div>
@@ -287,10 +297,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://www.finra.org/">FINRA</a> </span>
                                 <span class="position__pos">Software Engineer, Machine Learning</span>
-                            </h6>
+                            </h3>
                             <div class="position__timeframe">
                                 July 2023 - October 2024
                             </div>
@@ -306,10 +316,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://datava.com/">Datava</a> </span>
-                                <span class="position__pos">Software Engineer</span>
-                            </h6>
+                                <span class="position__pos">Software Engineer, Machine Learning</span>
+                            </h3>
                             <div class="position__timeframe">
                                 February 2023 - July 2023
                             </div>
@@ -324,10 +334,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://www.rfsuny.org/">SUNY Research Foundation</a> </span>
                                 <span class="position__pos">Research Intern</span>
-                            </h6>
+                            </h3>
                             <div class="position__timeframe">
                                 May 2022 - August 2022
                             </div>
@@ -344,10 +354,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://www.infosys.com/">Infosys</a> </span>
-                                <span class="position__pos">Software Engineer, Data Platform</span>
-                            </h6>
+                                <span class="position__pos">Software/Data Engineer</span>
+                            </h3>
                             <div class="position__timeframe">
                                 June 2019 - August 2021
                             </div>
@@ -361,11 +371,11 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://internshala.com/">Internshala</a></span>
                                 <span class="position__pos">Software Engineer Intern</span>
 
-                            </h6>
+                            </h3>
                             <div class="position__timeframe">
                                 November 2018 - February 2019
                             </div>
@@ -386,7 +396,7 @@
 
             <div class="row">
                 <div class="column">
-                    <h2 data-aos="fade-up">Education 👨🏻‍🎓</h2>
+                    <h2 data-aos="fade-up">Education <span aria-hidden="true">👨🏻‍🎓</span></h2>
                 </div>
             </div>
 
@@ -395,10 +405,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
+                            <h3 class="h6">
                                 <span class="position__co"> <a href="https://www.buffalo.edu/">University at Buffalo, SUNY</a> </span>
                                 <span class="position__pos">Master of Science (MS), Computer Science</span>
-                            </h6>
+                            </h3>
                             <div class="position__timeframe">
                                 August 2021 - December 2022
                             </div>
@@ -413,10 +423,10 @@
                 <div class="column" data-aos="fade-up">
                     <div class="position">
                         <div class="position__header">
-                            <h6>
-                                <span class="position__co"> <a href="http://www.unipune.ac.in/">University of Pune</a> </span>
+                            <h3 class="h6">
+                                <span class="position__co"> <a href="https://www.unipune.ac.in/">Savitribai Phule Pune University</a> </span>
                                 <span class="position__pos">Bachelor of Engineering (BE), Computer Engineering</span>
-                            </h6>
+                            </h3>
                             <div class="position__timeframe">
                                 July 2015 - May 2019
                             </div>
@@ -439,11 +449,11 @@
 
             <div class="column large-6 s-services__leftcol">
                 <div class="section-intro" data-num="02" data-aos="fade-up">
-                    <h3 class="subhead">Acumen</h3>
+                    <p class="subhead">Acumen</p>
 
-                    <h1 class="display-1">
+                    <h2 class="display-1">
                         LLM agents, ML models, and the systems that run them.
-                    </h1>
+                    </h2>
                 </div>
 
                 <p class="lead" data-aos="fade-up">
@@ -457,9 +467,9 @@
                 <ul class="services-list" data-aos="fade-up">
                     <li class="services-list__item is-active">
                         <div class="services-list__item-header">
-                            <h5>Building LLM Agents &amp; GenAI Systems</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="true" aria-controls="svc-1">Building LLM Agents &amp; GenAI Systems</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-1">
                             <p>
                                 I design and ship LLM-powered services end to end: agentic workflows that summarize and reason over real business data,
                                 multimodal analysis across text and images, PII redaction and content moderation, and MCP servers that let other
@@ -470,9 +480,9 @@
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>Applied ML &amp; Predictive Modeling</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-2">Applied ML &amp; Predictive Modeling</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-2">
                             <p>
                                 I build predictive models that drive real product decisions, including multi-stage gradient-boosted cascades
                                 that refine their predictions as new signals arrive. Trained on distributed data at scale, and treated as
@@ -482,9 +492,9 @@
                     </li>
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>Data Engineering at Scale</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-3">Data Engineering at Scale</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-3">
                             <p>
                                 Models are only as good as the data behind them. I design and maintain pipelines on Spark, Hadoop, Hive, and
                                 Kafka that turn massive, messy datasets into reliable features and signals (batch and real-time) so both
@@ -494,9 +504,9 @@
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>Cloud &amp; Infrastructure</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-4">Cloud &amp; Infrastructure</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-4">
                             <p>
                                 I run AI workloads on cloud infrastructure using AWS, Docker, Kubernetes, and Terraform, deploying and
                                 scaling services with an emphasis on reliability, observability, and cost. Infrastructure as code by default.
@@ -505,9 +515,9 @@
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>CI/CD &amp; Automation for AI Systems</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-5">CI/CD &amp; Automation for AI Systems</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-5">
                             <p>
                                 I automate the path to production with Jenkins, Airflow, and Git-based workflows, including CI validation
                                 and security scanning for agent configurations, and tooling that generates LLM-readable documentation for
@@ -534,11 +544,11 @@
 
             <div class="column large-6 s-services__leftcol">
                 <div class="section-intro" data-num="03" data-aos="fade-up">
-                    <h3 class="subhead">Open Source</h3>
+                    <p class="subhead">Open Source</p>
 
-                    <h1 class="display-1">
+                    <h2 class="display-1">
                         Code I have shipped into libraries other people depend on.
-                    </h1>
+                    </h2>
                 </div>
 
                 <p class="lead" data-aos="fade-up">
@@ -552,75 +562,75 @@
                 <ul class="services-list" data-aos="fade-up">
                     <li class="services-list__item is-active">
                         <div class="services-list__item-header">
-                            <h5>aeon &middot; MADRID anomaly detector</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="true" aria-controls="svc-6">aeon&nbsp;&middot; MADRID anomaly detector</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-6">
                             <p>
                                 A multi-length discord detector for time series, contributed as a new estimator to
-                                <a href="https://github.com/aeon-toolkit/aeon" target="_blank" rel="noopener">aeon</a>
+                                <a href="https://github.com/aeon-toolkit/aeon" target="_blank" rel="noopener">aeon<span class="visually-hidden"> (opens in a new tab)</span></a>
                                 and merged in September 2026. It shipped in the
-                                <a href="https://github.com/aeon-toolkit/aeon/releases/tag/v1.6.0" target="_blank" rel="noopener">v1.6.0 release</a>,
+                                <a href="https://github.com/aeon-toolkit/aeon/releases/tag/v1.6.0" target="_blank" rel="noopener">v1.6.0 release<span class="visually-hidden"> (opens in a new tab)</span></a>,
                                 whose notes read &ldquo;New estimators, including the ExtendedIsolationForest and MADRID
                                 anomaly detectors&rdquo;. I am listed in the project&rsquo;s contributors file.
-                                <a href="https://github.com/aeon-toolkit/aeon/pull/3702" target="_blank" rel="noopener">PR #3702</a>
+                                <a href="https://github.com/aeon-toolkit/aeon/pull/3702" target="_blank" rel="noopener">PR #3702<span class="visually-hidden"> (opens in a new tab)</span></a>
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>PyOD &middot; save and load round-trip coverage</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-7">PyOD&nbsp;&middot; save and load round-&#8288;trip coverage</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-7">
                             <p>
                                 Test coverage across the torch-free core detectors of
-                                <a href="https://github.com/yzhao062/pyod" target="_blank" rel="noopener">PyOD</a>,
+                                <a href="https://github.com/yzhao062/pyod" target="_blank" rel="noopener">PyOD<span class="visually-hidden"> (opens in a new tab)</span></a>,
                                 the most widely used anomaly detection library in Python: 23 of them are
                                 proven to survive a save and load round trip, and 21 a clone round trip.
                                 Merged by the library&rsquo;s creator in August 2026, closing a long-standing issue.
-                                <a href="https://github.com/yzhao062/pyod/pull/708" target="_blank" rel="noopener">PR #708</a>
+                                <a href="https://github.com/yzhao062/pyod/pull/708" target="_blank" rel="noopener">PR #708<span class="visually-hidden"> (opens in a new tab)</span></a>
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>category_encoders &middot; GrayEncoder correctness fix</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-8">category_encoders&nbsp;&middot; GrayEncoder correctness fix</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-8">
                             <p>
                                 <code>GrayEncoder.inverse_transform</code> did not recover the original values it had
                                 encoded, so a documented round trip silently returned the wrong answer. Fixed with a
                                 regression test and merged by the lead maintainer of
-                                <a href="https://github.com/scikit-learn-contrib/category_encoders" target="_blank" rel="noopener">scikit-learn-contrib/category_encoders</a>.
-                                <a href="https://github.com/scikit-learn-contrib/category_encoders/pull/499" target="_blank" rel="noopener">PR #499</a>
+                                <a href="https://github.com/scikit-learn-contrib/category_encoders" target="_blank" rel="noopener">scikit-learn-contrib/category_encoders<span class="visually-hidden"> (opens in a new tab)</span></a>.
+                                <a href="https://github.com/scikit-learn-contrib/category_encoders/pull/499" target="_blank" rel="noopener">PR #499<span class="visually-hidden"> (opens in a new tab)</span></a>
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>scikit-dimension &middot; uncentered lPCA</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-9">scikit-dimension&nbsp;&middot; uncentered lPCA</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-9">
                             <p>
                                 Added a <code>center</code> option to the lPCA intrinsic-dimension estimator, so it can
                                 run on uncentered data where the origin carries meaning rather than forcing a
                                 recentering that changes the estimate.
-                                <a href="https://github.com/scikit-learn-contrib/scikit-dimension/pull/41" target="_blank" rel="noopener">PR #41</a>
+                                <a href="https://github.com/scikit-learn-contrib/scikit-dimension/pull/41" target="_blank" rel="noopener">PR #41<span class="visually-hidden"> (opens in a new tab)</span></a>
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>Packages I maintain</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-10">Packages I maintain</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-10">
                             <p>
-                                <a href="https://pypi.org/project/graphspot/" target="_blank" rel="noopener">graphspot</a>
+                                <a href="https://pypi.org/project/graphspot/" target="_blank" rel="noopener">graphspot<span class="visually-hidden"> (opens in a new tab)</span></a>
                                 is inductive graph anomaly detection with honest flat baselines and a core that does not
                                 require torch, which the comparable libraries do without declaring it. It ships
                                 flat baselines beside the graph models on purpose, because a detector on raw
                                 features is a genuinely hard baseline: on Reddit, the BOND benchmark has LOF
                                 outscoring every deep graph model.
-                                <a href="https://pypi.org/project/geosocialx/" target="_blank" rel="noopener">GeoSocialX</a>
+                                <a href="https://pypi.org/project/geosocialx/" target="_blank" rel="noopener">GeoSocialX<span class="visually-hidden"> (opens in a new tab)</span></a>
                                 maps the geography of geotagged social data and reports its coverage before it maps
                                 anything, because most posts carry no location at all. Both install from PyPI.
                             </p>
@@ -628,12 +638,12 @@
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h5>In review</h5>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-11">In review</button></h3>
                         </div>
-                        <div class="services-list__item-body">
+                        <div class="services-list__item-body" id="svc-11">
                             <p>
                                 Twelve further pull requests are open with maintainers, across
-                                <a href="https://github.com/scikit-learn/scikit-learn/pull/34629" target="_blank" rel="noopener">scikit-learn</a>,
+                                <a href="https://github.com/scikit-learn/scikit-learn/pull/34629" target="_blank" rel="noopener">scikit-learn<span class="visually-hidden"> (opens in a new tab)</span></a>,
                                 PyOD, river, imbalanced-learn, hiclass, pythresh, DeepOD and aeon. Four add new
                                 detectors, the other eight are correctness fixes. Open is not merged, so I count them separately.
                             </p>
@@ -654,10 +664,10 @@
         <div class="row s-portfolio__header">
             <div class="column large-6 medium-8 tab-full">
                 <div class="section-intro" data-num="04" data-aos="fade-up">
-                    <h3 class="subhead">Projects</h3>
-                    <h1 class="display-1">
+                    <p class="subhead">Projects</p>
+                    <h2 class="display-1">
                         Some of my notable projects I've worked on.
-                    </h1>
+                    </h2>
                 </div>
             </div>
         </div> <!-- s-porfolio__header -->
@@ -671,15 +681,15 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/graphspot.webp"
                             title="graphspot: OddBall scoring a Tolokers neighbourhood" data-size="1600x900">
-                            <img decoding="async" src="images/portfolio/gallery/graphspot.webp" alt="A dense network of 300 Tolokers nodes in grey with the fifteen most structurally anomalous nodes marked in blue, scored by OddBall">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/graphspot-800.webp" srcset="images/portfolio/gallery/graphspot-800.webp 800w, images/portfolio/gallery/graphspot-1200.webp 1200w, images/portfolio/gallery/graphspot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="A dense network of 300 Tolokers nodes in grey with the fifteen most structurally anomalous nodes marked in blue, scored by OddBall">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Graph ML &middot; Python package on PyPI</div>
-                        <h4 class="folio-item__title">graphspot</h4>
+                        <h3 class="folio-item__title">graphspot</h3>
                     </div>
                     <a href="https://github.com/JayeshSuryavanshi/graphspot" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
-                        Link</a>
+                        Link<span class="visually-hidden">: graphspot on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>Inductive graph anomaly detection (on PyPI as graphspot), with a core that installs and runs without torch. It ships flat baselines next to the graph models on purpose, because a detector on raw features is a genuinely hard baseline to beat. The thumbnail is real output: OddBall, unsupervised, scoring a neighbourhood of the Tolokers graph.</p>
                     </div>
@@ -690,16 +700,16 @@
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/lyft.webp" title="Lyft Motion Prediction"
-                            data-size="1050x700">
-                            <img decoding="async" src="images/portfolio/gallery/lyft.webp" alt="Lyft Motion Prediction project thumbnail">
+                            data-size="1600x900">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/lyft-800.webp" srcset="images/portfolio/gallery/lyft-800.webp 800w, images/portfolio/gallery/lyft-1200.webp 1200w, images/portfolio/gallery/lyft.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Lyft Motion Prediction project thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Machine Learning</div>
-                        <h4 class="folio-item__title">Lyft Motion Prediction for Autonomous Vehicles</h4>
+                        <h3 class="folio-item__title">Lyft Motion Prediction for Autonomous Vehicles</h3>
                     </div>
                     <a href="https://github.com/JayeshSuryavanshi/l5-motion-prediction-study" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
-                        Link</a>
+                        Link<span class="visually-hidden">: Lyft Motion Prediction on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>Motion prediction on the Lyft Level 5 dataset, rebuilt as a study of what the task looks like under a single-laptop compute budget rather than a leaderboard run.</p>
                     </div>
@@ -712,15 +722,15 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/triangulation.webp" title="Triangulation SQL Explorer (click to see the app)"
                             data-size="1050x700">
-                            <img decoding="async" src="images/portfolio/gallery/triangulation-bg.webp" alt="Triangulation SQL Explorer project thumbnail">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/triangulation-bg-800.webp" srcset="images/portfolio/gallery/triangulation-bg-800.webp 800w, images/portfolio/gallery/triangulation-bg-1200.webp 1200w, images/portfolio/gallery/triangulation-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Triangulation SQL Explorer project thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">In-Browser Data Tools &middot; WebAssembly</div>
-                        <h4 class="folio-item__title">Triangulation: SQL Explorer</h4>
+                        <h3 class="folio-item__title">Triangulation: SQL Explorer</h3>
                     </div>
-                    <a href="https://www.jayeshsuryavanshi.com/Team-Triangulation/" target="_blank" title="Live Demo" class="folio-item__project-link">Live
-                        Demo</a>
+                    <a href="https://www.jayeshsuryavanshi.com/Team-Triangulation/" target="_blank" rel="noopener" title="Live Demo" class="folio-item__project-link">Live
+                        Demo<span class="visually-hidden">: Triangulation SQL Explorer (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>An IMDb-style movie/TV database you can query with free-form SQL, entirely in the browser: a real SQLite engine compiled to WebAssembly with a bundled sample dataset: no backend, no network. Rebuilt from a 2022 database-course project into a self-contained live demo with pre-built analytics views and 16 passing tests.</p>
                     </div>
@@ -733,15 +743,15 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/beacon.webp"
                             title="Beacon EV Charging dApp (click to see the app)" data-size="1050x700">
-                            <img decoding="async" src="images/portfolio/gallery/beacon-bg.webp" alt="Beacon P2P EV charging dApp thumbnail">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/beacon-bg-800.webp" srcset="images/portfolio/gallery/beacon-bg-800.webp 800w, images/portfolio/gallery/beacon-bg-1200.webp 1200w, images/portfolio/gallery/beacon-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Beacon P2P EV charging dApp thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Blockchain &middot; Solidity dApp</div>
-                        <h4 class="folio-item__title">Beacon: P2P EV Charging</h4>
+                        <h3 class="folio-item__title">Beacon: P2P EV Charging</h3>
                     </div>
-                    <a href="https://github.com/JayeshSuryavanshi/Blockchain-Application-Development" target="_blank" title="Project Link" class="folio-item__project-link">Project
-                        Link</a>
+                    <a href="https://github.com/JayeshSuryavanshi/Blockchain-Application-Development" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
+                        Link<span class="visually-hidden">: Beacon on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>A peer-to-peer marketplace for sharing home EV chargers, built as an Ethereum dApp: a pay-as-you-go Solidity contract audited and hardened against fund-drain bugs (15 passing Hardhat tests), with a React + ethers v6 frontend where hosts list chargers and drivers pay per charge in ETH. UB blockchain-course project.</p>
                     </div>
@@ -751,20 +761,20 @@
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/riot.webp"
-                            title="Social Unrest Forecasting" data-size="1050x700">
-                            <img decoding="async" src="images/portfolio/gallery/riot.webp" alt="Social Unrest Forecasting project thumbnail">
+                            title="Social Unrest Forecasting" data-size="1600x900">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/riot-800.webp" srcset="images/portfolio/gallery/riot-800.webp 800w, images/portfolio/gallery/riot-1200.webp 1200w, images/portfolio/gallery/riot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Social Unrest Forecasting project thumbnail">
                         </a>
                     </div>
                     
                     
                     <div class="folio-item__info">
                         <div class="folio-item__cat">ML Research &middot; Forecasting</div>
-                        <h4 class="folio-item__title">Social Unrest Forecasting</h4>
+                        <h3 class="folio-item__title">Social Unrest Forecasting</h3>
                     </div>
-                    <a href="https://github.com/JayeshSuryavanshi/social-unrest-forecasting" target="_blank" title="Project Link" class="folio-item__project-link">Project
-                        Link</a>
+                    <a href="https://github.com/JayeshSuryavanshi/social-unrest-forecasting" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
+                        Link<span class="visually-hidden">: Social Unrest Forecasting on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>A leakage-controlled study of subnational unrest forecasting on ACLED, UCDP and GDELT data: rolling-origin backtests over 55 countries against persistence baselines the field rarely beats. Headline finding: news-text signals are informative but subsumed. They can substitute for curated event histories, but don't improve on them. A rigorous 2026 rebuild of my 2022 master's project.</p>
+                        <p>A leakage-controlled study of subnational unrest forecasting on ACLED, UCDP and GDELT data: rolling-origin backtests over 55 countries against persistence baselines the field rarely beats. Headline finding: news text is informative but nearly subsumed by the event record. It adds a small but significant gain on escalation (+0.3-0.6 AUPRC points) and nothing on onset, and text-only models fall well short. A rigorous 2026 rebuild of my 2022 UB NLP course project.</p>
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -773,17 +783,17 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/geosocialx.webp"
                             title="GeoSocialX: density heatmap of geotagged posts" data-size="1600x900">
-                            <img decoding="async" src="images/portfolio/gallery/geosocialx.webp" alt="GeoSocialX density heatmap over San Francisco">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/geosocialx-800.webp" srcset="images/portfolio/gallery/geosocialx-800.webp 800w, images/portfolio/gallery/geosocialx-1200.webp 1200w, images/portfolio/gallery/geosocialx.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="GeoSocialX density heatmap over San Francisco">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Geospatial &middot; Python package on PyPI</div>
-                        <h4 class="folio-item__title">GeoSocialX</h4>
+                        <h3 class="folio-item__title">GeoSocialX</h3>
                     </div>
-                    <a href="https://github.com/JayeshSuryavanshi/GeoSocialX" target="_blank" title="Project Link" class="folio-item__project-link">Project
-                        Link</a>
+                    <a href="https://github.com/JayeshSuryavanshi/GeoSocialX" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
+                        Link<span class="visually-hidden">: GeoSocialX on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>A Python package (on PyPI as geosocialx) that maps the geography of X posts: fetch geotagged posts by radius via the X API v2, then surface hotspots and time trends.</p>
+                        <p>A Python package (on PyPI as geosocialx) that maps the geography of geotagged social and location data from any source (CSV, GeoJSON, Bluesky, or an X dump), reporting coverage before it maps anything, then hotspots and time trends.</p>
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -791,16 +801,16 @@
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/walleto.webp"
-                            title="Walleto: Digital Wallet" data-size="1050x700">
-                            <img decoding="async" src="images/portfolio/gallery/walleto.webp" alt="Walleto full-stack digital wallet thumbnail">
+                            title="Walleto: Digital Wallet" data-size="1600x900">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/walleto-800.webp" srcset="images/portfolio/gallery/walleto-800.webp 800w, images/portfolio/gallery/walleto-1200.webp 1200w, images/portfolio/gallery/walleto.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Walleto full-stack digital wallet thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Full Stack Development</div>
-                        <h4 class="folio-item__title">Walleto: Full-Stack Digital Wallet</h4>
+                        <h3 class="folio-item__title">Walleto: Full-&#8288;Stack Digital Wallet</h3>
                     </div>
-                    <a href="https://github.com/JayeshSuryavanshi/Walleto" target="_blank" title="Walleto" class="folio-item__project-link">Project
-                        Link</a>
+                    <a href="https://github.com/JayeshSuryavanshi/Walleto" target="_blank" rel="noopener" title="Walleto" class="folio-item__project-link">Project
+                        Link<span class="visually-hidden">: Walleto on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>Led development of full-stack digital wallet app, enabling users to connect bank accounts, view transactions, pay bills, and earn cashback</p>
                     </div>
@@ -827,11 +837,11 @@
         <div class="row s-footer__main">
             <div class="column large-6">
                 <div class="section-intro" data-aos="fade-up">
-                    <h3 class="subhead">Get In Touch</h3>
+                    <p class="subhead">Get In Touch</p>
 
-                    <h1 class="display-1">
+                    <h2 class="display-1">
                         Let's turn that idea into reality. Shoot me a message.
-                    </h1>
+                    </h2>
                 </div>
 
                 <div class="footer-email-us">
@@ -842,28 +852,28 @@
             <div class="column large-5">
                 <div class="footer-contacts">
                     <div class="footer-contact-block" data-aos="fade-up">
-                        <h5 class="footer-contact-block__header">
-                            Email 📨
-                        </h5>
+                        <h3 class="footer-contact-block__header h5">
+                            Email <span aria-hidden="true">📨</span>
+                        </h3>
                         <p class="footer-contact-block__content">
-                            <a href="mailto:jayeshksuryavanshi@gmail.com">jayeshksuryavanshi@gmail.com</a>
+                            <a href="mailto:jayeshksuryavanshi@gmail.com" aria-label="jayeshksuryavanshi@gmail.com">jayeshksuryavanshi<wbr>@gmail.com</a>
                         </p>
                     </div> <!-- end footer-contact-block -->
                     <div class="footer-contact-block" data-aos="fade-up">
-                        <h5 class="footer-contact-block__header">
-                            Phone 🤙🏼
-                        </h5>
+                        <h3 class="footer-contact-block__header h5">
+                            Phone <span aria-hidden="true">🤙🏼</span>
+                        </h3>
                         <p class="footer-contact-block__content">
-                            <a href="tel:+17163039894">(+1)  716-303-9894</a>
+                            <a href="tel:+17163039894">(+1)  716-&#8288;303-&#8288;9894</a>
                         </p>
                     </div> <!-- end footer-contact-block -->
                     <br>
                     <div class="footer-contact-block" data-aos="fade-up">
-                        <h5 class="footer-contact-block__header">
+                        <h3 class="footer-contact-block__header h5">
                             Social
-                        </h5>
+                        </h3>
                         <ul class="footer-contact-block__list">
-                            <li><a href="https://x.com/2jayesh3" target="_blank" rel="noopener">X</a></li>
+                            <li><a href="https://x.com/2jayesh3" target="_blank" rel="noopener">X<span class="visually-hidden"> (opens in a new tab)</span></a></li>
                         </ul>
                     </div> <!-- end footer-contact-block -->
                 </div>
@@ -889,7 +899,7 @@
 
     <!-- photoswipe background
     ================================================== -->
-    <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+    <div aria-hidden="true" class="pswp" role="dialog" aria-modal="true" aria-label="Project image viewer" tabindex="-1">
 
         <div class="pswp__bg"></div>
         <div class="pswp__scroll-wrap">
@@ -930,12 +940,22 @@
 
     <!-- Java Script
     ================================================== -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/jquery-3.2.1.min.js?v=2"></script>
+    <script src="js/plugins.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
     <script>
         var _cy = document.getElementById('copyright-year');
         if (_cy) { _cy.textContent = new Date().getFullYear(); }
+    </script>
+    <script>
+        // If jQuery never arrived, main.js did not run: fall back to the no-js
+        // styles so the preloader and the scroll reveals cannot hide the page.
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!window.jQuery) {
+                document.documentElement.classList.remove('js');
+                document.documentElement.classList.add('no-js');
+            }
+        });
     </script>
 
 </body>

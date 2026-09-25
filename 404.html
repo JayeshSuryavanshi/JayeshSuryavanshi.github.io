@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Page not found · Jayesh Suryavanshi</title>
+  <meta name="description" content="There is no page at this address on jayeshsuryavanshi.com.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <meta name="robots" content="noindex">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <!-- GitHub Pages serves this file at whatever path was requested, so every
+       asset and link here is root-absolute -->
+  <link rel="stylesheet" href="/blog/blog.css?v=5">
+  <script>
+    /* scheme boot. runs before first paint so a pinned theme never flashes the
+       other one. with no pinned choice the attribute stays off and the page
+       follows prefers-color-scheme, which is also the no JavaScript path.
+       the js class only reveals the switcher, which is inert without script */
+    (function () {
+      var r = document.documentElement;
+      r.className += (r.className ? ' ' : '') + 'js';
+      try {
+        var t = localStorage.getItem('blog-theme');
+        if (t === 'light' || t === 'dark' || t === 'reading') { r.setAttribute('data-theme', t); }
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    /* inline links in the hero get the same underline as links in post prose */
+    .index-hero p a { border-bottom: 1px solid var(--link-line); }
+    .index-hero p a:hover { border-bottom-color: var(--accent-2); }
+    .index-hero { padding-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="/">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/blog/">Writing</a>
+      </nav>
+    </header>
+
+    <main class="index-hero">
+      <h1>Page not found</h1>
+      <p>There is no page at this address. The link may be old or mistyped. Start from the <a href="/">homepage</a>, or browse the <a href="/blog/">writing</a>.</p>
+    </main>
+
+    <footer class="post-foot">
+      <a class="back" href="/">← Back to home</a>
+    </footer>
+
+  </div>
+</body>
+
+</html>

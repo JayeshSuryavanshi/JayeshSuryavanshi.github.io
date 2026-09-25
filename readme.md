@@ -1,10 +1,10 @@
 # jayeshsuryavanshi.com
 
-Source for my personal portfolio site, **[www.jayeshsuryavanshi.com](https://www.jayeshsuryavanshi.com)** — served via GitHub Pages from this repo (custom domain in `CNAME`).
+Source for my personal portfolio site, **[www.jayeshsuryavanshi.com](https://www.jayeshsuryavanshi.com)**, served via GitHub Pages from this repo (custom domain in `CNAME`).
 
 ## Stack
 
-Hand-built static site — HTML, CSS, and vanilla JS (with jQuery). No build step: the files here are what's deployed.
+Hand-built static site in HTML, CSS, and vanilla JS (with jQuery). No build step: the files here are what's deployed.
 
 ## Run locally
 

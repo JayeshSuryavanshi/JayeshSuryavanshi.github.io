@@ -1,5 +1,5 @@
 # https://www.jayeshsuryavanshi.com/robots.txt
-# Everything is public and indexable — including for AI crawlers.
+# Everything is public and indexable, including for AI crawlers.
 
 User-agent: *
 Allow: /
