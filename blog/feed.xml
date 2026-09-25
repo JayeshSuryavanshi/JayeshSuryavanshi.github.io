@@ -9,6 +9,15 @@
     <lastBuildDate>Thu, 24 Sep 2026 12:00:00 GMT</lastBuildDate>
 
     <item>
+      <title>The simulator was the experiment</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html</guid>
+      <pubDate>Thu, 24 Sep 2026 12:00:00 GMT</pubDate>
+      <category>Research Notes</category>
+      <description>I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a rule I wrote in ten minutes. On the real regime break a one-line heuristic beat it by 3.6x. Five results in the project were wrong before they were right.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png" length="120293" type="image/png"/>
+    </item>
+    <item>
       <title>The wrong opponent</title>
       <link>https://www.jayeshsuryavanshi.com/blog/wrong-opponent.html</link>
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/wrong-opponent.html</guid>
