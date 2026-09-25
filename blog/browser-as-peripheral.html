@@ -27,6 +27,8 @@
   <meta name="twitter:image:alt" content="The browser is a peripheral, a field guide by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -51,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=5">
+  <link rel="stylesheet" href="blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -78,7 +80,7 @@
         <a href="../">Home</a>
         <a href="./" class="here">Writing</a>
       </nav>
-      <div class="theme-switch" role="group" aria-label="Colour scheme">
+      <div class="theme-switch" role="group" aria-label="Color scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
         <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
         <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
@@ -110,7 +112,7 @@
         <div class="callout">
           <div class="label">How I checked, and what I could not</div>
           <p>Everything below about the command-line side is read out of the shipped CLI, version 2.1.278, plus the tool server&rsquo;s own session logs, which it writes in the clear under <code>~/Library/Caches/claude-cli-nodejs/</code>, and the live process and socket table. That part I consider evidenced.</p>
-          <p>The browser side is not in the same class. <strong>macOS file protection blocks every read under the Chrome profile directory</strong>, even with the sandbox off: <code>stat</code> works, opening a file does not. So the extension analysis comes from a fresh Web Store download of the same version string as the installed copy, not from the installed bytes. I did not confirm the two are byte-identical, and I never captured a live frame on the wire. Where I am reading code rather than watching behaviour, I say so.</p>
+          <p>The browser side is not in the same class. <strong>macOS file protection blocks every read under the Chrome profile directory</strong>, even with the sandbox off: <code>stat</code> works, opening a file does not. So the extension analysis comes from a fresh Web Store download of the same version string as the installed copy, not from the installed bytes. I did not confirm the two are byte-identical, and I never captured a live frame on the wire. Where I am reading code rather than watching behavior, I say so.</p>
         </div>
 
         <h2>Five hops to a click</h2>
@@ -167,13 +169,13 @@
 
         <p>It is not the path the CLI uses. The transport selector checks for a bridge configuration first, and the factory that builds the context sets that configuration unconditionally, so the websocket branch always wins and <strong>the local socket pool is unreachable</strong> from this client. It also never sets the options that would turn on the sealing, the proactive dialing or the peer-credential check. On my machine the live socket has exactly one holder, the desktop app&rsquo;s helper, and <em>nothing connected to it</em>. Two transports exist. Which one you are on depends on which client you are running, and the answer for the command line is the remote one.</p>
 
-        <p>So the frame goes out over a websocket to a vendor-hosted relay, addressed by account, authenticated by an access token in the opening message. Tool calls and their results are matched by a request id. And the sealing does not apply: every reference to it in that module sits in the local-socket pairing code, none in the websocket client, which builds its frame and serialises the arguments as they are. <strong>Page text, accessibility trees and base64 screenshots cross as clear JSON inside TLS to a machine that is not yours.</strong></p>
+        <p>So the frame goes out over a websocket to a vendor-hosted relay, addressed by account, authenticated by an access token in the opening message. Tool calls and their results are matched by a request id. And the sealing does not apply: every reference to it in that module sits in the local-socket pairing code, none in the websocket client, which builds its frame and serializes the arguments as they are. <strong>Page text, accessibility trees and base64 screenshots cross as clear JSON inside TLS to a machine that is not yours.</strong></p>
 
         <p>I read that out of the binary rather than off the wire, so treat it as a strong code-level claim and not a packet capture. It is also not a vulnerability and I am not presenting it as one. TLS is doing its job and the relay is the vendor&rsquo;s own. But it does change the answer to a practical question, which is <em>which tabs you point this at</em>. &ldquo;The agent reads the page locally&rdquo; would have been a reasonable thing to assume and it is not what happens.</p>
 
         <h2>What is actually watching</h2>
 
-        <p>Everything on the return path is written by the page. Not just the obvious text and screenshots, but the console, the network bodies, the tab titles and URLs appended to nearly every result, and, my favourite, the confirmation string after a form fill, which helpfully echoes the field&rsquo;s previous value. A hostile page controls all of it.</p>
+        <p>Everything on the return path is written by the page. Not just the obvious text and screenshots, but the console, the network bodies, the tab titles and URLs appended to nearly every result, and, my favorite, the confirmation string after a form fill, which helpfully echoes the field&rsquo;s previous value. A hostile page controls all of it.</p>
 
         <p>There are gates, and they sit in different places: per-site grants and blocked categories inside the extension, an approval mode with a classifier that inspects each outgoing call, and account identity on the connection itself. Documented protected actions still interrupt even on a site you have blanket-approved, and a documented prohibited list refuses outright, including the nicely circular entry for completing instructions found in web content.</p>
 
@@ -208,7 +210,7 @@
             <li>Primary: the shipped CLI 2.1.278, its <code>mcp-logs-claude-in-chrome</code> session logs, the live process and socket table, and the extension bundle at the version string installed here. Read on macOS, September&nbsp;20, 2026.</li>
             <li>Browser tool surface and known failure modes: <a href="https://code.claude.com/docs/en/chrome">code.claude.com/docs/en/chrome</a></li>
             <li>Permission model, protected and prohibited actions, blocked categories: <a href="https://support.claude.com/en/articles/12902446-claude-in-chrome-permissions-guide">permissions guide</a> &middot; <a href="https://support.claude.com/en/articles/12902428-use-claude-in-chrome-safely">using it safely</a></li>
-            <li>Injection evaluations and defence layers, across four different suites: <a href="https://claude.com/blog/claude-for-chrome">Aug 2025</a> &middot; <a href="https://www.anthropic.com/research/prompt-injection-defenses">Nov 2025 research</a> &middot; <a href="https://claude.com/blog/claude-in-chrome-generally-available">GA post</a></li>
+            <li>Injection evaluations and defense layers, across four different suites: <a href="https://claude.com/blog/claude-for-chrome">Aug 2025</a> &middot; <a href="https://www.anthropic.com/research/prompt-injection-defenses">Nov 2025 research</a> &middot; <a href="https://claude.com/blog/claude-in-chrome-generally-available">GA post</a></li>
             <li>Companion piece: <a href="closed-frontier.html">The closed frontier</a>, on reading provenance before reading numbers.</li>
           </ul>
         </div>
@@ -234,6 +236,94 @@
       }
       document.addEventListener('scroll', tick, { passive: true });
       tick();
+    })();
+  </script>
+  <script>
+    /* a table gets the pinned-column hairline only while it really overflows
+       its box, rechecked on resize. the class is cleared before measuring
+       because the rule it enables widens the first column */
+    (function () {
+      var boxes = document.querySelectorAll('.table-scroll');
+      if (!boxes.length) { return; }
+      function check() {
+        for (var i = 0; i < boxes.length; i++) {
+          boxes[i].classList.remove('is-scrolling');
+          if (boxes[i].scrollWidth > boxes[i].clientWidth + 1) { boxes[i].classList.add('is-scrolling'); }
+        }
+      }
+      check();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(check); }
+      window.addEventListener('resize', check);
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
     })();
   </script>
   <script>

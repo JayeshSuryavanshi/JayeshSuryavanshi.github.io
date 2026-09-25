@@ -27,6 +27,8 @@
   <meta name="twitter:image:alt" content="Informative but subsumed, a study by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -51,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=5">
+  <link rel="stylesheet" href="blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -78,7 +80,7 @@
         <a href="../">Home</a>
         <a href="./" class="here">Writing</a>
       </nav>
-      <div class="theme-switch" role="group" aria-label="Colour scheme">
+      <div class="theme-switch" role="group" aria-label="Color scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
         <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
         <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
@@ -89,7 +91,7 @@
     <article>
       <p class="kicker">Research Notes</p>
       <h1 class="title">Informative but subsumed</h1>
-      <p class="dek">Does news text help forecast social unrest? The literature answers everything from &ldquo;transformative&rdquo; to &ldquo;nothing beats a no-change baseline.&rdquo; I measured it properly: 336&nbsp;million events, 55&nbsp;countries, leakage-controlled out-of-time evaluation, and a text-signal ladder from tone counts up to neural embeddings of 1.37&nbsp;million headlines. The answer is small, precise, and stranger than either camp claims.</p>
+      <p class="dek">Does news text help forecast social unrest? The literature answers everything from &ldquo;transformative&rdquo; to &ldquo;nothing beats a no-change baseline.&rdquo;</p>
       <div class="byline">
         <span>By <strong>Jayesh Suryavanshi</strong></span>
         <span class="sep">&middot;</span>
@@ -99,6 +101,8 @@
       </div>
 
       <div class="prose">
+
+        <p class="lead">I measured it properly: 336&nbsp;million events, 55&nbsp;countries, leakage-controlled out-of-time evaluation, and a text-signal ladder from tone counts up to neural embeddings of 1.37&nbsp;million headlines. The answer is small, precise, and stranger than either camp claims.</p>
 
         <h2>Why the literature disagrees</h2>
         <p>Text-based conflict forecasting has a reproducibility problem hiding in plain sight. On one side, well-cited work reports that newspaper topics carry real predictive signal for political violence. On the other, every major forecasting competition in the space keeps reaching the same deflating conclusion: almost nothing beats &ldquo;assume next month looks like this month.&rdquo; Both camps publish plausible numbers. They can&rsquo;t both be right at face value.</p>
@@ -118,7 +122,10 @@
 
         <h2>What&rsquo;s forecastable at all</h2>
         <figure>
-          <img src="../images/subsumed-regime-map.webp?v=3" alt="Dot plot: AUPRC by regime and scorer on a log scale. Occurrence ~0.8, escalation ~0.18, onset ~0.025 barely above its 0.018 base rate." loading="lazy">
+          <a href="../images/subsumed-regime-map.webp?v=3" target="_blank" rel="noopener">
+            <img src="../images/subsumed-regime-map.webp?v=3" alt="Dot plot: AUPRC by regime and scorer on a log scale. Occurrence ~0.8, escalation ~0.18, onset ~0.025 barely above its 0.018 base rate." width="1644" height="948" loading="lazy">
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
           <figcaption>The regime map. Out-of-time AUPRC on a log scale, across 87,472 test region-months for occurrence and escalation and 27,565 for onset&rsquo;s calm risk set. Dashed rails are base rates, the score of a no-skill model. Onset is the cliff on the right, and persistence lands exactly on the rail there.</figcaption>
         </figure>
         <p>Skill collapses by an order of magnitude at each step. <em>Where violence already burns</em>, next month is very learnable (0.80 AUPRC against a 0.53 persistence baseline). <em>Whether it spikes</em> is much harder but real (0.175 vs 0.107). And <em>onset</em>, eruption after two calm years, is close to unforecastable for everything tested: the best model reaches 0.025 against a 0.018 base rate, and persistence is <em>completely blind</em> there by construction, since every region in the risk set looks identical to it. The case that matters most is the case nobody can call.</p>
@@ -127,7 +134,10 @@
         <p>Onto that scaffold goes every text signal constructible from open news data, in increasing order of representational depth: GDELT&rsquo;s machine-coded tone and article volume; its thematic tags; topic models over event narratives; precipitation anomalies as a non-news control; and, because &ldquo;your text signals were too shallow&rdquo; is the correct objection to everything above, <strong>neural sentence embeddings of 1.37&nbsp;million human-written headlines</strong>, harvested from the URL slugs of the 336&nbsp;million GDELT events joined to the panel by pure geography.<span class="sn-ref">3</span></p>
         <aside class="sidenote"><span class="sn-num">3</span>No name-matching between datasets: each event is assigned to the nearest region centroid by great-circle distance with a 200&nbsp;km cap. The embedding representation (pooling + PCA) is fitted on pre-2017 months only, so no test-era text shapes the features.</aside>
         <figure>
-          <img src="../images/subsumed-forest.webp?v=3" alt="Forest plot of news-text marginal AUPRC with confidence intervals: six tight multi-country intervals near zero (escalation just above), two much wider single-country intervals." loading="lazy">
+          <a href="../images/subsumed-forest.webp?v=3" target="_blank" rel="noopener">
+            <img src="../images/subsumed-forest.webp?v=3" alt="Forest plot of news-text marginal AUPRC with confidence intervals: six tight multi-country intervals near zero (escalation just above), two much wider single-country intervals." width="1969" height="1055" loading="lazy">
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
           <figcaption>What text adds on top of event history, with 90% block-bootstrap CIs. Green: the only regime where both model families agree it&rsquo;s positive. Gray: single-country intervals on the same axis, wide enough to hide the true effect entirely. The multi-country rows are recomputed from the shipped per-row predictions; the two India rows are the recorded block bootstrap from the robustness run.</figcaption>
         </figure>
         <p>Three results, each of which survived label-sensitivity sweeps, dual-family checks, and 90% intervals:</p>
@@ -160,7 +170,7 @@
         <div class="rule"></div>
 
         <div class="sources">
-          <h3>Sources &amp; further reading</h3>
+          <h3>Sources</h3>
           <ul>
             <li>Code, data &amp; released predictions: <a href="https://github.com/JayeshSuryavanshi/social-unrest-forecasting">github.com/JayeshSuryavanshi/social-unrest-forecasting</a> (benchmark spec in <code>BENCHMARK.md</code>)</li>
             <li>Ground truth &amp; signals: <a href="https://ucdp.uu.se/">UCDP GED</a> &middot; <a href="https://acleddata.com/">ACLED</a> &middot; <a href="https://www.gdeltproject.org/">The GDELT Project</a> &middot; <a href="https://open-meteo.com/">Open-Meteo</a></li>
@@ -189,6 +199,76 @@
       }
       document.addEventListener('scroll', tick, { passive: true });
       tick();
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
     })();
   </script>
   <script>

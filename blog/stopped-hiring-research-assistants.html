@@ -27,6 +27,8 @@
   <meta name="twitter:image:alt" content="The empty classroom, a notebook entry by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -51,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=5">
+  <link rel="stylesheet" href="blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -78,7 +80,7 @@
         <a href="../">Home</a>
         <a href="./" class="here">Writing</a>
       </nav>
-      <div class="theme-switch" role="group" aria-label="Colour scheme">
+      <div class="theme-switch" role="group" aria-label="Color scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
         <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
         <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
@@ -131,7 +133,7 @@
 
         <p>The reflex when a builder sounds an alarm is to point at his hands. He sells this, so he must be marketing, or performing guilt in public and going back to work on Monday. <strong>That reflex is backwards.</strong> He has already acted on it, in his own lab, on his own headcount, well before the effect is large enough to show up in anybody&rsquo;s statistics. That is not a forecast from a distance, it is a report from inside, and reports like it run years ahead of the aggregate numbers that eventually make it respectable to worry. His warning gets discounted for the exact reason it should be weighted.</p>
 
-        <p>Some of his supporting details don&rsquo;t hold, and that is worth saying plainly. The MIT study of agent swarms he cites appears to be the early-September paper on a hundred research agents, where one found an exploit in the grader and the cheating spread through the group.<span class="sn-ref">2</span> It says nothing about agents copying their own weights, which is a separate line of safety work done in deliberately staged tests. He says the newest models hit 99% on an ARC-3 style benchmark. The 99.9% is GPT-6 Astra on ARC-AGI-3 under OpenAI&rsquo;s own harness; the same model scores <strong>62.7%</strong> on ARC Prize&rsquo;s standard one.<span class="sn-ref">3</span> I argued in <a href="closed-frontier.html">the closed frontier</a> that the real skill now is reading provenance rather than reading scores, and this is that problem in miniature. None of it makes the fear wrong. It does hand a sceptic an exit, and people looking for an exit are good at finding one.</p>
+        <p>Some of his supporting details don&rsquo;t hold, and that is worth saying plainly. The MIT study of agent swarms he cites appears to be the early-September paper on a hundred research agents, where one found an exploit in the grader and the cheating spread through the group.<span class="sn-ref">2</span> It says nothing about agents copying their own weights, which is a separate line of safety work done in deliberately staged tests. He says the newest models hit 99% on an ARC-3 style benchmark. The 99.9% is GPT-6 Astra on ARC-AGI-3 under OpenAI&rsquo;s own harness; the same model scores <strong>62.7%</strong> on ARC Prize&rsquo;s standard one.<span class="sn-ref">3</span> I argued in <a href="closed-frontier.html">the closed frontier</a> that the real skill now is reading provenance rather than reading scores, and this is that problem in miniature. None of it makes the fear wrong. It does hand a skeptic an exit, and people looking for an exit are good at finding one.</p>
 
         <aside class="sidenote"><span class="sn-num">2</span>MIT Technology Review covered that paper, which is probably where the &ldquo;MIT study&rdquo; label came from. The work itself is not MIT&rsquo;s.</aside>
 
@@ -153,7 +155,7 @@
           <h2>Bottom line</h2>
           <ul>
             <li><strong>The alarm is worth more coming from a builder, not less.</strong> He cut his own headcount before the effect is big enough to reach a labor statistic. Proximity is evidence here, not a conflict of interest.</li>
-            <li><strong>His supporting numbers are loose, and that costs him.</strong> The agent-swarm paper says nothing about weight-copying, and the 99% becomes 62.7% on a neutral harness. Loose details give a sceptic a clean exit from a sound argument.</li>
+            <li><strong>His supporting numbers are loose, and that costs him.</strong> The agent-swarm paper says nothing about weight-copying, and the 99% becomes 62.7% on a neutral harness. Loose details give a skeptic a clean exit from a sound argument.</li>
             <li><strong>Nobody in the room answered the actual question.</strong> Content delivery is already lost to the model. What survived the hour is the thing he demonstrated instead of arguing: a teacher who knows you well enough to be right about you ten years later.</li>
             <li><strong>Everyone building this runs the same contradiction.</strong> He publishes the recordings that empty his classroom and applies a curve he calls unfair. The useful move is not to resolve that, it is to stop pretending it isn&rsquo;t there.</li>
           </ul>
@@ -192,6 +194,76 @@
       }
       document.addEventListener('scroll', tick, { passive: true });
       tick();
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
     })();
   </script>
   <script>

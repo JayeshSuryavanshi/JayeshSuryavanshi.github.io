@@ -8,6 +8,8 @@
   <meta name="robots" content="noindex">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -16,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
   <!-- GitHub Pages serves this file at whatever path was requested, so every
        asset and link here is root-absolute -->
-  <link rel="stylesheet" href="/blog/blog.css?v=5">
+  <link rel="stylesheet" href="/blog/blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -36,6 +38,8 @@
     .index-hero p a { border-bottom: 1px solid var(--link-line); }
     .index-hero p a:hover { border-bottom-color: var(--accent-2); }
     .index-hero { padding-bottom: 30px; }
+    /* no footer here, so the cards keep the bottom room the footer gives other pages */
+    .post-list { margin-bottom: 76px; }
   </style>
 </head>
 <body>
@@ -47,18 +51,89 @@
         <a href="/">Home</a>
         <a href="/blog/">Writing</a>
       </nav>
+      <div class="theme-switch" role="group" aria-label="Color scheme">
+        <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
+        <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
+        <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
+      </div>
     </header>
 
-    <main class="index-hero">
+    <main id="main">
+    <section class="index-hero">
       <h1>Page not found</h1>
       <p>There is no page at this address. The link may be old or mistyped. Start from the <a href="/">homepage</a>, or browse the <a href="/blog/">writing</a>.</p>
+    </section>
+
+    <ul class="post-list">
+      <li>
+        <a class="card" href="/blog/simulator-was-the-experiment.html">
+          <div class="p-meta">Research Notes &middot; Sep 2026</div>
+          <h2 class="p-title">The simulator was the experiment</h2>
+          <p class="p-dek">I built an RL environment for fraud investigation and trained a policy that beat every baseline I had, including a hand-written rule. Then I ran it on the real regime break, and the advantage did not show up. The agent was never the thing being tested. Corrected September 25, 2026.</p>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/blog/wrong-opponent.html" aria-labelledby="t-wrong-opponent">
+          <div class="p-meta">Field Guide &middot; Sep 2026</div>
+          <h2 class="p-title" id="t-wrong-opponent">The wrong opponent</h2>
+          <p class="p-dek">Jev ships with two headline multipliers, 193.6x faster and 444.6x cheaper, and neither one names what it is faster and cheaper than. Arithmetic on TypeSafe&rsquo;s own published cells pins them to two different opponents, one of which is more accurate than Jev. Sixteen configurations on that chart and not a single small model. I did the sums, then ran the missing baseline on gold labels on my own laptop, and found that the most-cited evidence against small encoders is largely a truncation bug.</p>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/blog/browser-as-peripheral.html" aria-labelledby="t-browser-as-peripheral">
+          <div class="p-meta">Field Guide &middot; Sep 2026</div>
+          <h2 class="p-title" id="t-browser-as-peripheral">The browser is a peripheral</h2>
+          <p class="p-dek">Claude Code can drive Chrome, and the documentation covers what it can do without saying how. Reading the shipped binary, the extension bundle and the tool server&rsquo;s own session logs turns up five hops from tool call to page, two transports where I expected one, a screenshot frame that disagrees with its own declared scale, and the part where your page text leaves the machine.</p>
+        </a>
+      </li>
+    </ul>
     </main>
 
-    <footer class="post-foot">
-      <a class="back" href="/">← Back to home</a>
-    </footer>
-
   </div>
+  <script>
+    /* the scheme switcher. the pinned choice lives in localStorage, and every
+       access is guarded because storage throws in private mode and when site
+       data is blocked. with nothing pinned the buttons show whichever scheme
+       the operating system is asking for, and follow it if it changes */
+    (function () {
+      var KEY = 'blog-theme';
+      var OK = { light: 1, dark: 1, reading: 1 };
+      var root = document.documentElement;
+      var group = document.querySelector('.theme-switch');
+      if (!group) { return; }
+      var buttons = group.querySelectorAll('button[data-theme-set]');
+      var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+      /* the attribute on <html> is the source of truth, not storage: the boot
+         script has already copied any pinned choice onto it, and when storage
+         is unavailable the buttons still agree with what the page is showing */
+      function pinned() { var t = root.getAttribute('data-theme'); return OK[t] ? t : null; }
+      function mark() {
+        var active = pinned() || ((mq && mq.matches) ? 'dark' : 'light');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].setAttribute('aria-pressed',
+            buttons[i].getAttribute('data-theme-set') === active ? 'true' : 'false');
+        }
+      }
+      function pick(name) {
+        if (!OK[name]) { return; }
+        root.setAttribute('data-theme', name);
+        try { localStorage.setItem(KEY, name); } catch (e) {}
+        mark();
+      }
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+          pick(this.getAttribute('data-theme-set'));
+        });
+      }
+      mark();
+      if (mq) {
+        var follow = function () { if (!pinned()) { mark(); } };
+        if (mq.addEventListener) { mq.addEventListener('change', follow); }
+        else if (mq.addListener) { mq.addListener(follow); }
+      }
+    })();
+  </script>
 </body>
 
 </html>

@@ -27,6 +27,8 @@
   <meta name="twitter:image:alt" content="The open-weights frontier, mid-2026: a study by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -51,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=5">
+  <link rel="stylesheet" href="blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -78,7 +80,7 @@
         <a href="../">Home</a>
         <a href="./" class="here">Writing</a>
       </nav>
-      <div class="theme-switch" role="group" aria-label="Colour scheme">
+      <div class="theme-switch" role="group" aria-label="Color scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
         <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
         <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
@@ -88,8 +90,8 @@
     <main id="main">
     <article>
       <p class="kicker">Field Guide</p>
-      <h1 class="title">The open-weights frontier, mid-2026</h1>
-      <p class="dek">Inkling landed in a crowded field. Here's how it stacks up against GLM&nbsp;5.2, Kimi&nbsp;K2.7, DeepSeek&nbsp;V4, and Nemotron&nbsp;3&nbsp;Ultra, and who actually wins what.</p>
+      <h1 class="title">The open-weights frontier, mid-&#8288;2026</h1>
+      <p class="dek">Inkling landed in a crowded field. Here&rsquo;s how it stacks up against GLM&nbsp;5.2, Kimi&nbsp;K2.7, DeepSeek&nbsp;V4, and Nemotron&nbsp;3&nbsp;Ultra, and who actually wins what.</p>
       <div class="byline">
         <span>By <strong>Jayesh Suryavanshi</strong></span>
         <span class="sep">·</span>
@@ -100,12 +102,12 @@
 
       <div class="prose">
 
-        <p class="lead">Sometime in the first half of 2026, the open-weights tier stopped being a discount rack. On the benchmarks that used to separate the frontier (graduate-level science, competition math) the best open models now sit <em>inside</em> the closed-frontier band. The gap that remains is narrower and more specific than the "open is a generation behind" story suggests. After <a href="inkling.html">taking apart Inkling</a>, I lined up the five open models that actually matter this summer and checked the receipts.</p>
+        <p class="lead">Sometime in the first half of 2026, the open-weights tier stopped being a discount rack. On the benchmarks that used to separate the frontier (graduate-level science, competition math) the best open models now sit <em>inside</em> the closed-frontier band. The gap that remains is narrower and more specific than the &ldquo;open is a generation behind&rdquo; story suggests. After <a href="inkling.html">taking apart Inkling</a>, I lined up the five open models that actually matter this summer and checked the receipts.</p>
 
         <div class="callout">
           <div class="label">A word on the numbers</div>
-          <p>Almost every headline score below is <strong>vendor-reported</strong>, and the vendors don't run the same harness. Inkling reports at <code>effort=0.99</code> (its max thinking budget). GLM quotes Terminal-Bench at 81.0 where Artificial&nbsp;Analysis independently measures 77.9. GLM's coding flagship is SWE-bench <em>Pro</em>, not the <em>Verified</em> everyone else quotes. Kimi&nbsp;K2.7 has <strong>no independent public-suite numbers at all</strong>.</p>
-          <p>Where I could, I anchored to independent sources: the Artificial&nbsp;Analysis Intelligence Index, and NIST/CAISI's evaluation. Treat ±2-3&nbsp;points as noise, and read "vendor" as an upper bound. The real skill in mid-2026 isn't reading scores; it's reading <em>provenance</em>.</p>
+          <p>Almost every headline score below is <strong>vendor-reported</strong>, and the vendors don&rsquo;t run the same harness. Inkling reports at <code>effort=0.99</code> (its max thinking budget). GLM quotes Terminal-Bench at 81.0 where Artificial&nbsp;Analysis independently measures 77.9. GLM&rsquo;s coding flagship is SWE-bench <em>Pro</em>, not the <em>Verified</em> everyone else quotes. Kimi&nbsp;K2.7 has <strong>no independent public-suite numbers at all</strong>.</p>
+          <p>Where I could, I anchored to independent sources: the Artificial&nbsp;Analysis Intelligence Index, and NIST/CAISI&rsquo;s evaluation. Treat ±2-3&nbsp;points as noise, and read &ldquo;vendor&rdquo; as an upper bound. The real skill in mid-2026 isn&rsquo;t reading scores; it&rsquo;s reading <em>provenance</em>.</p>
         </div>
 
         <h2>The cast</h2>
@@ -113,7 +115,7 @@
         <ul>
           <li><strong>GLM&nbsp;5.2</strong> (Zhipu&nbsp;AI, MIT): the current <strong>open intelligence leader</strong>. First open model to top the Artificial&nbsp;Analysis Intelligence Index (51). Text-only, tuned hard for agentic coding. ~753B/40B MoE.</li>
           <li><strong>Kimi&nbsp;K2.7</strong> (Moonshot, modified-MIT), the trillion-param (1T/32B) autonomy specialist: 12-hour agent runs, 300-agent swarms. K2.7 is a coding-focused point release trained with MuonClip.</li>
-          <li><strong>DeepSeek&nbsp;V4</strong> (MIT): the <strong>efficiency and factuality king</strong>. A 1.6T/49B "Pro" and a self-hostable 285B/13B "Flash," built around genuinely cheap 1M-token context.</li>
+          <li><strong>DeepSeek&nbsp;V4</strong> (MIT): the <strong>efficiency and factuality king</strong>. A 1.6T/49B &ldquo;Pro&rdquo; and a self-hostable 285B/13B &ldquo;Flash,&rdquo; built around genuinely cheap 1M-token context.</li>
           <li><strong>Nemotron&nbsp;3&nbsp;Ultra</strong> (NVIDIA, OpenMDW), the architecture outlier: a 550B/55B <strong>hybrid Mamba-Attention</strong> MoE, pretrained natively in NVFP4, sold on throughput and token efficiency. Fully open: data and recipes too.</li>
           <li><strong>Inkling</strong> (Thinking&nbsp;Machines, Apache&nbsp;2.0): the only true <strong>multimodal</strong> one: 975B/41B, native audio, published safety, and Tinker fine-tuning.</li>
         </ul>
@@ -121,35 +123,35 @@
         <h2>Who wins what</h2>
 
         <h3>Raw intelligence → GLM 5.2</h3>
-        <p>On the one genuinely independent cross-model yardstick, Artificial&nbsp;Analysis's Intelligence Index, the ranking is <strong>GLM&nbsp;5.2 (51) &gt; Nemotron&nbsp;3&nbsp;Ultra (48) &gt; Kimi&nbsp;K2.6 (44) &gt; Inkling (41)</strong>. GLM is the first open model ever to lead that board, and it trails only the closed frontier.<span class="sn-ref">1</span> DeepSeek&nbsp;V4 is a preview and wasn't cleanly indexed at the time, but its component scores land it in the same top cluster.</p>
+        <p>On the one genuinely independent cross-model yardstick, Artificial&nbsp;Analysis&rsquo;s Intelligence Index, the ranking is <strong>GLM&nbsp;5.2 (51) &gt; Nemotron&nbsp;3&nbsp;Ultra (48) &gt; Kimi&nbsp;K2.6 (44) &gt; Inkling (41)</strong>. GLM is the first open model ever to lead that board, and it trails only the closed frontier.<span class="sn-ref">1</span> DeepSeek&nbsp;V4 is a preview and wasn&rsquo;t cleanly indexed at the time, but its component scores land it in the same top cluster.</p>
 
         <aside class="sidenote"><span class="sn-num">1</span>For reference, the closed leaders on the same index: Claude&nbsp;Opus&nbsp;4.8 at 56, GPT-5.5 at 53.</aside>
 
         <h3>Agentic coding → GLM 5.2 (with an asterisk)</h3>
-        <p>This is where I had to walk back my own starting assumption. "Chinese labs own open coding" is <em>directionally</em> true, but only for GLM. GLM leads Terminal-Bench&nbsp;2.1<span class="sn-ref">2</span> and SWE-bench&nbsp;Pro (62.1). But the benchmarks don't line up cleanly: GLM never published SWE-bench <em>Verified</em>, and <strong>Kimi&nbsp;K2.7's Verified is only 60.4, below both Nemotron (71.9) and Inkling (77.6)</strong>. So "Kimi&nbsp;K2.7 beats the field on coding" is just wrong on the one apples-to-apples number that exists. Kimi's real edge is <em>autonomy</em> (12-hour runs and agent swarms), not raw SWE-bench.</p>
+        <p>This is where I had to walk back my own starting assumption. &ldquo;Chinese labs own open coding&rdquo; is <em>directionally</em> true, but only for GLM. GLM leads Terminal-Bench&nbsp;2.1<span class="sn-ref">2</span> and SWE-bench&nbsp;Pro (62.1). But the benchmarks don&rsquo;t line up cleanly: GLM never published SWE-bench <em>Verified</em>, and <strong>Kimi&nbsp;K2.7&rsquo;s Verified is only 60.4, below both Nemotron (71.9) and Inkling (77.6)</strong>. So &ldquo;Kimi&nbsp;K2.7 beats the field on coding&rdquo; is just wrong on the one apples-to-apples number that exists. Kimi&rsquo;s real edge is <em>autonomy</em> (12-hour runs and agent swarms), not raw SWE-bench.</p>
 
         <aside class="sidenote"><span class="sn-num">2</span>77.9 measured independently by Artificial&nbsp;Analysis vs 81.0 vendor-reported: a textbook provenance gap.</aside>
 
         <h3>Math &amp; science → a near-tie at the ceiling</h3>
-        <p>Effectively saturated. GLM posts AIME&nbsp;2026 99.2 and GPQA&nbsp;Diamond 91.2; Kimi 96.4 / 90.5; DeepSeek n/a / 90.1; Inkling 97.1 / 87.2. The headline here isn't the winner, it's that <strong>open GPQA scores now overlap the closed band</strong>. GLM (91.2) and DeepSeek (90.1) nearly match Claude&nbsp;Opus&nbsp;4.8 (93.6) and trail only Gemini&nbsp;3.1&nbsp;Pro (94.3). The "distinct lower tier" is gone on knowledge benchmarks.</p>
+        <p>Effectively saturated. GLM posts AIME&nbsp;2026 99.2 and GPQA&nbsp;Diamond 91.2; Kimi 96.4 / 90.5; DeepSeek n/a / 90.1; Inkling 97.1 / 87.2. The headline here isn&rsquo;t the winner, it&rsquo;s that <strong>open GPQA scores now overlap the closed band</strong>. GLM (91.2) and DeepSeek (90.1) nearly match Claude&nbsp;Opus&nbsp;4.8 (93.6) and trail only Gemini&nbsp;3.1&nbsp;Pro (94.3). The &ldquo;distinct lower tier&rdquo; is gone on knowledge benchmarks.</p>
 
         <h3>Factuality &amp; calibration → DeepSeek V4 (and a correction)</h3>
-        <p>DeepSeek&nbsp;V4&nbsp;Pro posts the best raw open factuality by a wide margin (SimpleQA-Verified <strong>57.9</strong> vs Inkling's 43.9), roughly 20 points above prior open baselines. On the softer "does it hallucinate" axis (AA-Omniscience), the order is <strong>Kimi&nbsp;K2.6 (6.0) &gt; GLM&nbsp;5.2 (4.0) &gt; Inkling (+2.1) &gt; Nemotron (−1)</strong>.</p>
+        <p>DeepSeek&nbsp;V4&nbsp;Pro posts the best raw open factuality by a wide margin (SimpleQA-Verified <strong>57.9</strong> vs Inkling&rsquo;s 43.9), roughly 20 points above prior open baselines. On the softer &ldquo;does it hallucinate&rdquo; axis (AA-Omniscience), the order is <strong>Kimi&nbsp;K2.6 (6.0) &gt; GLM&nbsp;5.2 (4.0) &gt; Inkling (+2.1) &gt; Nemotron (−1)</strong>.</p>
         <div class="callout">
           <div class="label">Correcting my own record</div>
-          <p>In the Inkling write-up I called it a factuality leader among open models. That's too strong. On AA-Omniscience, Inkling (+2.1) trails Kimi&nbsp;K2.6 and GLM&nbsp;5.2. Artificial&nbsp;Analysis's exact words are that it sits <em>"below leading open weights models but above other U.S. open weights models."</em> So Inkling leads the <strong>US</strong> open subset on calibration, not the whole field. Worth fixing.</p>
+          <p>In the Inkling write-up I called it a factuality leader among open models. That&rsquo;s too strong. On AA-Omniscience, Inkling (+2.1) trails Kimi&nbsp;K2.6 and GLM&nbsp;5.2. Artificial&nbsp;Analysis&rsquo;s exact words are that it sits <em>&ldquo;below leading open weights models but above other U.S. open weights models.&rdquo;</em> So Inkling leads the <strong>US</strong> open subset on calibration, not the whole field. Worth fixing.</p>
         </div>
 
         <h3>Multimodality &amp; audio → Inkling, uncontested</h3>
-        <p>The one row nobody else shows up for. GLM, DeepSeek, and Nemotron are <strong>text-only</strong>; Kimi K2.6 has a vision encoder (MoonViT, MMMU-Pro 79.4) but no audio. Inkling is the only natively omni-modal model of the five (text, image, audio, and video in) and the only one with a published safety suite (FORTRESS 78.0). If your product touches voice or images, this isn't a benchmark comparison; it's the only option on the list.</p>
+        <p>The one row nobody else shows up for. GLM, DeepSeek, and Nemotron are <strong>text-only</strong>; Kimi K2.6 has a vision encoder (MoonViT, MMMU-Pro 79.4) but no audio. Inkling is the only natively omni-modal model of the five (text, image, audio, and video in) and the only one with a published safety suite (FORTRESS 78.0). If your product touches voice or images, this isn&rsquo;t a benchmark comparison; it&rsquo;s the only option on the list.</p>
 
         <h3>Efficiency, footprint &amp; openness → DeepSeek / Nemotron</h3>
-        <p>Two different kinds of efficient. <strong>DeepSeek</strong> wins cost: $0.87/M output<span class="sn-ref">3</span> and genuinely cheap 1M context (~10% of V3's KV cache), and its 285B Flash is the only variant here you can realistically self-host. <strong>Nemotron</strong> wins throughput and footprint via its hybrid Mamba design and native NVFP4, and it's the <em>most</em> open of the five: weights, training data, and recipes all under OpenMDW. Everyone else is a ~1-2&nbsp;TB-VRAM datacenter animal.</p>
+        <p>Two different kinds of efficient. <strong>DeepSeek</strong> wins cost: $0.87/M output<span class="sn-ref">3</span> and genuinely cheap 1M context (~10% of V3&rsquo;s KV cache), and its 285B Flash is the only variant here you can realistically self-host. <strong>Nemotron</strong> wins throughput and footprint via its hybrid Mamba design and native NVFP4, and it&rsquo;s the <em>most</em> open of the five: weights, training data, and recipes all under OpenMDW. Everyone else is a ~1-2&nbsp;TB-VRAM datacenter animal.</p>
 
         <aside class="sidenote"><span class="sn-num">3</span>That $0.87 is a promotional rate; list price is $3.48/M, still the cheapest on the board.</aside>
 
         <h2>The scoreboard</h2>
-        <p>Best open value in each row is <strong>bold</strong>. "v" = vendor-reported, "ind" = independent. Read it with the caveats above: this is a map, not a photo finish.</p>
+        <p>Best open value in each row is <strong>bold</strong>. &ldquo;v&rdquo; = vendor-reported, &ldquo;ind&rdquo; = independent. Read it with the caveats above: this is a map, not a photo finish.</p>
 
         <div class="table-scroll" tabindex="0" role="region" aria-label="Open-weights scoreboard">
         <table>
@@ -157,7 +159,7 @@
             <th>Dimension</th><th>Inkling</th><th>GLM&nbsp;5.2</th><th>Kimi&nbsp;K2.7</th><th>DeepSeek&nbsp;V4</th><th>Nemotron&nbsp;3&nbsp;Ultra</th>
           </tr></thead>
           <tbody>
-            <tr><td>AA Intelligence Index <span style="color:var(--faint)">(ind)</span></td><td>41</td><td class="win"><strong>51</strong></td><td>44*</td><td>n/a</td><td>48</td></tr>
+            <tr><td>AA Intelligence Index <span class="muted">(ind)</span></td><td>41</td><td class="win"><strong>51</strong></td><td>44*</td><td>n/a</td><td>48</td></tr>
             <tr><td>Params (total / active)</td><td>975B / 41B</td><td>753B / 40B</td><td>1T / 32B</td><td>1.6T / 49B</td><td>550B / 55B</td></tr>
             <tr><td>Context</td><td>1M</td><td>1M</td><td>256K</td><td>1M</td><td>1M</td></tr>
             <tr><td>License</td><td>Apache 2.0</td><td>MIT</td><td>mod. MIT</td><td>MIT</td><td>OpenMDW</td></tr>
@@ -173,15 +175,15 @@
           </tbody>
         </table>
         </div>
-        <p style="font-size:14px;color:var(--faint);margin-top:-8px">* Kimi index/benchmarks are K2.6 (K2.7 has no independent numbers). DeepSeek $0.87 was a promo; list is $3.48. "n/p" = not published (often because the model is text-only or the vendor reported a different benchmark).</p>
+        <p class="table-note">* Kimi index/benchmarks are K2.6 (K2.7 has no independent numbers). DeepSeek $0.87 was a promo; list is $3.48. &ldquo;n/p&rdquo; = not published (often because the model is text-only or the vendor reported a different benchmark).</p>
 
         <h2>How to choose</h2>
         <ul>
           <li><strong>GLM&nbsp;5.2</strong>: the default pick for the strongest all-round open model and the best open agentic coder, if you can feed a ~1TB-VRAM box. Caveat: very verbose (real token cost is high despite the low per-token price), text-only.</li>
           <li><strong>DeepSeek&nbsp;V4</strong>: best cost-per-token and best open factuality, with cheap 1M context. <strong>Flash</strong> (285B/13B) is the one you can actually run yourself.</li>
           <li><strong>Kimi&nbsp;K2.7</strong>: reach for it when the job is long-horizon autonomous agents (multi-hour runs, swarms). Trust-but-verify: no independent numbers yet.</li>
-          <li><strong>Nemotron&nbsp;3&nbsp;Ultra</strong>: best throughput and self-host footprint, fully open (data + recipes), and the most interesting architecture bet. NVIDIA's answer, and the strongest US open model after GLM.</li>
-          <li><strong>Inkling</strong>: the pick when you need multimodality or native audio, published safety, and cheap LoRA specialization via Tinker, not when you're chasing raw coding SOTA.</li>
+          <li><strong>Nemotron&nbsp;3&nbsp;Ultra</strong>: best throughput and self-host footprint, fully open (data + recipes), and the most interesting architecture bet. NVIDIA&rsquo;s answer, and the strongest US open model after GLM.</li>
+          <li><strong>Inkling</strong>: the pick when you need multimodality or native audio, published safety, and cheap LoRA specialization via Tinker, not when you&rsquo;re chasing raw coding SOTA.</li>
         </ul>
 
         <hr class="rule">
@@ -190,7 +192,7 @@
           <h2>Bottom line</h2>
           <ul>
             <li><strong>The open tier caught up on knowledge and reasoning.</strong> On GPQA and AIME, the best open models now overlap the closed frontier. The gap survives mainly on the hardest agentic coding and on HLE.</li>
-            <li><strong>There's no single winner.</strong> GLM = intelligence + coding; DeepSeek = efficiency + factuality; Kimi = autonomy; Nemotron = throughput + openness; Inkling = modality + safety + customization.</li>
+            <li><strong>There&rsquo;s no single winner.</strong> GLM = intelligence + coding; DeepSeek = efficiency + factuality; Kimi = autonomy; Nemotron = throughput + openness; Inkling = modality + safety + customization.</li>
             <li><strong>Benchmarks are a mess.</strong> Vendor vs independent, effort=0.99 vs default, SWE-Pro vs Verified, and one model with no public numbers at all. The meta-skill is auditing provenance, not memorizing leaderboards.</li>
           </ul>
         </div>
@@ -225,6 +227,94 @@
       }
       document.addEventListener('scroll', tick, { passive: true });
       tick();
+    })();
+  </script>
+  <script>
+    /* a table gets the pinned-column hairline only while it really overflows
+       its box, rechecked on resize. the class is cleared before measuring
+       because the rule it enables widens the first column */
+    (function () {
+      var boxes = document.querySelectorAll('.table-scroll');
+      if (!boxes.length) { return; }
+      function check() {
+        for (var i = 0; i < boxes.length; i++) {
+          boxes[i].classList.remove('is-scrolling');
+          if (boxes[i].scrollWidth > boxes[i].clientWidth + 1) { boxes[i].classList.add('is-scrolling'); }
+        }
+      }
+      check();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(check); }
+      window.addEventListener('resize', check);
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
     })();
   </script>
   <script>

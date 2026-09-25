@@ -216,7 +216,7 @@ a:hover { color: var(--accent-2); }
   color: var(--ink);
 }
 .brand:hover { color: var(--ink); }
-.brand .dot { color: var(--accent); }
+.brand .dot { color: #f9861a; }   /* the homepage orange, a decorative period shared with the main site */
 
 .masthead nav {
   display: flex; flex-wrap: wrap; gap: 4px 6px; font-size: 14px;
@@ -291,6 +291,12 @@ a:hover { color: var(--accent-2); }
   box-shadow: var(--shadow);
 }
 .theme-switch button:focus-visible { outline-offset: 1px; }
+/* in dark the pressed pill used --surface, which is darker than the tray and
+   read as a hole. a lighter step marks it instead, auto dark then pinned */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-switch button[aria-pressed="true"] { background: var(--line-2); }
+}
+:root[data-theme="dark"] .theme-switch button[aria-pressed="true"] { background: var(--line-2); }
 
 /* =====================  post header  ==================================== */
 
@@ -471,6 +477,10 @@ hr.rule, .rule {
   color: var(--warn); font-weight: 600;
 }
 
+/* footnote under a table, set like a caption */
+.prose .table-note { margin: -14px 0 28px; font-size: 14px; line-height: 1.55; color: var(--ink-3); }
+.prose .muted { color: var(--ink-3); }
+
 /* row labels stay put while a wide table scrolls under them on a phone. the
    opaque ground is what the values slide beneath; it matches the page in
    every theme, so where nothing overflows this changes nothing. the hairline
@@ -554,9 +564,18 @@ hr.rule, .rule {
    stated twice for the same reason the dark tokens are: auto dark, then the
    pinned dark theme */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .prose figure img { background: var(--ground); border-color: #2c3440; }
+  :root:not([data-theme]) .prose figure img { background: var(--ground); border-color: #2c3440; filter: brightness(.9) contrast(.96); }
 }
-:root[data-theme="dark"] .prose figure img { background: var(--ground); border-color: #2c3440; }
+:root[data-theme="dark"] .prose figure img { background: var(--ground); border-color: #2c3440; filter: brightness(.9) contrast(.96); }
+
+/* each chart links to its full size file; the link is a frame, not an
+   underlined word */
+.prose figure > a { display: block; border-bottom: 0; cursor: zoom-in; border-radius: var(--r-md); }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
 
 .prose figcaption {
   margin-top: 12px;
@@ -682,8 +701,14 @@ hr.rule, .rule {
 .post-list a.card:hover .p-title { color: var(--accent); }
 .post-list .p-dek { margin: 0; max-width: 500px; font-size: 15.5px; line-height: 1.58; color: var(--ink-3); }
 
-/* newest post reads as the lead item once there are two columns: it keeps the
-   whole row and splits into label plus title on the left, summary on the right */
+/* =====================  line breaking  ================================
+   headings balance their lines; running text avoids a lone last word.
+   browsers without text-wrap simply wrap as before */
+
+h1.title, .prose > h2, .prose h3, .post-list .p-title, .index-hero h1 { text-wrap: balance; }
+.dek, .p-dek, .prose p, .prose li, .prose figcaption { text-wrap: pretty; }
+
+/* once there are two columns, the newest post keeps the whole row */
 @media (min-width: 1000px) {
   .post-list { grid-template-columns: 1fr 1fr; }
   .post-list li:first-child { grid-column: 1 / -1; }
@@ -716,11 +741,14 @@ hr.rule, .rule {
 
   .sidenote {
     float: right; clear: right; width: var(--rail);
-    margin: 6px calc(-1 * (var(--rail) + var(--rail-gap))) 22px 0;
+    margin: var(--sn-lift, 6px) calc(-1 * (var(--rail) + var(--rail-gap))) 22px 0;
     padding: 0 0 0 16px;
     border-left: 1px solid var(--line);
     font-size: 13.5px;
   }
+  /* the lift is measured on the screen layout; a print page wide enough for
+     the rail reflows, so it keeps the plain offset */
+  @media print { .sidenote { --sn-lift: 6px !important; } }
 }
 
 /* =====================  narrow  ========================================= */
@@ -742,6 +770,12 @@ hr.rule, .rule {
   h1.title { font-size: clamp(28px, 7.6vw, 34px); letter-spacing: -.02em; }
   .dek { font-size: 17.5px; }
   .byline { gap: 4px 18px; font-size: 13px; }
+  /* author on its own row, then date and read time together, on every post */
+  .byline > :first-child { flex-basis: 100%; }
+  .byline .sep { display: inline; margin: 0 -9px; }   /* halves the 18px column gap either side of the dot */
+  .byline > :first-child + .sep { display: none; }
+  .byline .sep-corr { display: none; }
+  .byline .byline-corr { flex-basis: 100%; }
 
   .abstract, .callout, .takeaways { padding-left: 18px; padding-right: 18px; }
   .callout { padding-left: 20px; }
@@ -754,7 +788,11 @@ hr.rule, .rule {
   .prose table { font-size: 13.5px; }
   .prose thead th { padding: 0 10px 8px; font-size: 12px; }
   .prose tbody td { padding: 10px; }
-  .table-scroll th:first-child, .table-scroll td:first-child { background: linear-gradient(to left, var(--line) 1px, var(--ground) 1px); }
+  /* the pinned-edge hairline only where the table really scrolls; a script
+     in the page sets .is-scrolling. the wider label column stops row labels
+     breaking every syllable */
+  .table-scroll.is-scrolling th:first-child, .table-scroll.is-scrolling td:first-child { background: linear-gradient(to left, var(--line) 1px, var(--ground) 1px); }
+  .table-scroll.is-scrolling td:first-child { min-width: 7.5em; }
   .prose pre { font-size: 12.5px; padding: 14px 16px; }
   .prose .code-bar { padding: 8px 12px; font-size: 11.5px; }
 

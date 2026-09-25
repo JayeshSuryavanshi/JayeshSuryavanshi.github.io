@@ -27,6 +27,8 @@
   <meta name="twitter:image:alt" content="The wrong opponent, a field guide by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -51,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=5">
+  <link rel="stylesheet" href="blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -78,7 +80,7 @@
         <a href="../">Home</a>
         <a href="./" class="here">Writing</a>
       </nav>
-      <div class="theme-switch" role="group" aria-label="Colour scheme">
+      <div class="theme-switch" role="group" aria-label="Color scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
         <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
         <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
@@ -100,17 +102,17 @@
 
       <section class="abstract" aria-label="Abstract">
         <h2>Abstract</h2>
-        <p>Jev's two headline figures, 193.6x faster and 444.6x cheaper, do not name what they are faster and cheaper than. Rounding on TypeSafe's own published cells pins them down: they are two different opponents, and the cost one scores 5.3 points above Jev. The comparison set holds sixteen frontier LLM configurations and zero small models, on a benchmark whose reference labels two frontier LLMs wrote. On the one neutral harness that ran the missing comparison, an ordinary small instruction model sits inside Jev's accuracy band, leads it on the composite intelligence score, and costs 6.1x more rather than 445x. I then ran the frozen-task baseline myself on gold labels. Their headline reproduces. But the option strings you pass turn out to be a hyperparameter: spelling the same 77 labels with underscores instead of spaces costs 35% of the context window, and forcing it through leaves accuracy untouched while degrading calibration 7.8 times. The same class of limit explains the most-cited number against small encoders, which is largely a truncation artifact.</p>
+        <p>Jev&rsquo;s two headline figures, 193.6x faster and 444.6x cheaper, do not name what they are faster and cheaper than. Rounding on TypeSafe&rsquo;s own published cells pins them down: they are two different opponents, and the cost one scores 5.3 points above Jev. The comparison set holds sixteen frontier LLM configurations and zero small models, on a benchmark whose reference labels two frontier LLMs wrote. On the one neutral harness that ran the missing comparison, an ordinary small instruction model sits inside Jev&rsquo;s accuracy band, leads it on the composite intelligence score, and costs 6.1x more rather than 445x. I then ran the frozen-task baseline myself on gold labels. Their headline reproduces. But the option strings you pass turn out to be a hyperparameter: spelling the same 77 labels with underscores instead of spaces costs 35% of the context window, and forcing it through leaves accuracy untouched while degrading calibration 7.8 times. The same class of limit explains the most-cited number against small encoders, which is largely a truncation artifact.</p>
       </section>
 
       <div class="prose">
         <p class="lead">TypeSafe released Jev a week ago and the two numbers on the homepage are 193.6x faster and 444.6x cheaper. I believe both of them, roughly, in the way you believe a number that has been rounded in a friendly direction. What I could not work out from the homepage was faster and cheaper <em>than what</em>. Neither figure names an opponent. So I went and read the benchmark they come from, did the arithmetic on the published cells, and then ran the comparison that is missing from it on my own laptop.</p>
 
-        <p>The short version: the two headlines are measured against two different models, one of which is more accurate than Jev. The comparison set contains sixteen configurations and every single one is a frontier LLM. And when somebody finally did run a small model against Jev on a neutral harness, the small model landed inside Jev's accuracy band, led it on the composite score, and the cost gap collapsed from four hundred and forty-five to about six.</p>
+        <p>The short version: the two headlines are measured against two different models, one of which is more accurate than Jev. The comparison set contains sixteen configurations and every single one is a frontier LLM. And when somebody finally did run a small model against Jev on a neutral harness, the small model landed inside Jev&rsquo;s accuracy band, led it on the composite score, and the cost gap collapsed from four hundred and forty-five to about six.</p>
 
         <div class="callout">
           <div class="label">What I ran, and what I did not</div>
-          <p>I never created a TypeSafe account, so every claim here about Jev itself is read from published material rather than tested by me: their eval site, their docs, their launch post, and two independent benchmarks. The arithmetic on their published table is mine and I show it. The only thing I ran with my own hands is the open reproduction of Jev's shape, on gold labels, on an M1 Pro. That part is first person and the numbers are in section four.</p>
+          <p>I never created a TypeSafe account, so every claim here about Jev itself is read from published material rather than tested by me: their eval site, their docs, their launch post, and two independent benchmarks. The arithmetic on their published table is mine and I show it. The only thing I ran with my own hands is the open reproduction of Jev&rsquo;s shape, on gold labels, on an M1 Pro. That part is first person and the numbers are in section four.</p>
         </div>
 
         <h2>What the headline is measured against</h2>
@@ -119,35 +121,35 @@
 
         <blockquote>For this eval, the reference labels are generated via an average of the responses of GPT-6 Astra and Claude Fable 5.1, both at high thinking, answering every question in the harness.</blockquote>
 
-        <p>There is no ground truth. "Accuracy" means agreement with what two frontier models said the answer was. TypeSafe is explicit about why, and the reasoning is defensible: <em>"Instead of debating the correctness of the harness and labels, we assume that the code is correct, and measure against the current smartest large models."</em> If your actual question is "can I swap out my Opus call for this," then agreement with Opus is the metric you want. It is a migration-risk number, and it is honest about being one.<span class="sn-ref">1</span></p>
+        <p>There is no ground truth. &ldquo;Accuracy&rdquo; means agreement with what two frontier models said the answer was. TypeSafe is explicit about why, and the reasoning is defensible: <em>&ldquo;Instead of debating the correctness of the harness and labels, we assume that the code is correct, and measure against the current smartest large models.&rdquo;</em> If your actual question is &ldquo;can I swap out my Opus call for this,&rdquo; then agreement with Opus is the metric you want. It is a migration-risk number, and it is honest about being one.<span class="sn-ref">1</span></p>
 
-        <aside class="sidenote"><span class="sn-num">1</span>They also flag the direction of the bias themselves: <em>"We use the average of GPT-6 Astra and Fable 5.1 as the reference answer, which biases answers towards OpenAI and Anthropic's models,"</em> and then <em>"We likely underestimate the relative performance of our model and DeepSeek's models."</em> That is a vendor arguing against its own scoreboard, which I have not seen often.</aside>
+        <aside class="sidenote"><span class="sn-num">1</span>They also flag the direction of the bias themselves: <em>&ldquo;We use the average of GPT-6 Astra and Fable 5.1 as the reference answer, which biases answers towards OpenAI and Anthropic&rsquo;s models,&rdquo;</em> and then <em>&ldquo;We likely underestimate the relative performance of our model and DeepSeek&rsquo;s models.&rdquo;</em> That is a vendor arguing against its own scoreboard, which I have not seen often.</aside>
 
-        <p>The problem is who else is on the chart. I counted the opponents: sixteen configurations, all of them frontier LLMs, run either through TypeSafe's own wrapper or as one-shot prompts. No encoder. No BERT-family model. No fitted classifier. No small instruction model. Nothing that a team with labelled data would actually reach for.</p>
+        <p>The problem is who else is on the chart. I counted the opponents: sixteen configurations, all of them frontier LLMs, run either through TypeSafe&rsquo;s own wrapper or as one-shot prompts. No encoder. No BERT-family model. No fitted classifier. No small instruction model. Nothing that a team with labeled data would actually reach for.</p>
 
-        <p>Which is odd, because TypeSafe's own cookbook tells <em>you</em> to add TF-IDF and embedding baselines before trusting a result. The advice is right. It just was not taken on the launch benchmark.</p>
+        <p>Which is odd, because TypeSafe&rsquo;s own cookbook tells <em>you</em> to add TF-IDF and embedding baselines before trusting a result. The advice is right. It just was not taken on the launch benchmark.</p>
 
         <h2>Two headlines, two opponents</h2>
 
-        <p>Jev's line on the aggregate chart is 67.8% agreement at $0.0004 and 0.4 seconds per case. Those are rounded, which turns out to matter, because you can use the rounding to work out which opponent each headline is talking about.</p>
+        <p>Jev&rsquo;s line on the aggregate chart is 67.8% agreement at $0.0004 and 0.4 seconds per case. Those are rounded, which turns out to matter, because you can use the rounding to work out which opponent each headline is talking about.</p>
 
-        <p>Take the cost claim. 444.6x means Jev's true mean cost is the opponent's cost divided by 444.6. Rounding bounds Jev to somewhere in $0.000350 to $0.000450. Of the sixteen opponents, exactly one lands inside that window: Opus 5 on the workflow route, at $0.17605, which implies $0.000396. The next nearest candidate implies $0.000451 and falls outside. So the cheaper-by-444.6x number is against Opus 5.</p>
+        <p>Take the cost claim. 444.6x means Jev&rsquo;s true mean cost is the opponent&rsquo;s cost divided by 444.6. Rounding bounds Jev to somewhere in $0.000350 to $0.000450. Of the sixteen opponents, exactly one lands inside that window: Opus 5 on the workflow route, at $0.17605, which implies $0.000396. The next nearest candidate implies $0.000451 and falls outside. So the cheaper-by-444.6x number is against Opus 5.</p>
 
         <p>Now the speed claim. 193.6x against a 0.4 second mean bounds Jev to 0.375 to 0.475 seconds, and only two opponents have latencies consistent with that: Sonnet 5 on the workflow route at 78.1 seconds, or DeepSeek v4 pro at 86.5. It cannot be Opus 5, which works out to 88.9x on time, not 193.6x.</p>
 
         <div class="callout">
-          <div class="label">Two headlines, two opponents</div>
-          <p><strong>444.6x cheaper</strong> is against Opus 5, which scores 73.1% on TypeSafe's own chart, 5.3 points <em>above</em> Jev. <strong>193.6x faster</strong> is against Sonnet 5 or DeepSeek v4 pro, which cannot be the same opponent, because Opus 5 works out to 88.9x on time.</p>
+          <div class="label">In short</div>
+          <p><strong>444.6x cheaper</strong> is against Opus 5, which scores 73.1% on TypeSafe&rsquo;s own chart, 5.3 points <em>above</em> Jev. <strong>193.6x faster</strong> is against Sonnet 5 or DeepSeek v4 pro, which cannot be the same opponent, because Opus 5 works out to 88.9x on time.</p>
         </div>
 
-        <p>Nothing here is fabricated and I want to be careful about that. Every number I just used is TypeSafe's own, and they say out loud that <em>"we expect that these are on the higher end of real world gains."</em> The charge is not that the figures are false. It is that a multiplier without a named opponent is not a measurement, and that these two were picked from opposite ends of a table.</p>
+        <p>Nothing here is fabricated and I want to be careful about that. Every number I just used is TypeSafe&rsquo;s own, and they say out loud that <em>&ldquo;we expect that these are on the higher end of real world gains.&rdquo;</em> The charge is not that the figures are false. It is that a multiplier without a named opponent is not a measurement, and that these two were picked from opposite ends of a table.</p>
 
         <p>Watch how far the number moves if you slide the opponent along that same table, using the same published cells:</p>
 
         <div class="table-scroll">
           <table>
             <thead>
-              <tr><th>Opponent on TypeSafe's chart</th><th>Its accuracy</th><th>Cheaper by</th><th>Faster by</th></tr>
+              <tr><th>Opponent on TypeSafe&rsquo;s chart</th><th>Its accuracy</th><th>Cheaper by</th><th>Faster by</th></tr>
             </thead>
             <tbody>
               <tr><td>GPT-5.6 Luna</td><td>1 pt below Jev</td><td class="win">8.2x</td><td class="win">30.4x</td></tr>
@@ -161,31 +163,31 @@
 
         <p>Two orders of magnitude, same model, same benchmark, same day. The green row is the opponent closest to Jev on accuracy, which is the comparison a buyer actually wants. The amber row is the one that produces the biggest number. Pick your opponent and you pick your headline.</p>
 
-        <p>One more thing about that benchmark: 691 of the 711 cases are not published, the harness is not released, and there are no token counts, no hardware, no batch sizes, no seeds and no error bars. Every cost cell carries <code>"basis": "estimated_uncached"</code> against a pricing revision hash with no price table behind it. So the cost axis is a model nobody outside the company can recompute. TypeSafe also notes that their timings are <em>"generally run from our laptops on the West Coast."</em></p>
+        <p>One more thing about that benchmark: 691 of the 711 cases are not published, the harness is not released, and there are no token counts, no hardware, no batch sizes, no seeds and no error bars. Every cost cell carries <code>"basis": "estimated_uncached"</code> against a pricing revision hash with no price table behind it. So the cost axis is a model nobody outside the company can recompute. TypeSafe also notes that their timings are <em>&ldquo;generally run from our laptops on the West Coast.&rdquo;</em></p>
 
         <h2>The opponent nobody ran</h2>
 
         <p>Someone did run the missing comparison. JevBench is an MIT-licensed harness by Benchmark Heaven, unaffiliated with TypeSafe, and version 1.3.0 scores 534 frozen typed decisions across four axes at equal weight: intelligence, calibration, speed and cost.<span class="sn-ref">2</span></p>
 
-        <aside class="sidenote"><span class="sn-num">2</span>Quote the version if you cite it. The aggregate moved from 75.3 at launch to 74.4 in v1.3.0, and v1 costs were recomputed between releases. The author also adjusts self-hosted latencies by doubling and adding 0.15 s, and says plainly that this is "an assumption, not a measurement."</aside>
+        <aside class="sidenote"><span class="sn-num">2</span>Quote the version if you cite it. The aggregate moved from 75.3 at launch to 74.4 in v1.3.0, and v1 costs were recomputed between releases. The author also adjusts self-hosted latencies by doubling and adding 0.15 s, and says plainly that this is &ldquo;an assumption, not a measurement.&rdquo;</aside>
 
-        <p>Jev takes first place overall at 74.4. That is a real result and it is the headline of the leaderboard. But look at the intelligence column on its own and the top row is not Jev. It is GPT-5.6 Luna at low reasoning effort, scoring 95.3 against Jev's 85.7. The benchmark's author puts it more plainly than I would:</p>
+        <p>Jev takes first place overall at 74.4. That is a real result and it is the headline of the leaderboard. But look at the intelligence column on its own and the top row is not Jev. It is GPT-5.6 Luna at low reasoning effort, scoring 95.3 against Jev&rsquo;s 85.7. The benchmark&rsquo;s author puts it more plainly than I would:</p>
 
         <blockquote>An ordinary small instruction model is not out of its depth here. GPT-5.6 Luna (low reasoning effort) reaches 97.1%. What the purpose-built models buy you shows up in the other four columns, not in accuracy.</blockquote>
 
-        <p>Luna finishes fourteenth overall for one reason: it costs $0.2419 per thousand decisions against Jev's $0.0399. That is a <strong>6.1x</strong> gap. Not 445x. Six.</p>
+        <p>Luna finishes fourteenth overall for one reason: it costs $0.2419 per thousand decisions against Jev&rsquo;s $0.0399. That is a <strong>6.1x</strong> gap. Not 445x. Six.</p>
 
-        <p>To be fair to Jev on the raw accuracy figure, the author's own instruction is to <em>"treat the first few rows as a group, not a podium,"</em> because Luna's 97.1% and Jev's 96.3% have overlapping confidence intervals. Read it that way and the claim is not that Luna wins, it is that a cheap general model is already inside the same band. On the composite intelligence score across 534 decisions the gap is wider and the ordering is not in doubt.</p>
+        <p>To be fair to Jev on the raw accuracy figure, the author&rsquo;s own instruction is to <em>&ldquo;treat the first few rows as a group, not a podium,&rdquo;</em> because Luna&rsquo;s 97.1% and Jev&rsquo;s 96.3% have overlapping confidence intervals. Read it that way and the claim is not that Luna wins, it is that a cheap general model is already inside the same band. On the composite intelligence score across 534 decisions the gap is wider and the ordering is not in doubt.</p>
 
         <p>That is the whole argument of this piece in one comparison. Jev is genuinely fast and genuinely cheap and the parallelism is genuinely the product, and none of that requires a 445x number. Against an opponent that a sensible engineer would actually consider, the advantage is single digit on cost, and on the composite intelligence score Jev is the one <em>behind</em>.</p>
 
         <h2>I ran the frozen-task baseline myself</h2>
 
-        <p>There is a third regime nobody's leaderboard covers: you have one task, it is not changing, and you own labels for it. That is most classification work in production. For that case the opponent is a small supervised encoder, and I wanted a number I had measured rather than read.</p>
+        <p>There is a third regime nobody&rsquo;s leaderboard covers: you have one task, it is not changing, and you own labels for it. That is most classification work in production. For that case the opponent is a small supervised encoder, and I wanted a number I had measured rather than read.</p>
 
-        <p>So I pulled <code>com-kotobalabs/open-jev-deberta-v3-large</code>, an open reproduction of Jev's <em>shape</em> (one state, many typed questions, one forward pass) built by an unaffiliated team on public gold labels. Its card is scrupulous about not being Jev and about its numbers not being comparable to TypeSafe's. It ran on an M1 Pro, torch 2.14.</p>
+        <p>So I pulled <code>com-kotobalabs/open-jev-deberta-v3-large</code>, an open reproduction of Jev&rsquo;s <em>shape</em> (one state, many typed questions, one forward pass) built by an unaffiliated team on public gold labels. Its card is scrupulous about not being Jev and about its numbers not being comparable to TypeSafe&rsquo;s. It ran on an M1 Pro, torch 2.14.</p>
 
-        <p>First I reproduced the card's own worked example. The chosen option came back identical. The three probabilities drifted a little: confidence 0.701 against their 0.733, score 0.819 against 0.846, noul 0.941 against 0.892. Close enough to call the artifact loadable and working.</p>
+        <p>First I reproduced the card&rsquo;s own worked example. The chosen option came back identical. The three probabilities drifted a little: confidence 0.701 against their 0.733, score 0.819 against 0.846, noul 0.941 against 0.892. Close enough to call the artifact loadable and working.</p>
 
         <p>Then the real test, banking77 intent classification, 77 options, all 3,076 test examples, against gold labels rather than consensus labels. I ran it twice, because partway through I discovered that how you spell the option strings is not a cosmetic choice. The next section explains why. The results first:</p>
 
@@ -195,27 +197,27 @@
               <tr><th>Option strings</th><th>Accuracy, 77-way</th><th>Calibration error</th><th>Latency, median</th></tr>
             </thead>
             <tbody>
-              <tr><td>"activate my card"</td><td class="win"><strong>0.899</strong></td><td class="win"><strong>0.011</strong></td><td>354 ms</td></tr>
+              <tr><td>&ldquo;activate my card&rdquo;</td><td class="win"><strong>0.899</strong></td><td class="win"><strong>0.011</strong></td><td>354 ms</td></tr>
               <tr><td><code>activate_my_card</code></td><td>0.890</td><td class="warn"><strong>0.089</strong></td><td class="warn">657 ms</td></tr>
             </tbody>
           </table>
         </div>
 
-        <p>Condition A is the faithful reproduction, and their headline holds. I get <strong>0.8992</strong> (2766/3076), 95% interval [0.888, 0.909], against the card's claimed 0.916. That reads like a 1.7-point shortfall until you look at how their test set is built. They shuffle each source and take a slice, and with 1,500 test states spread across three datasets the banking77 intent figure rests on roughly 500 examples rather than the 1,500 the card implies. At that size a 0.916 carries an interval of about [0.888, 0.937], which contains my number without strain (two-proportion z = 1.17, p = 0.24). So this is not a discrepancy. It is the same result on six times the data, and I would rather say so than manufacture a gap out of a sample-size difference.</p>
+        <p>Condition A is the faithful reproduction, and their headline holds. I get <strong>0.8992</strong> (2766/3076), 95% interval [0.888, 0.909], against the card&rsquo;s claimed 0.916. That reads like a 1.7-point shortfall until you look at how their test set is built. They shuffle each source and take a slice, and with 1,500 test states spread across three datasets the banking77 intent figure rests on roughly 500 examples rather than the 1,500 the card implies. At that size a 0.916 carries an interval of about [0.888, 0.937], which contains my number without strain (two-proportion z = 1.17, p = 0.24). So this is not a discrepancy. It is the same result on six times the data, and I would rather say so than manufacture a gap out of a sample-size difference.</p>
 
         <p>Condition B is where it gets interesting, and not in the way I expected. Same 77 labels, same meanings, underscores left in, context raised until they fit. Accuracy holds up: <strong>0.8901</strong>, statistically indistinguishable from condition A (z = 1.16, p = 0.24). I had assumed that was the whole story, that formatting costs you feasibility and nothing else. Then I looked at the calibration column.</p>
 
         <p>Expected calibration error goes from <strong>0.011</strong> to <strong>0.089</strong>, <strong>7.8 times worse</strong>. Mean confidence falls to 0.801 while accuracy stays near 0.89, so the model is running about 9 points under-confident instead of 1. Latency also goes from 354 ms to 657 ms, which is just the longer sequence. The accuracy is fine and the number you would threshold on is wrecked.</p>
 
-        <p>I want to state that result narrowly, because condition B changes two things at once: the spelling and the sequence length.<span class="sn-ref">3</span> The mechanism is almost certainly the temperature. This model ships a single post-hoc temperature of 1.05, fitted on a validation split in the format its authors used. Feed it a distribution that split did not contain and the scaling is no longer the right scaling. So the honest claim is not "underscores are bad". It is that a confidence number carries an unstated dependency on the input format it was calibrated against, and changing that format silently invalidates it.</p>
+        <p>I want to state that result narrowly, because condition B changes two things at once: the spelling and the sequence length.<span class="sn-ref">3</span> The mechanism is almost certainly the temperature. This model ships a single post-hoc temperature of 1.05, fitted on a validation split in the format its authors used. Feed it a distribution that split did not contain and the scaling is no longer the right scaling. So the honest claim is not &ldquo;underscores are bad&rdquo;. It is that a confidence number carries an unstated dependency on the input format it was calibrated against, and changing that format silently invalidates it.</p>
 
-        <aside class="sidenote"><span class="sn-num">3</span>Length alone should not be the cause. The backbone sets <code>position_biased_input: false</code> and uses relative attention with 256 position buckets, so it has no hard ceiling at 512, and the project's own training default was an 8192-token context, meaning sequences this long were in distribution during training. But I did not run the third arm that would separate the two, spaced options padded to the same length, so I cannot fully rule length out.</aside>
+        <aside class="sidenote"><span class="sn-num">3</span>Length alone should not be the cause. The backbone sets <code>position_biased_input: false</code> and uses relative attention with 256 position buckets, so it has no hard ceiling at 512, and the project&rsquo;s own training default was an 8192-token context, meaning sequences this long were in distribution during training. But I did not run the third arm that would separate the two, spaced options padded to the same length, so I cannot fully rule length out.</aside>
 
         <p>Either way it matters more than a point of accuracy, because calibrated confidence is the entire reason to buy a typed-decision model instead of asking an LLM to emit JSON. A silent formatting choice in glue code left the headline metric intact and quietly degraded the one you would actually build a review queue on. Nobody would catch that from an accuracy dashboard.</p>
 
         <h2>The trap that explains 51.7%</h2>
 
-        <p>The two rows in that table are the same 77 labels with the same meanings. The only difference is whether the underscores in the dataset's own <code>label_text</code> field are replaced with spaces. That is a formatting decision in glue code, the kind nobody writes down.</p>
+        <p>The two rows in that table are the same 77 labels with the same meanings. The only difference is whether the underscores in the dataset&rsquo;s own <code>label_text</code> field are replaced with spaces. That is a formatting decision in glue code, the kind nobody writes down.</p>
 
         <p>It costs 35% of the context budget. With spaces, the 77-option question encodes to 348 to 423 tokens across the test set. With the raw underscored field, it encodes to 531 to 606. The shipped configuration allows 512.</p>
 
@@ -227,13 +229,13 @@ options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
 
         <p>Pass the dataset field straight through, which is the obvious thing to do, and every single input raises <code>ValueError</code> before the model runs. Replace one character and it all fits with room to spare. Nothing in the model card mentions this, and the naive path is the broken one.</p>
 
-        <p>This is not a footnote about my afternoon. It is the explanation for the most-quoted number in the entire Jev debate. On JevBench v1 that same open encoder scored 51.7% against Jev's 96.3%, and in v1.3.0 it ranks 42nd of 44. Everyone cites it as proof that small encoders cannot do typed decisions. Here is the benchmark author, who deserves credit for saying so in the results themselves:</p>
+        <p>This is not a footnote about my afternoon. It is the explanation for the most-quoted number in the entire Jev debate. On JevBench v1 that same open encoder scored 51.7% against Jev&rsquo;s 96.3%, and in v1.3.0 it ranks 42nd of 44. Everyone cites it as proof that small encoders cannot do typed decisions. Here is the benchmark author, who deserves credit for saying so in the results themselves:</p>
 
-        <blockquote>open-jev-deberta-v3-large (local CPU) did not see the whole question 80 times out of 242. Its encoder window is 256 tokens and several routing requests are longer than that. Its 51.7% is a context limit as much as a judgement one, worth knowing before anyone reads it as "small encoders cannot do this."</blockquote>
+        <blockquote>open-jev-deberta-v3-large (local CPU) did not see the whole question 80 times out of 242. Its encoder window is 256 tokens and several routing requests are longer than that. Its 51.7% is a context limit as much as a judgement one, worth knowing before anyone reads it as &ldquo;small encoders cannot do this.&rdquo;</blockquote>
 
-        <p>Both numbers in that paragraph are right, and they are different budgets: the shipped config allows 512 tokens in total and caps the <em>state</em> at 256, so a long document gets cut at 256 while a long question set runs out of room at 512. My banking77 question hit the second limit. JevBench's routing requests hit the first.</p>
+        <p>Both numbers in that paragraph are right, and they are different budgets: the shipped config allows 512 tokens in total and caps the <em>state</em> at 256, so a long document gets cut at 256 while a long question set runs out of room at 512. My banking77 question hit the second limit. JevBench&rsquo;s routing requests hit the first.</p>
 
-        <p>A third of that benchmark never reached the model. And when I diffed the snapshot on the model hub against the project's own repository, the repository had already fixed it: the newer encoder computes the question budget first and clips the state to fit, instead of failing after the fact. The published artifact still carries the 18 September version. The fix landed upstream at 09:08 UTC on the day I wrote this, so it is real, it is hours old, and it is not yet in the file you download from the hub. I am not scoring points off that gap. I am pointing out that JevBench ran on 19 September, when the fix did not exist at all, and that its 51.7% is therefore a measurement of the truncating encoder.</p>
+        <p>A third of that benchmark never reached the model. And when I diffed the snapshot on the model hub against the project&rsquo;s own repository, the repository had already fixed it: the newer encoder computes the question budget first and clips the state to fit, instead of failing after the fact. The published artifact still carries the 18 September version. The fix landed upstream at 09:08 UTC on the day I wrote this, so it is real, it is hours old, and it is not yet in the file you download from the hub. I am not scoring points off that gap. I am pointing out that JevBench ran on 19 September, when the fix did not exist at all, and that its 51.7% is therefore a measurement of the truncating encoder.</p>
 
         <p>So the case against small encoders here rests substantially on a truncation bug in a wrapper, not on a finding about encoders.</p>
 
@@ -241,25 +243,25 @@ options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
 
         <p>Three regimes, three different right answers, and the leaderboards only cover one of them.</p>
 
-        <p><strong>Your task is fixed and you have labels.</strong> Train the encoder. On banking77 a 22M-parameter supervised encoder gets 93.2% at 8 ms on CPU against Jev's 80.1% zero-shot, which is somebody else's measurement, not mine. There is no contest and there should not be, because one of them was shown the answers. Self-hosting has a floor though: the open model only beats Jev's list price above roughly 14% GPU duty cycle, which is about 188 million decisions a month. Below that, paying for the API is the cheaper engineering decision, and a network round trip of 69 to 105 ms erases the compute advantage anyway.</p>
+        <p><strong>Your task is fixed and you have labels.</strong> Train the encoder. On banking77 a 22M-parameter supervised encoder gets 93.2% at 8 ms on CPU against Jev&rsquo;s 80.1% zero-shot, which is somebody else&rsquo;s measurement, not mine. There is no contest and there should not be, because one of them was shown the answers. Self-hosting has a floor though: the open model only beats Jev&rsquo;s list price above roughly 14% GPU duty cycle, which is about 188 million decisions a month. Below that, paying for the API is the cheaper engineering decision, and a network round trip of 69 to 105 ms erases the compute advantage anyway.</p>
 
-        <p><strong>Your questions change at runtime.</strong> This is the case Jev is actually built for, and the case the encoder loses badly. An honest critic on Hacker News put the steelman better than the marketing did: you are competitive with Jev <em>"only if you fine tune on the train dataset and calibrate per question,"</em> whereas TypeSafe has <em>"an API model that works on any problem without fine tuning, and that is the key."</em> The open reproduction concedes the same thing in its own numbers, 0.854 in domain falling to 0.690 once the instructions and option sets change, and it leads its limitations with "It reads the question only partly."</p>
+        <p><strong>Your questions change at runtime.</strong> This is the case Jev is actually built for, and the case the encoder loses badly. An honest critic on Hacker News put the steelman better than the marketing did: you are competitive with Jev <em>&ldquo;only if you fine tune on the train dataset and calibrate per question,&rdquo;</em> whereas TypeSafe has <em>&ldquo;an API model that works on any problem without fine tuning, and that is the key.&rdquo;</em> The open reproduction concedes the same thing in its own numbers, 0.854 in domain falling to 0.690 once the instructions and option sets change, and it leads its limitations with &ldquo;It reads the question only partly.&rdquo;</p>
 
-        <p><strong>You need many judgements on one document.</strong> Buy Jev, and this is where it stops being a benchmark argument. An independent pre-registered evaluation found that going from one question to twelve costs <em>minus</em> nine milliseconds, and that 800 typed judgements on a single state came back in 985 ms for $0.000747. The same evaluation registered 50 predictions before collecting data, and reports that 18 of its 21 falsified predictions missed in the same direction: they kept predicting failure and kept being wrong.</p>
+        <p><strong>You need many judgments on one document.</strong> Buy Jev, and this is where it stops being a benchmark argument. An independent pre-registered evaluation found that going from one question to twelve costs <em>minus</em> nine milliseconds, and that 800 typed judgments on a single state came back in 985 ms for $0.000747. The same evaluation registered 50 predictions before collecting data, and reports that 18 of its 21 falsified predictions missed in the same direction: they kept predicting failure and kept being wrong.</p>
 
-        <p>That same evaluation is also where the sharpest criticism comes from, and it is about the number people will most want to use. Jev's confidence <em>ranks</em> well and <em>calibrates</em> badly: ECE 0.051, AUROC 0.837. Use it to sort, not to threshold. It called a cake recipe a technical issue at 0.94 confidence and flagged zero of thirty out-of-scope messages. TypeSafe's own jaggedness page says much the same in blunter language, including <em>"jev-1.13 does not count reliably"</em> and <em>"Jev suffers from context rot."</em> A vendor publishing a page of its model's failure modes is worth more than a 445x on a homepage.</p>
+        <p>That same evaluation is also where the sharpest criticism comes from, and it is about the number people will most want to use. Jev&rsquo;s confidence <em>ranks</em> well and <em>calibrates</em> badly: ECE 0.051, AUROC 0.837. Use it to sort, not to threshold. It called a cake recipe a technical issue at 0.94 confidence and flagged zero of thirty out-of-scope messages. TypeSafe&rsquo;s own jaggedness page says much the same in blunter language, including <em>&ldquo;jev-1.13 does not count reliably&rdquo;</em> and <em>&ldquo;Jev suffers from context rot.&rdquo;</em> A vendor publishing a page of its model&rsquo;s failure modes is worth more than a 445x on a homepage.</p>
 
         <div class="rule"></div>
 
         <div class="takeaways">
           <h2>Bottom line</h2>
           <ul>
-            <li><strong>A multiplier with no named opponent is marketing, not measurement.</strong> Jev's two headlines come from two different opponents, and the cost one scores 5.3 points above Jev on TypeSafe's own chart. Slide the opponent along that table and the same model is 8.2x or 854.4x cheaper.</li>
-            <li><strong>Check who is on the chart before you read the numbers on it.</strong> Sixteen opponents, all frontier LLMs, zero small models, on a benchmark whose labels two frontier LLMs wrote. TypeSafe's own cookbook tells users to add the baselines its launch benchmark skips.</li>
-            <li><strong>Against the right opponent the gap is 6x, not 445x.</strong> A small instruction model at low reasoning effort matches Jev's accuracy on a neutral harness, leads it on the composite intelligence score, and costs 6.1x more. That is still a good trade. It is a different claim.</li>
+            <li><strong>A multiplier with no named opponent is marketing, not measurement.</strong> Jev&rsquo;s two headlines come from two different opponents, and the cost one scores 5.3 points above Jev on TypeSafe&rsquo;s own chart. Slide the opponent along that table and the same model is 8.2x or 854.4x cheaper.</li>
+            <li><strong>Check who is on the chart before you read the numbers on it.</strong> Sixteen opponents, all frontier LLMs, zero small models, on a benchmark whose labels two frontier LLMs wrote. TypeSafe&rsquo;s own cookbook tells users to add the baselines its launch benchmark skips.</li>
+            <li><strong>Against the right opponent the gap is 6x, not 445x.</strong> A small instruction model at low reasoning effort matches Jev&rsquo;s accuracy on a neutral harness, leads it on the composite intelligence score, and costs 6.1x more. That is still a good trade. It is a different claim.</li>
             <li><strong>The most-cited evidence against small encoders is a truncation bug.</strong> A third of the questions never reached the model, the upstream repository already fixed it, and the published artifact does not have the fix.</li>
             <li><strong>Option formatting is a hyperparameter nobody documents.</strong> Underscores instead of spaces cost me 35% of the context window, turned a question that fits comfortably into one that fails on 100% of inputs, and when I forced it through anyway it left accuracy alone while making calibration 7.8 times worse. The metric on the dashboard survived; the metric you would threshold on did not. If you change how you spell your options, refit the temperature.</li>
-            <li><strong>Buy it for parallelism, not for accuracy, and sort with the confidence rather than thresholding on it.</strong></li>
+            <li><strong>Buy it for parallelism, not for accuracy, and sort with the confidence rather than thresholding on it.</strong> An independent pre-registered evaluation found that going from one question to twelve on the same document costs <em>minus</em> nine milliseconds. Jev&rsquo;s confidence ranks well (AUROC 0.837) but calibrates badly (ECE 0.051).</li>
           </ul>
         </div>
 
@@ -271,7 +273,7 @@ options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
             <li>Vendor primary: <a href="https://evals.typesafe.ai/">evals.typesafe.ai</a> (all cell arithmetic above is mine, on their published table), <a href="https://docs.typesafe.ai/">docs.typesafe.ai</a> including the models, confidence and jaggedness pages, and the launch post. Read September&nbsp;22, 2026.</li>
             <li>Independent, neutral harness: JevBench v1 and v1.3.0 by Benchmark Heaven, MIT licensed and unaffiliated with TypeSafe. Cite the version; scores moved between releases.</li>
             <li>Independent, pre-registered: PriorBench, 5,721 calls across 21 experiments with 50 predictions timestamped before collection and raw results published.</li>
-            <li>Skeptical coverage: The&nbsp;Register, September&nbsp;16, 2026, on why "hallucination-free" is not a like-for-like comparison when the output is not natural language.</li>
+            <li>Skeptical coverage: The&nbsp;Register, September&nbsp;16, 2026, on why &ldquo;hallucination-free&rdquo; is not a like-for-like comparison when the output is not natural language.</li>
             <li>Measured by me: <a href="https://huggingface.co/com-kotobalabs/open-jev-deberta-v3-large">com-kotobalabs/open-jev-deberta-v3-large</a> on banking77 test, 3,076 examples, gold labels, M1 Pro, torch&nbsp;2.14. Token counts, both formattings, and the latency figures are my own. The encoder diff is the hub snapshot against <a href="https://github.com/kotoba-lang/typed-decisions">kotoba-lang/typed-decisions</a>, whose option strings and question wording I copied so the comparison is theirs rather than mine.</li>
             <li>Companion piece: <a href="closed-frontier.html">The closed frontier</a>, on reading provenance before reading numbers.</li>
           </ul>
@@ -298,6 +300,94 @@ options as activate_my_card     median 539   over 512:  3076 / 3076</code></pre>
       }
       document.addEventListener('scroll', tick, { passive: true });
       tick();
+    })();
+  </script>
+  <script>
+    /* a table gets the pinned-column hairline only while it really overflows
+       its box, rechecked on resize. the class is cleared before measuring
+       because the rule it enables widens the first column */
+    (function () {
+      var boxes = document.querySelectorAll('.table-scroll');
+      if (!boxes.length) { return; }
+      function check() {
+        for (var i = 0; i < boxes.length; i++) {
+          boxes[i].classList.remove('is-scrolling');
+          if (boxes[i].scrollWidth > boxes[i].clientWidth + 1) { boxes[i].classList.add('is-scrolling'); }
+        }
+      }
+      check();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(check); }
+      window.addEventListener('resize', check);
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
     })();
   </script>
   <script>
