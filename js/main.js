@@ -233,6 +233,7 @@
                 $thumbLink =  $folio.find('.folio-item__thumb-link'),
                 $title = $folio.find('.folio-item__title'),
                 $caption = $folio.find('.folio-item__caption'),
+                $link = $folio.find('.folio-item__project-link'),
                 $titleText = '<h4>' + $.trim($title.html()) + '</h4>',
                 $captionText = $.trim($caption.html()),
                 $href = $thumbLink.attr('href'),
@@ -251,6 +252,14 @@
                 item.title = $.trim($titleText + $captionText);
             }
 
+            // the caption was a dead end: carry the card's own link into it
+            if ($link.length) {
+                item.title = (item.title || $titleText) +
+                    '<p class="pswp__cta"><a href="' + $link.attr('href') + '" target="_blank" rel="noopener">' +
+                    $.trim($link.contents().first().text()).replace(/\s+/g, ' ') +
+                    ' <span aria-hidden="true">\u279c</span><span class="visually-hidden"> (opens in a new tab)</span></a></p>';
+            }
+
             items.push(item);
         });
 
@@ -261,7 +270,8 @@
                 e.preventDefault();
                 let options = {
                     index: i,
-                    showHideOpacity: true
+                    showHideOpacity: true,
+                    shareEl: false   // the template's Facebook/Tweet/Pin menu tweeted raw caption HTML
                 }
 
                 const opener = this,
@@ -301,10 +311,10 @@
     const ssAOS = function() {
         
         AOS.init( {
-            offset: 100,
-            duration: 600,
+            offset: 60,
+            duration: 400,
             easing: 'ease-in-out',
-            delay: 300,
+            delay: 0,
             once: true,
             // Capability test, not a UA sniff. The old disable:'mobile' string
             // left iPads in their default desktop-UA mode animating, where 18
@@ -407,17 +417,44 @@
         
         const pxShow = 800;
         const $goTopButton = $(".ss-go-top")
+        const phone = window.matchMedia('(max-width: 600px)');
+        const cta = document.querySelector('.footer-email-us');
+        let lastTop = $(window).scrollTop();
+        let ctaInView = false;
 
-        // Show or hide the button
-        if ($(window).scrollTop() >= pxShow) $goTopButton.addClass('link-is-visible');
+        // On phones the disc sat over the right end of body lines and over
+        // the Let's Talk button: there it shows only while the reader scrolls
+        // up, and never while that button is on screen.
+        const update = function() {
+            const top = $(window).scrollTop(),
+                  delta = top - lastTop;
+            let show;
 
-        $(window).on('scroll', function() {
-            if ($(window).scrollTop() >= pxShow) {
-                if(!$goTopButton.hasClass('link-is-visible')) $goTopButton.addClass('link-is-visible')
+            if (top < pxShow) {
+                show = false;
+            } else if (!phone.matches) {
+                show = true;
+            } else if (ctaInView) {
+                show = false;
+            } else if (Math.abs(delta) < 6) {
+                return;   // wait for a clear direction
             } else {
-                $goTopButton.removeClass('link-is-visible')
+                show = delta < 0;
             }
-        });
+
+            lastTop = top;
+            $goTopButton.toggleClass('link-is-visible', show);
+        };
+
+        if (cta && 'IntersectionObserver' in window) {
+            new IntersectionObserver(function(entries) {
+                ctaInView = entries[0].isIntersecting;
+                update();
+            }).observe(cta);
+        }
+
+        update();
+        $(window).on('scroll', update);
     };
 
 

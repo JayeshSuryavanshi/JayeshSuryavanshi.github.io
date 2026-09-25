@@ -1645,7 +1645,7 @@ input::-moz-focus-inner {
 }
 
 .s-header.sticky .header-logo img {
-  width: 35px;
+  width: 38px;
   height: 38px;
 }
 
@@ -1691,10 +1691,15 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
+/* the J/s monogram is square, and picture is inline by default */
+.header-logo picture {
+  display: block;
+}
+
 .header-logo img {
-  width: 41px;
+  display: block;
+  width: 44px;
   height: 44px;
-  vertical-align: bottom;
 }
 
 /* -------------------------------------------------------------------
@@ -1721,7 +1726,7 @@ input::-moz-focus-inner {
 }
 
 .header-nav a:hover,
-.header-nav a:focus {
+.header-nav a:focus-visible {   /* :focus kept a clicked item white, like a stale current-section mark */
   color: #ffffff !important;
 }
 
@@ -1887,7 +1892,7 @@ input::-moz-focus-inner {
   }
 
   .header-logo img {
-    width: 37px;
+    width: 40px;
     height: 40px;
   }
 
@@ -1902,6 +1907,10 @@ input::-moz-focus-inner {
     position: absolute;
     top: -2rem;
     left: 0;
+    /* opened mid-page the sheet stopped short and the page showed below it;
+     * the +2rem cancels top:-2rem */
+    min-height: calc(100vh + 2rem);
+    min-height: calc(100svh + 2rem);
   }
 
   .header-content .btn {
@@ -2003,15 +2012,38 @@ input::-moz-focus-inner {
 
 }
 
-/* landscape phones: the 16rem top padding left room for two of seven links */
+/* landscape phones: the 16rem top padding left room for two of seven links,
+ * and one column still cut off Contact. Two columns fit all seven. */
 @media screen and (max-width:900px) and (max-height:500px) {
   .header-content {
-    padding-top: 9rem;
+    padding-top: 10.4rem;
     padding-bottom: 3rem;
   }
 
   .header-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
     line-height: 4.4rem;
+  }
+
+  /* both cells of the first row get the same rule */
+  .header-nav li:nth-child(-n+2) {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* the 80px bar took a quarter of a 320-393px screen */
+  .s-header.sticky {
+    height: 5.6rem;
+  }
+
+  .s-header.sticky .header-logo img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .s-header.sticky .header-menu-toggle {
+    top: .6rem;
   }
 
 }
@@ -2193,6 +2225,7 @@ input::-moz-focus-inner {
   width: 6.4rem;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);   /* the disc vanished on the black video; as .ss-go-top a */
   margin: 0;
   position: relative;
 }
@@ -2253,15 +2286,53 @@ html.ss-preload .hero-content {
   opacity: 0;
 }
 
+/* was fadeIn over 3s: the headline rose a full block height (500-880px) and
+ * still sat ~100px low after a second */
 html.ss-loaded .hero-content {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-  -webkit-animation-duration: 3s;
-  animation-duration: 3s;
+  -webkit-animation-name: heroIn;
+  animation-name: heroIn;
+  -webkit-animation-duration: 1.1s;
+  animation-duration: 1.1s;
   -webkit-animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+
+/* coming back from another page of the site: no intro */
+html.ss-fast .hero-content {
+  -webkit-animation: none;
+  animation: none;
+}
+
+@-webkit-keyframes heroIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 3.2rem, 0);
+    transform: translate3d(0, 3.2rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 3.2rem, 0);
+    transform: translate3d(0, 3.2rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
 }
 
 html.no-csstransitions .hero-content {
@@ -2483,11 +2554,51 @@ html.no-csstransitions .hero-content {
 
 }
 
-/* and 601-900px (iPads, landscape phones) did the same */
+/* and 601-900px (iPads, landscape phones) did the same. The floor matches
+ * the 600px size: it was 3.2rem, so 601px got a smaller headline than 320px. */
 @media screen and (min-width:601px) and (max-width:900px) {
   .hero-content h1 {
     padding-right: 0;
-    font-size: clamp(3.2rem, 5.5vw, 5.6rem);
+    font-size: clamp(4.6rem, 5.5vw, 5.1rem);
+  }
+
+}
+
+/* At 46px the three fixed lines only fit from about 780px. Size the type to
+ * the widest line (14.6em) instead, which keeps the designed three lines
+ * down to about 38px at 671px. */
+@media screen and (min-width:671px) and (max-width:800px) {
+  .hero-content h1 {
+    font-size: min(4.6rem, calc((100vw - 11.6rem) / 14.6));
+  }
+
+}
+
+/* Below that the forced breaks stranded 'GenAI' on a line. Let it flow,
+ * evenly. */
+@media screen and (min-width:601px) and (max-width:670px) and (min-height:501px) {
+  .hero-content h1 {
+    text-wrap: balance;
+  }
+
+  .hero-content h1 br {
+    display: none;
+  }
+
+}
+
+/* Tablets and phones wrap the links; a slash left at a line end dangles.
+ * A grid instead: three across, two on phones, one where two would run into
+ * the scroll disc. */
+@media screen and (max-width:900px) {
+  .hero-social {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    column-gap: 4rem;
+  }
+
+  .hero-social li::after {
+    display: none;
   }
 
 }
@@ -2512,6 +2623,11 @@ html.no-csstransitions .hero-content {
     line-height: 3.2rem;
   }
 
+  .hero-social {
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 2.4rem;
+  }
+
   .hero-scroll {
     right: 2.4rem;
   }
@@ -2529,6 +2645,17 @@ html.no-csstransitions .hero-content {
 @media screen and (max-width:400px) {
   .hero-content h1 {
     font-size: 4rem;
+  }
+
+}
+
+/* two columns end at about 337px and the disc starts at 100vw - 76px, so
+ * they only clear it from about 430px (iPhone Pro Max). The extra row
+ * comes out of the gap above, so the links end where they did. */
+@media screen and (max-width:427px) {
+  .hero-social {
+    grid-template-columns: max-content;
+    margin-top: 4.8rem;
   }
 
 }
@@ -2557,6 +2684,34 @@ html.no-csstransitions .hero-content {
 
 }
 
+/* landscape phones: a compact hero so the headline fits the first screen.
+ * Landscape only: short portrait windows (SE in Safari, split screens) keep
+ * the phone layout above. */
+@media screen and (max-width:900px) and (max-height:500px) and (orientation:landscape) {
+  .hero-content {
+    padding-top: 9rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero-content h1 {
+    font-size: 3.4rem;
+    padding-top: 1.6rem;
+  }
+
+  .hero-social {
+    margin-top: 2.4rem;
+  }
+
+}
+
+/* three across clears the disc from about 545px (568px landscape SE) */
+@media screen and (min-width:545px) and (max-width:900px) and (max-height:500px) and (orientation:landscape) {
+  .hero-social {
+    grid-template-columns: repeat(3, max-content);
+  }
+
+}
+
 
 
 /* ===================================================================
@@ -2567,6 +2722,16 @@ html.no-csstransitions .hero-content {
   padding-bottom: 16rem;
   background-color: #ffffff;
   position: relative;
+}
+
+/* each h2 sat halfway between blocks (a stray <br> under it), and the
+ * skills rows ran together, so a wrapped line looked like a new item */
+.s-about__section--profile .column > h2 {
+  margin-bottom: 2rem;
+}
+
+.skills-list li + li {
+  margin-top: 1.2rem;
 }
 
 .s-about .right-vert-line {
@@ -2602,6 +2767,22 @@ html.no-csstransitions .hero-content {
   left: calc(50% + 80px);
 }
 
+/* The bio runs far longer than the portrait is tall, so on wide screens the
+ * portrait rides along beside it: the box spans the row, the image sticks
+ * inside it below the sticky header and stops at the row's end. */
+@media screen and (min-width:1201px) {
+  .s-about__section--profile .profile-pic {
+    bottom: 0;
+  }
+
+  .s-about__section--profile .profile-pic img {
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 14rem;
+  }
+}
+
 /* ------------------------------------------------------------------- 
  * ## career position
  * ------------------------------------------------------------------- */
@@ -2634,8 +2815,12 @@ html.no-csstransitions .hero-content {
   margin-bottom: .4rem;
 }
 
+/* always stacked: inline-or-wrapped by string length gave paired cards
+ * different header heights */
 .position__header h3 .position__co {
-  margin-right: 2rem;
+  display: block;
+  margin-right: 0;
+  margin-bottom: .4rem;
 }
 
 /* taller hit area on the employer links without moving the line */
@@ -2660,6 +2845,15 @@ html.no-csstransitions .hero-content {
   text-transform: uppercase;
   letter-spacing: .3rem;
   color: #7e7e7e;
+  text-wrap: balance;
+}
+
+/* the tracked date ranges left one year alone on a line at 320px */
+@media screen and (max-width:400px) {
+  .position__timeframe {
+    letter-spacing: .15rem;
+  }
+
 }
 
 /* ------------------------------------------------------------------- 
@@ -2699,8 +2893,10 @@ html.no-csstransitions .hero-content {
 }
 
 @media screen and (max-width:800px) {
+  /* 8rem put the About subhead exactly under the 76-80px sticky header after
+   * a menu jump or a /#about load; 12rem clears it like the other sections */
   .s-about__section--profile {
-    padding-top: 8rem;
+    padding-top: 12rem;
     padding-bottom: 0;
     min-height: 0;
   }
@@ -2868,9 +3064,9 @@ html.no-csstransitions .hero-content {
   border-right: 2px solid #ffffff;
   content: '';
   display: block;
-  height: 6px;
-  width: 6px;
-  margin-top: -6px;
+  height: 10px;
+  width: 10px;
+  margin-top: -8px;
   pointer-events: none;
   position: absolute;
   right: 2.4rem;
@@ -2956,20 +3152,21 @@ html.no-csstransitions .hero-content {
 
 }
 
+/* Phones: at 3rem the titles ran 4-5 lines in a 220-290px measure and split
+ * 'category_encoders' mid-word, and the panel text sat in a 200px column.
+ * The body indent now matches the h3's 1.111em inset, so text lines up. */
 @media screen and (max-width:600px) {
   .s-services .vert-line {
     left: 34px;
   }
 
   .services-list__item-header h3 {
-    font-size: 3.2rem;
+    font-size: 2.4rem;
   }
 
-}
-
-@media screen and (max-width:500px) {
-  .services-list__item-header h3 {
-    font-size: 3rem;
+  .services-list__item-body {
+    padding-left: 2.67rem;
+    padding-right: 0;
   }
 
 }
@@ -2980,9 +3177,37 @@ html.no-csstransitions .hero-content {
   }
 
   .services-list__item-header h3 {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
   }
 
+  .services-list__item-body {
+    padding-left: 2.44rem;
+  }
+
+}
+
+/* 3.6rem titles wrapped 9 of 11 and outweighed the section heading */
+@media screen and (min-width:1001px) {
+  .services-list__item-header h3 {
+    font-size: 3rem;
+  }
+
+}
+
+/* Skills and Open Source share one ground; a rule marks where one ends. */
+#services {
+  padding-bottom: 12rem;
+}
+
+/* the orange line still runs down to the section edge, now the rule */
+#services .vert-line {
+  height: 12rem;
+  bottom: -12rem;
+}
+
+#open-source {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14rem;
 }
 
 
@@ -3021,6 +3246,20 @@ html.no-csstransitions .hero-content {
   overflow: hidden;
 }
 
+/* A hairline edge for the pale chart tiles on the white page. An outline on
+ * the item painted under the positioned thumbnail, so it rides a pseudo. */
+.folio-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 0 0 0 1px rgba(11, 10, 21, 0.07);
+  pointer-events: none;
+  z-index: 3;
+}
+
 .folio-item__caption {
   display: none;
 }
@@ -3035,7 +3274,7 @@ html.no-csstransitions .hero-content {
   z-index: 1;
   content: "";
   display: block;
-  background-color: #2299c9ab;
+  background-color: transparent;   /* the template's cyan washed out the charts; the scrim carries the text */
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -3198,35 +3437,114 @@ html.no-csstransitions .hero-content {
   transition: opacity 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.folio-item:hover .folio-item__thumb::after,
-.folio-item:focus-within .folio-item__thumb::after {
-  opacity: 1;
+/* The category and title live in a dark band under the image at every
+ * width. Hidden behind hover, all eight cards read as unlabelled pictures
+ * until pointed at, and a touch device never revealed them at all. Laid over
+ * the image, the label hid most of the chart and collided with it. */
+.folio-item {
+  background-color: #0b0a15;
 }
 
-/* A touch device has no hover, so the project name, category and link were
- * never revealed and all seven cards read as unlabelled photographs. Show the
- * block permanently where hover does not exist, with its scrim. */
-@media (hover: none), (pointer: coarse) {
-  .folio-item__info,
-  .folio-item__project-link {
-    opacity: 1;
-    visibility: visible;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  .folio-item__thumb::after {
-    opacity: 1;
-  }
-}
-
-/* keyboard equivalent of the hover reveal */
-.folio-item:focus-within .folio-item__info,
-.folio-item:focus-within .folio-item__project-link {
+.folio-item__info,
+.folio-item__project-link {
   opacity: 1;
   visibility: visible;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  -webkit-transform: none;
+  transform: none;
+}
+
+.folio-item__info {
+  position: static;
+  padding: 1.6rem 2rem 0;
+}
+
+.folio-item__project-link {
+  position: static;
+  display: inline-block;
+  margin: 1.2rem 2rem 2rem;
+}
+
+.folio-item__project-link::before {
+  display: none;
+}
+
+.s-porfolio__list > .column {
+  margin-bottom: 1.6rem;
+}
+
+/* two up, a label that wraps made one card of the pair taller: fill the
+ * row, and keep the links level at the bottom */
+.folio-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
+.folio-item__info {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+}
+
+.folio-item__project-link {
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+}
+
+/* and a gutter between the pair, or the two dark bands ran together */
+@media screen and (min-width:601px) {
+  .s-porfolio__list > .column:nth-child(odd) {
+    padding-right: .8rem;
+  }
+
+  .s-porfolio__list > .column:nth-child(even) {
+    padding-left: .8rem;
+  }
+}
+
+/* Hover is a slow zoom on the picture. The "+" says it opens larger, on a
+ * dark disc now that no scrim sits behind it to carry it over pale charts. */
+.folio-item__thumb {
+  overflow: hidden;
+}
+
+.folio-item__thumb img {
+  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@media (hover: hover) {
+  .folio-item:hover .folio-item__thumb img {
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+  }
+}
+
+.folio-item__thumb a::after {
+  width: 48px;
+  height: 48px;
+  line-height: 46px;
+  margin-left: -24px;
+  margin-top: -24px;
+  border-radius: 50%;
+  background-color: rgba(11, 10, 21, 0.72);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio-item__thumb img {
+    -webkit-transition: none;
+    transition: none;
+  }
+
+  .folio-item:hover .folio-item__thumb img {
+    -webkit-transform: none;
+    transform: none;
+  }
 }
 
 /* ------------------------------------------------------------------- 
@@ -3267,6 +3585,17 @@ html.no-csstransitions .hero-content {
 
   .folio-item__cat {
     font-size: 1.4rem;
+  }
+
+}
+
+/* iPad Mini portrait fell to one column of 684px cards; keep two up */
+@media screen and (min-width:601px) and (max-width:800px) {
+  .s-porfolio__list.block-tab-full > .column {
+    -ms-flex: 0 0 50%;
+    -webkit-box-flex: 0;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 
 }
@@ -3542,12 +3871,13 @@ html.no-csstransitions .hero-content {
 
 .footer-contact-block__list {
   list-style: none;
-  margin-top: .4rem;
+  margin-top: 1.2rem;
   margin-left: 0;
 }
 
+/* four links now: the 44px rows are the spacing, no padding on top of it */
 .footer-contact-block__list li {
-  padding-left: 0;
+  padding: 0;
 }
 
 /* the lone X link was a 20x28 target */
@@ -3569,6 +3899,21 @@ html.no-csstransitions .hero-content {
 .footer-contact-block__header {
   color: rgba(255, 255, 255, 0.4);
   margin: 0;
+}
+
+/* one step between blocks; a stray <br> used to double the last one */
+.footer-contact-block + .footer-contact-block {
+  margin-top: 3.2rem;
+}
+
+/* the email broke at the @ at every desktop width. The column is 31% of the
+ * window (320px at 1024), so the size tracks it to keep one line. */
+@media screen and (min-width:1001px) {
+  .footer-contact-block__content a {
+    font-size: clamp(1.9rem, 1.875vw, 2.4rem);
+    white-space: nowrap;
+  }
+
 }
 
 /* ------------------------------------------------------------------- 
@@ -3878,19 +4223,10 @@ html.no-csstransitions .hero-content {
 
 }
 
-/* At 320px the 14px categories wrap to two lines and pushed the titles under
- * the link pill on a 155px card, and did up to about 370px. */
+/* At 320px the 14px categories wrap to two lines. */
 @media screen and (max-width:380px) {
-  .folio-item__info {
-    top: 1.6rem;
-  }
-
   .folio-item__cat {
     line-height: 1.4;
-  }
-
-  .folio-item__project-link {
-    bottom: 1.2rem;
   }
 
 }
@@ -3901,6 +4237,65 @@ html.no-csstransitions .hero-content {
 .folio-item__title,
 .position__header h3 {
   text-wrap: balance;
+}
+
+/* Lightbox caption: vendor.css asks for the unloaded "Gothic A1", so it was
+ * the one Arial text on the site, 14px at 50% white. vendor.css loads after
+ * this file, hence the .pswp prefix on each rule. */
+.pswp.pswp {
+  font-family: "Product-Sans", sans-serif;
+}
+
+.pswp .pswp__caption__center {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 68ch;
+}
+
+.pswp .pswp__caption__center p {
+  margin-bottom: .8rem;
+}
+
+.pswp .pswp__cta {
+  margin-bottom: 0;
+}
+
+.pswp .pswp__cta a {
+  color: #f9861a;
+  font-weight: 700;
+}
+
+.pswp .pswp__cta a:hover,
+.pswp .pswp__cta a:focus {
+  color: #ffffff;
+}
+
+@media screen and (max-width:600px) {
+  .pswp .pswp__caption__center {
+    text-align: left;
+    padding: 12px 16px;
+  }
+
+}
+
+/* PhotoSwipe fits the image above the caption, so on short screens the
+ * longer captions squeezed the picture to a strip: a size down there */
+@media screen and (max-height:600px) {
+  .pswp .pswp__caption__center {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+}
+
+@media screen and (max-height:500px) {
+  .pswp .pswp__caption__center {
+    font-size: 14px;
+    line-height: 1.45;
+    max-width: 90ch;
+  }
+
 }
 
 /* Back to top sat over body text at 1024-1440, and its black disc all but

@@ -37,16 +37,21 @@
     <!-- mobile specific
     ================================================== -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
 
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="css/base.css?v=2">
-    <link rel="stylesheet" href="css/main.css?v=2">
+    <link rel="stylesheet" href="css/main.css?v=4">
     <link rel="stylesheet" href="css/vendor.css?v=2">
 
     <!-- script
     ================================================== -->
-    <script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, 'js');</script>
+    <script>
+        document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, 'js');
+        // back from the blog or another page of the site: skip the hero intro
+        try { if (document.referrer && new URL(document.referrer).origin === location.origin) { document.documentElement.classList.add('ss-fast'); } } catch (e) {}
+    </script>
 
     <!-- favicons
     ================================================== -->
@@ -129,7 +134,10 @@
 
         <div class="header-logo">
             <a href="./">
-                <img src="images/logo.svg" alt="Homepage">
+                <picture>
+                    <source srcset="images/logo-js.webp" type="image/webp">
+                    <img src="images/logo-js.png" width="44" height="44" alt="Jayesh Suryavanshi">
+                </picture>
             </a>
         </div>
 
@@ -145,7 +153,7 @@
                     <li><a class="smoothscroll larger-font" href="#open-source" title="Open source contributions">Open Source</a></li>
                     <li><a class="smoothscroll larger-font" href="#portfolio" title="Projects">Projects</a></li>
                     <li><a class="larger-font" href="blog/" title="Writing & studies">Writing</a></li>
-                    <li><a class="larger-font" href="mailto:jayeshksuryavanshi@gmail.com" title="Contact Jayesh">Contact</a></li>
+                    <li><a class="smoothscroll larger-font" href="#contact" title="Contact Jayesh">Contact</a></li>
 
                 </ul>
             </nav> <!-- end header-nav-wrap -->
@@ -174,9 +182,9 @@
 
 
                 <h1>
-                    I'm <span class="hero-name">Jayesh Suryavanshi.</span><br>
-                    I build LLM agents &amp; GenAI<br>
-                    in production at <span class="hero-ebay-wrap"><svg class="hero-ebay" role="img" aria-label="eBay" viewBox="0 0 1000 400.75" xmlns="http://www.w3.org/2000/svg" focusable="false"><path fill="#ffbc13" d="m 633.07803,212.53323 c -45.43873,1.48929 -73.6715,9.689 -73.6715,39.61897 0,19.37591 15.44713,40.38162 54.66334,40.38162 52.57698,0 80.64259,-28.65902 80.64259,-75.66331 l 0.003,-5.16994 c -18.43302,0 -41.16414,0.16089 -61.63704,0.83266 z m 111.75103,62.10248 c 0,14.58313 0.42155,28.9782 1.69406,41.94092 h -46.61408 c -1.24325,-10.67368 -1.6972,-21.27945 -1.6972,-31.56656 -25.20195,30.97941 -55.17735,39.88537 -96.76149,39.88537 -61.67674,0 -94.70072,-32.59982 -94.70072,-70.30689 0,-54.61215 44.91583,-73.86739 122.89013,-75.65391 21.32332,-0.48686 45.27419,-0.55894 65.07531,-0.55894 l -0.003,-5.33606 c 0,-36.56098 -23.44364,-51.59335 -64.06765,-51.59335 -30.15876,0 -52.38579,12.48057 -54.6764,34.0468 h -52.65168 c 5.57217,-53.77165 62.06643,-67.37115 111.74005,-67.37115 59.50837,0 109.77228,21.17288 109.77228,84.11481 z"/><path fill="#f12c2d" d="m 199.63633,185.86602 c -1.94427,-46.87735 -35.77951,-64.41973 -71.94139,-64.41973 -38.99421,0 -70.12667,19.7327 -75.58026,64.41973 z M 51.034408,219.1909 c 2.704332,45.48365 34.069782,72.38437 77.197532,72.38437 29.88033,0 56.45979,-12.17498 65.35948,-38.66041 h 51.68424 c -10.05205,53.73979 -67.15384,71.98058 -116.303,71.98058 C 39.606424,324.89544 0,275.67889 0,209.30653 0,136.24203 40.965642,88.12194 129.78809,88.12194 c 70.69867,0 122.49992,36.99926 122.49992,117.75572 v 13.31324 z"/><path fill="#0968f6" d="m 380.83181,290.6235 c 46.57228,0 78.44078,-33.52181 78.44078,-84.10854 0,-50.58203 -31.8685,-84.10854 -78.44078,-84.10854 -46.31058,0 -78.44392,33.52651 -78.44392,84.10854 0,50.58673 32.13334,84.10854 78.44392,84.10854 z M 252.2854,0 h 50.10249 l -0.005,125.87707 c 24.55682,-29.25975 58.38892,-37.75513 91.68976,-37.75513 55.83503,0 117.85132,37.6773 117.85132,119.02875 0,68.12232 -49.32155,117.74475 -118.78114,117.74475 -36.35726,0 -70.58062,-13.04265 -91.68663,-38.88294 0,10.32107 -0.57618,20.72364 -1.70503,30.56413 h -49.17162 c 0.85513,-15.90944 1.70555,-35.7184 1.70555,-51.74693 z"/><path fill="#93c822" d="M 1000,96.45747 845.05541,400.75099 H 788.94926 L 833.49578,316.25589 716.89033,96.45747 h 58.6266 l 85.80469,171.73057 85.56283,-171.73057 z"/></svg>.</span>
+                    I&rsquo;m <span class="hero-name">Jayesh Suryavanshi.</span><br>
+                    I&nbsp;build LLM agents &amp; GenAI<br>
+                    in production <span class="hero-ebay-wrap">at <svg class="hero-ebay" role="img" aria-label="eBay" viewBox="0 0 1000 400.75" xmlns="http://www.w3.org/2000/svg" focusable="false"><path fill="#ffbc13" d="m 633.07803,212.53323 c -45.43873,1.48929 -73.6715,9.689 -73.6715,39.61897 0,19.37591 15.44713,40.38162 54.66334,40.38162 52.57698,0 80.64259,-28.65902 80.64259,-75.66331 l 0.003,-5.16994 c -18.43302,0 -41.16414,0.16089 -61.63704,0.83266 z m 111.75103,62.10248 c 0,14.58313 0.42155,28.9782 1.69406,41.94092 h -46.61408 c -1.24325,-10.67368 -1.6972,-21.27945 -1.6972,-31.56656 -25.20195,30.97941 -55.17735,39.88537 -96.76149,39.88537 -61.67674,0 -94.70072,-32.59982 -94.70072,-70.30689 0,-54.61215 44.91583,-73.86739 122.89013,-75.65391 21.32332,-0.48686 45.27419,-0.55894 65.07531,-0.55894 l -0.003,-5.33606 c 0,-36.56098 -23.44364,-51.59335 -64.06765,-51.59335 -30.15876,0 -52.38579,12.48057 -54.6764,34.0468 h -52.65168 c 5.57217,-53.77165 62.06643,-67.37115 111.74005,-67.37115 59.50837,0 109.77228,21.17288 109.77228,84.11481 z"/><path fill="#f12c2d" d="m 199.63633,185.86602 c -1.94427,-46.87735 -35.77951,-64.41973 -71.94139,-64.41973 -38.99421,0 -70.12667,19.7327 -75.58026,64.41973 z M 51.034408,219.1909 c 2.704332,45.48365 34.069782,72.38437 77.197532,72.38437 29.88033,0 56.45979,-12.17498 65.35948,-38.66041 h 51.68424 c -10.05205,53.73979 -67.15384,71.98058 -116.303,71.98058 C 39.606424,324.89544 0,275.67889 0,209.30653 0,136.24203 40.965642,88.12194 129.78809,88.12194 c 70.69867,0 122.49992,36.99926 122.49992,117.75572 v 13.31324 z"/><path fill="#0968f6" d="m 380.83181,290.6235 c 46.57228,0 78.44078,-33.52181 78.44078,-84.10854 0,-50.58203 -31.8685,-84.10854 -78.44078,-84.10854 -46.31058,0 -78.44392,33.52651 -78.44392,84.10854 0,50.58673 32.13334,84.10854 78.44392,84.10854 z M 252.2854,0 h 50.10249 l -0.005,125.87707 c 24.55682,-29.25975 58.38892,-37.75513 91.68976,-37.75513 55.83503,0 117.85132,37.6773 117.85132,119.02875 0,68.12232 -49.32155,117.74475 -118.78114,117.74475 -36.35726,0 -70.58062,-13.04265 -91.68663,-38.88294 0,10.32107 -0.57618,20.72364 -1.70503,30.56413 h -49.17162 c 0.85513,-15.90944 1.70555,-35.7184 1.70555,-51.74693 z"/><path fill="#93c822" d="M 1000,96.45747 845.05541,400.75099 H 788.94926 L 833.49578,316.25589 716.89033,96.45747 h 58.6266 l 85.80469,171.73057 85.56283,-171.73057 z"/></svg>.</span>
                 </h1>
                 
 
@@ -194,7 +202,7 @@
                         <a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener" title=""><span aria-hidden="true">➜</span>Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a>
                     </li>
                     <li>
-                        <a href="https://github.com/JayeshSuryavanshi?tab=repositories" target="_blank" rel="noopener" title=""><span aria-hidden="true">➜</span>Projects<span class="visually-hidden"> (opens in a new tab)</span></a>
+                        <a class="smoothscroll" href="#portfolio" title=""><span aria-hidden="true">➜</span>Projects</a>
                     </li>
 
                 </ul> <!-- end hero-social -->
@@ -235,9 +243,9 @@
                         <img src="images/jayesh-portrait.webp?v=3" width="800" height="800" loading="lazy" decoding="async" alt="Illustrated portrait of Jayesh Suryavanshi">
                     </div>
 
-                    <h2 data-aos="fade-up">About Me</h2><br>
+                    <h2 data-aos="fade-up">Background</h2>
                     <p data-aos="fade-up">
-                        I'm a Machine Learning Engineer at eBay, where I build LLM agents and GenAI systems that run in production at marketplace scale.
+                        I&rsquo;m a Machine Learning Engineer at eBay, where I build LLM agents and GenAI systems that run in production at marketplace scale.
                         My work spans agentic services (LLM-generated summaries, multimodal analysis across text and images,
                         MCP tool servers) and the classic ML behind them, like gradient-boosted models trained on large-scale data.
                         Before eBay, I worked on ML systems for the financial industry at FINRA, and built data platforms at Datava and Infosys.
@@ -245,7 +253,7 @@
                         I care about shipping AI systems that are measurable, safe, and actually used in production.
                     </p>
 
-                    <h2>Technical Skills</h2> <br>
+                    <h2>Technical Skills</h2>
                     <ul class="skills-list">
                         <li><b>LLM &amp; Agentic Systems:</b> Claude (Anthropic API), Azure OpenAI, Vertex AI, MCP (Model Context Protocol), agent orchestration, RAG, prompt engineering, LLM evals</li>
                         <li><b>Machine Learning &amp; NLP:</b> PyTorch, TensorFlow, Hugging Face Transformers, XGBoost, spaCy, NLTK</li>
@@ -254,7 +262,7 @@
                         <li><b>Cloud &amp; CI/CD:</b> AWS, Docker, Kubernetes, Terraform, Jenkins, Ansible</li>
                     </ul>
                     <p>
-                        <a href="https://www.linkedin.com/in/jayeshsuryavanshi/">more<span class="visually-hidden"> on LinkedIn</span> <span aria-hidden="true">➜</span></a>
+                        <a href="https://www.linkedin.com/in/jayeshsuryavanshi/" target="_blank" rel="noopener">More on LinkedIn <span aria-hidden="true">➜</span><span class="visually-hidden"> (opens in a new tab)</span></a>
                     </p>
 
                 </div>
@@ -266,7 +274,7 @@
 
             <div class="row">
                 <div class="column">
-                    <h2 data-aos="fade-up">Career <span aria-hidden="true">👨🏻‍💻</span></h2>
+                    <h2 data-aos="fade-up">Career</h2>
                 </div>
             </div>
 
@@ -287,7 +295,7 @@
                         <p>
                             I build production ML and LLM systems at eBay. I created and lead an internal code-knowledge platform, a CLI and
                             MCP server that indexes microservice repositories so AI coding assistants answer with citations. It is adopted across
-                            eBay's Payments organization, and I am a co-inventor on its provisional patent application. I also developed and
+                            eBay&rsquo;s Payments organization, and I am a co-inventor on its provisional patent application. I also developed and
                             deployed a transformer classifier for fraudulent buyer and seller behavior, and I build and operate an LLM service that
                             turns long threads, images and OCR output into structured summaries and risk signals, served to internal agents as
                             MCP tools.
@@ -308,7 +316,7 @@
                         </div>
 
                         <p>
-                            I was on FINRA's LLM pilot team, where I built a conversational platform on Amazon Bedrock and Polly that analysts
+                            I was on FINRA&rsquo;s LLM pilot team, where I built a conversational platform on Amazon Bedrock and Polly that analysts
                             used to inform policy decisions; it was deployed across the data science organization. I also deployed Spark MLlib
                             models on EMR on EKS with Jenkins CI/CD to SageMaker endpoints, ran the champion/challenger tests that replaced a
                             production model, and cut the cost of our SageMaker processing with Spot Instances.
@@ -402,7 +410,7 @@
 
             <div class="row">
                 <div class="column">
-                    <h2 data-aos="fade-up">Education <span aria-hidden="true">👨🏻‍🎓</span></h2>
+                    <h2 data-aos="fade-up">Education</h2>
                 </div>
             </div>
 
@@ -420,9 +428,7 @@
                             </div>
                         </div>
 
-                        <p>
-                            <!-- I am working as a blockchain researcher and developer at SUNY RF, New York under Prof. Dr. Bina Ramamurthy. -->
-                        </p>
+                        <!-- I am working as a blockchain researcher and developer at SUNY RF, New York under Prof. Dr. Bina Ramamurthy. -->
                     </div>
                 </div> <!-- end column -->
 
@@ -455,7 +461,7 @@
 
             <div class="column large-6 s-services__leftcol">
                 <div class="section-intro" data-num="02" data-aos="fade-up">
-                    <p class="subhead">Acumen</p>
+                    <p class="subhead">Skills</p>
 
                     <h2 class="display-1">
                         LLM agents, ML models, and the systems that run them.
@@ -504,7 +510,7 @@
                             <p>
                                 Models are only as good as the data behind them. I design and maintain pipelines on Spark, Hadoop, Hive, and
                                 Kafka that turn massive, messy datasets into reliable features and signals (batch and real-time) so both
-                                ML models and LLM systems have reliable inputs.
+                                ML models and LLM systems have clean inputs.
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
@@ -560,7 +566,7 @@
                 <p class="lead" data-aos="fade-up">
                     Four pull requests merged into maintained scientific Python libraries, each reviewed and
                     accepted by the people who run them. One of them shipped as a named estimator in a
-                    release. Alongside two packages of my own on PyPI.
+                    release, alongside two packages of my own on PyPI.
                 </p>
             </div> <!-- end s-services--leftcol -->
 
@@ -599,7 +605,7 @@
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-8">category_encoders&nbsp;&middot; GrayEncoder correctness fix</button></h3>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-8">category_<wbr>encoders&nbsp;&middot; GrayEncoder correctness fix</button></h3>
                         </div>
                         <div class="services-list__item-body" id="svc-8">
                             <p>
@@ -613,7 +619,7 @@
                     </li> <!-- services-list__item -->
                     <li class="services-list__item">
                         <div class="services-list__item-header">
-                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-9">scikit-dimension&nbsp;&middot; uncentered lPCA</button></h3>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-9">scikit-&#8288;dimension&nbsp;&middot; uncentered lPCA</button></h3>
                         </div>
                         <div class="services-list__item-body" id="svc-9">
                             <p>
@@ -672,7 +678,7 @@
                 <div class="section-intro" data-num="04" data-aos="fade-up">
                     <p class="subhead">Projects</p>
                     <h2 class="display-1">
-                        Some of my notable projects I've worked on.
+                        Selected projects.
                     </h2>
                 </div>
             </div>
@@ -686,8 +692,8 @@
                 <div class="folio-item">
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/graphspot.webp"
-                            title="graphspot: OddBall scoring a Tolokers neighbourhood" data-size="1600x900">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/graphspot-800.webp" srcset="images/portfolio/gallery/graphspot-800.webp 800w, images/portfolio/gallery/graphspot-1200.webp 1200w, images/portfolio/gallery/graphspot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="A dense network of 300 Tolokers nodes in grey with the fifteen most structurally anomalous nodes marked in blue, scored by OddBall">
+                            title="graphspot: OddBall scoring a Tolokers neighborhood" data-size="1600x900">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/graphspot-800.webp" srcset="images/portfolio/gallery/graphspot-800.webp 800w, images/portfolio/gallery/graphspot-1200.webp 1200w, images/portfolio/gallery/graphspot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="A dense network of 300 Tolokers nodes in gray with the fifteen most structurally anomalous nodes marked in blue, scored by OddBall">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -697,7 +703,7 @@
                     <a href="https://github.com/JayeshSuryavanshi/graphspot" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link<span class="visually-hidden">: graphspot on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>Inductive graph anomaly detection (on PyPI as graphspot), with a core that installs and runs without torch. It ships flat baselines next to the graph models on purpose, because a detector on raw features is a genuinely hard baseline to beat. The thumbnail is real output: OddBall, unsupervised, scoring a neighbourhood of the Tolokers graph. I also mirror four graph anomaly benchmarks (Tolokers, Questions, Weibo and Reddit) as Parquet datasets on <a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener">Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+                        <p>Inductive graph anomaly detection (on PyPI as graphspot), with a core that installs and runs without torch. It ships flat baselines next to the graph models on purpose, because a detector on raw features is a genuinely hard baseline to beat. The thumbnail is real output: OddBall, unsupervised, scoring a neighborhood of the Tolokers graph. I also mirror four graph anomaly benchmarks (Tolokers, Questions, Weibo and Reddit) as Parquet datasets on <a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener">Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
                     </div>
                 </div>
             </div>
@@ -707,7 +713,7 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/riot.webp"
                             title="Social Unrest Forecasting" data-size="1600x900">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/riot-800.webp" srcset="images/portfolio/gallery/riot-800.webp 800w, images/portfolio/gallery/riot-1200.webp 1200w, images/portfolio/gallery/riot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Social Unrest Forecasting project thumbnail">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/riot-800.webp" srcset="images/portfolio/gallery/riot-800.webp 800w, images/portfolio/gallery/riot-1200.webp 1200w, images/portfolio/gallery/riot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Social Unrest Forecasting project thumbnail">
                         </a>
                     </div>
                     
@@ -729,7 +735,7 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/geosocialx.webp"
                             title="GeoSocialX: density heatmap of geotagged posts" data-size="1600x900">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/geosocialx-800.webp" srcset="images/portfolio/gallery/geosocialx-800.webp 800w, images/portfolio/gallery/geosocialx-1200.webp 1200w, images/portfolio/gallery/geosocialx.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="GeoSocialX density heatmap over San Francisco">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/geosocialx-800.webp" srcset="images/portfolio/gallery/geosocialx-800.webp 800w, images/portfolio/gallery/geosocialx-1200.webp 1200w, images/portfolio/gallery/geosocialx.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="GeoSocialX density heatmap over San Francisco">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -749,7 +755,7 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/caseload.webp" title="caseload"
                             data-size="1600x900">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/caseload-800.webp" srcset="images/portfolio/gallery/caseload-800.webp 800w, images/portfolio/gallery/caseload-1200.webp 1200w, images/portfolio/gallery/caseload.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Bar chart of per-step recall at a 2% budget for a detector frozen at Elliptic step 34: 36% to 91% on steps 35 to 42, then zero on five of the seven steps after the break at step 43, with 2 of 169 illicit transactions found in total.">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/caseload-800.webp" srcset="images/portfolio/gallery/caseload-800.webp 800w, images/portfolio/gallery/caseload-1200.webp 1200w, images/portfolio/gallery/caseload.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Bar chart of per-step recall at a 2% budget for a detector frozen at Elliptic step 34: 36% to 91% on steps 35 to 42, then zero on five of the seven steps after the break at step 43, with 2 of 169 illicit transactions found in total.">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -759,7 +765,7 @@
                     <a href="https://github.com/JayeshSuryavanshi/caseload" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link<span class="visually-hidden">: caseload on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>Reinforcement learning environments for budgeted fraud investigation, where investigating a case is the only way to learn its label. On the Elliptic transaction graph, a detector frozen before the step-43 regime break finds 2 of 169 illicit transactions after it. On Feedzai's synthetic FiFAR alerts, sending 10% of them to analysts cuts expected cost by 3.2% at the dataset's stated cost ratio. The chart is the per-step recall around the break.</p>
+                        <p>Reinforcement learning environments for budgeted fraud investigation, where investigating a case is the only way to learn its label. On the Elliptic transaction graph, a detector frozen before the step-43 regime break finds 2 of 169 illicit transactions after it. On Feedzai&rsquo;s synthetic FiFAR alerts, sending 10% of them to analysts cuts expected cost by 3.2% at the dataset&rsquo;s stated cost ratio. The chart is the per-step recall around the break.</p>
                     </div>
                 </div>
             </div><!-- end column -->
@@ -769,7 +775,7 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/l5-study.webp" title="L5 Motion Prediction Study"
                             data-size="1600x900">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/l5-study-800.webp" srcset="images/portfolio/gallery/l5-study-800.webp 800w, images/portfolio/gallery/l5-study-1200.webp 1200w, images/portfolio/gallery/l5-study.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Dot plot of holdout negative log-likelihood on a log scale: history MLP 128.9, kinematic mixture 289.0, constant velocity 310.5, constant turn 701.7, stationary 7,496.9">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/l5-study-800.webp" srcset="images/portfolio/gallery/l5-study-800.webp 800w, images/portfolio/gallery/l5-study-1200.webp 1200w, images/portfolio/gallery/l5-study.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Dot plot of holdout negative log-likelihood on a log scale: history MLP 128.9, kinematic mixture 289.0, constant velocity 310.5, constant turn 701.7, stationary 7,496.9">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -779,7 +785,7 @@
                     <a href="https://github.com/JayeshSuryavanshi/l5-motion-prediction-study" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link<span class="visually-hidden">: L5 Motion Prediction Study on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>Motion prediction on the Lyft Level 5 dataset, run as a study of what the task looks like on a single laptop's compute budget rather than a leaderboard run. In progress: the kinematic baselines and a history-only MLP are done, raster and vector models are next. The chart is the holdout results so far.</p>
+                        <p>Motion prediction on the Lyft Level 5 dataset, run as a study of what the task looks like on a single laptop&rsquo;s compute budget rather than a leaderboard run. In progress: the kinematic baselines and a history-only MLP are done, raster and vector models are next. The chart is the holdout results so far.</p>
                     </div>
                 </div>
             </div><!-- end column -->
@@ -789,7 +795,7 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/triangulation.webp" title="Triangulation SQL Explorer (click to see the app)"
                             data-size="1050x700">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/triangulation-bg-800.webp" srcset="images/portfolio/gallery/triangulation-bg-800.webp 800w, images/portfolio/gallery/triangulation-bg-1200.webp 1200w, images/portfolio/gallery/triangulation-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Triangulation SQL Explorer project thumbnail">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/triangulation-bg-800.webp" srcset="images/portfolio/gallery/triangulation-bg-800.webp 800w, images/portfolio/gallery/triangulation-bg-1200.webp 1200w, images/portfolio/gallery/triangulation-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Triangulation SQL Explorer project thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -799,7 +805,7 @@
                     <a href="https://www.jayeshsuryavanshi.com/Team-Triangulation/" target="_blank" rel="noopener" title="Live Demo" class="folio-item__project-link">Live
                         Demo<span class="visually-hidden">: Triangulation SQL Explorer (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>An IMDb-style movie/TV database you can query with free-form SQL, entirely in the browser: a real SQLite engine compiled to WebAssembly with a bundled sample dataset: no backend, no network. Rebuilt from a 2022 database-course project into a self-contained live demo with pre-built analytics views and 16 passing tests.</p>
+                        <p>An IMDb-style movie/TV database you can query with free-form SQL, entirely in the browser: a real SQLite engine compiled to WebAssembly with a bundled sample dataset, and no backend or network. Rebuilt from a 2022 database-course project into a self-contained live demo with pre-built analytics views and 16 passing tests.</p>
                     </div>
                 </div>
             </div><!-- end column -->
@@ -811,17 +817,17 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/walleto.webp"
                             title="Walleto: Digital Wallet" data-size="1600x900">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/walleto-800.webp" srcset="images/portfolio/gallery/walleto-800.webp 800w, images/portfolio/gallery/walleto-1200.webp 1200w, images/portfolio/gallery/walleto.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Walleto full-stack digital wallet thumbnail">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/walleto-800.webp" srcset="images/portfolio/gallery/walleto-800.webp 800w, images/portfolio/gallery/walleto-1200.webp 1200w, images/portfolio/gallery/walleto.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Walleto full-stack digital wallet thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
                         <div class="folio-item__cat">Full Stack Development</div>
                         <h3 class="folio-item__title">Walleto: Full-&#8288;Stack Digital Wallet</h3>
                     </div>
-                    <a href="https://github.com/JayeshSuryavanshi/Walleto" target="_blank" rel="noopener" title="Walleto" class="folio-item__project-link">Project
+                    <a href="https://github.com/JayeshSuryavanshi/Walleto" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link<span class="visually-hidden">: Walleto on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>Led development of full-stack digital wallet app, enabling users to connect bank accounts, view transactions, pay bills, and earn cashback</p>
+                        <p>I led development of a full-stack digital wallet app, enabling users to connect bank accounts, view transactions, pay bills, and earn cashback.</p>
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -831,7 +837,7 @@
                     <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/beacon.webp"
                             title="Beacon EV Charging dApp (click to see the app)" data-size="1050x700">
-                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/beacon-bg-800.webp" srcset="images/portfolio/gallery/beacon-bg-800.webp 800w, images/portfolio/gallery/beacon-bg-1200.webp 1200w, images/portfolio/gallery/beacon-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 801px) 45vw, calc(100vw - 48px)" alt="Beacon P2P EV charging dApp thumbnail">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/beacon-bg-800.webp" srcset="images/portfolio/gallery/beacon-bg-800.webp 800w, images/portfolio/gallery/beacon-bg-1200.webp 1200w, images/portfolio/gallery/beacon-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Beacon P2P EV charging dApp thumbnail">
                         </a>
                     </div>
                     <div class="folio-item__info">
@@ -859,7 +865,7 @@
 
     <!-- footer
     ================================================== -->
-    <footer class="s-footer h-dark-bg">
+    <footer id="contact" class="s-footer h-dark-bg">
 
         <div class="right-vert-line"></div>
 
@@ -869,12 +875,12 @@
                     <p class="subhead">Get In Touch</p>
 
                     <h2 class="display-1">
-                        Let's turn that idea into reality. Shoot me a message.
+                        Let&rsquo;s turn that idea into reality. Shoot me a message.
                     </h2>
                 </div>
 
                 <div class="footer-email-us">
-                    <a href="mailto:jayeshksuryavanshi@gmail.com" class="btn btn--primary h-full-width">Let's Talk</a>
+                    <a href="mailto:jayeshksuryavanshi@gmail.com" class="btn btn--primary h-full-width">Let&rsquo;s Talk</a>
                 </div>
             </div>
 
@@ -882,7 +888,7 @@
                 <div class="footer-contacts">
                     <div class="footer-contact-block" data-aos="fade-up">
                         <h3 class="footer-contact-block__header h5">
-                            Email <span aria-hidden="true">📨</span>
+                            Email
                         </h3>
                         <p class="footer-contact-block__content">
                             <a href="mailto:jayeshksuryavanshi@gmail.com" aria-label="jayeshksuryavanshi@gmail.com">jayeshksuryavanshi<wbr>@gmail.com</a>
@@ -890,19 +896,21 @@
                     </div> <!-- end footer-contact-block -->
                     <div class="footer-contact-block" data-aos="fade-up">
                         <h3 class="footer-contact-block__header h5">
-                            Phone <span aria-hidden="true">🤙🏼</span>
+                            Phone
                         </h3>
                         <p class="footer-contact-block__content">
-                            <a href="tel:+17163039894">(+1)  716-&#8288;303-&#8288;9894</a>
+                            <a href="tel:+17163039894">(+1) 716-&#8288;303-&#8288;9894</a>
                         </p>
                     </div> <!-- end footer-contact-block -->
-                    <br>
                     <div class="footer-contact-block" data-aos="fade-up">
                         <h3 class="footer-contact-block__header h5">
                             Social
                         </h3>
                         <ul class="footer-contact-block__list">
                             <li><a href="https://x.com/2jayesh3" target="_blank" rel="noopener">X<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                            <li><a href="https://www.linkedin.com/in/jayeshsuryavanshi/" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                            <li><a href="https://github.com/JayeshSuryavanshi" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                            <li><a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener">Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a></li>
                         </ul>
                     </div> <!-- end footer-contact-block -->
                 </div>
@@ -942,8 +950,7 @@
             <div class="pswp__ui pswp__ui--hidden">
                 <div class="pswp__top-bar">
                     <div class="pswp__counter"></div><button class="pswp__button pswp__button--close"
-                        title="Close (Esc)"></button> <button class="pswp__button pswp__button--share"
-                        title="Share"></button> <button class="pswp__button pswp__button--fs"
+                        title="Close (Esc)"></button> <button class="pswp__button pswp__button--fs"
                         title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom"
                         title="Zoom in/out"></button>
                     <div class="pswp__preloader">
@@ -954,9 +961,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
                 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
                 <div class="pswp__caption">
                     <div class="pswp__caption__center"></div>
@@ -971,7 +976,7 @@
     ================================================== -->
     <script src="js/jquery-3.2.1.min.js?v=2"></script>
     <script src="js/plugins.js?v=2"></script>
-    <script src="js/main.js?v=3"></script>
+    <script src="js/main.js?v=4"></script>
     <script>
         var _cy = document.getElementById('copyright-year');
         if (_cy) { _cy.textContent = new Date().getFullYear(); }
