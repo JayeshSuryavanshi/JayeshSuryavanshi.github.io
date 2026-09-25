@@ -6,7 +6,7 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2026 12:00:00 GMT</lastBuildDate>
 
     <item>
       <title>The simulator was the experiment</title>
@@ -14,8 +14,8 @@
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html</guid>
       <pubDate>Thu, 24 Sep 2026 12:00:00 GMT</pubDate>
       <category>Research Notes</category>
-      <description>I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a rule I wrote in ten minutes. On the real regime break a one-line heuristic beat it by 3.6x. Five results in the project were wrong before they were right.</description>
-      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png" length="120293" type="image/png"/>
+      <description>I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a hand-written rule. On the real regime break that advantage did not show up. The agent was never the thing under test.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png?v=2" length="126131" type="image/png"/>
     </item>
     <item>
       <title>The wrong opponent</title>

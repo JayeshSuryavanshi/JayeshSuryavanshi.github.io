@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>The simulator was the experiment · Jayesh Suryavanshi</title>
-  <meta name="description" content="I built a reinforcement learning environment for budgeted fraud investigation, trained a policy, and it beat every baseline including a hand-written rule. On real data a one-line heuristic beat it by 3.6x. The agent was never the thing under test.">
+  <meta name="description" content="I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a hand-written rule. On the real regime break that advantage did not show up. The agent was never the thing under test.">
   <meta name="author" content="Jayesh Suryavanshi">
   <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html">
 
@@ -11,8 +11,8 @@
   <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html">
   <meta property="og:site_name" content="Jayesh Suryavanshi">
   <meta property="og:title" content="The simulator was the experiment">
-  <meta property="og:description" content="A learned policy dominated my fraud-investigation simulator across six seeds, then lost to a one-line rule on the real regime break. Five results were wrong before they were right.">
-  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png">
+  <meta property="og:description" content="A learned policy dominated my fraud-investigation simulator across six seeds, then showed no advantage on the real regime break. Five results were wrong before I published, and a later review found eight more.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png?v=2">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
   <meta property="og:image:alt" content="The simulator was the experiment, research notes by Jayesh Suryavanshi">
@@ -22,11 +22,13 @@
   <meta name="twitter:site" content="@2jayesh3">
   <meta name="twitter:creator" content="@2jayesh3">
   <meta name="twitter:title" content="The simulator was the experiment">
-  <meta name="twitter:description" content="A learned policy dominated my fraud-investigation simulator across six seeds, then lost to a one-line rule on the real regime break. Five results were wrong before they were right.">
-  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png">
+  <meta name="twitter:description" content="A learned policy dominated my fraud-investigation simulator across six seeds, then showed no advantage on the real regime break. Five results were wrong before I published, and a later review found eight more.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png?v=2">
   <meta name="twitter:image:alt" content="The simulator was the experiment, research notes by Jayesh Suryavanshi">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -38,10 +40,10 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "The simulator was the experiment",
-    "description": "A learned policy dominated my fraud-investigation simulator across six seeds, then lost to a one-line rule on the real regime break. Five results were wrong before they were right.",
-    "image": "https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png",
+    "description": "A learned policy dominated my fraud-investigation simulator across six seeds, then showed no advantage on the real regime break. Five results were wrong before I published, and a later review found eight more.",
+    "image": "https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png?v=2",
     "datePublished": "2026-09-24",
-    "dateModified": "2026-09-24",
+    "dateModified": "2026-09-25",
     "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
     "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
     "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html",
@@ -51,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="blog.css?v=5">
+  <link rel="stylesheet" href="blog.css?v=7">
   <script>
     /* scheme boot. runs before first paint so a pinned theme never flashes the
        other one. with no pinned choice the attribute stays off and the page
@@ -78,7 +80,7 @@
         <a href="../">Home</a>
         <a href="./" class="here">Writing</a>
       </nav>
-      <div class="theme-switch" role="group" aria-label="Colour scheme">
+      <div class="theme-switch" role="group" aria-label="Color scheme">
         <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
         <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
         <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
@@ -89,68 +91,84 @@
     <article>
       <p class="kicker">Research Notes</p>
       <h1 class="title">The simulator was the experiment</h1>
-      <p class="dek">I built an RL environment for fraud investigation and trained a policy that beat every baseline I had, including a rule I wrote in ten minutes. Then I ran it on real data, where a one-line heuristic beat it by three and a half times. The agent was never the thing being tested.</p>
+      <p class="dek">I built an RL environment for fraud investigation and trained a policy that beat every baseline I had, including a hand-written rule. Then I ran it on the real regime break, and the advantage did not show up. The agent was never the thing being tested.</p>
       <div class="byline">
         <span>By <strong>Jayesh Suryavanshi</strong></span>
         <span class="sep">&middot;</span>
         <span>September&nbsp;24,&nbsp;2026</span>
         <span class="sep">&middot;</span>
-        <span>~12&nbsp;min read</span>
+        <span><a href="#correction">Corrected September&nbsp;25</a></span>
+        <span class="sep">&middot;</span>
+        <span>~18&nbsp;min read</span>
+      </div>
+
+      <div class="prose" style="padding-bottom:0">
+        <div class="callout" id="correction" role="note">
+          <div class="label">Corrected September 25, 2026</div>
+          <p>I published this on September 24 from an earlier state of the caseload README. Before making the repository public I had every claim in it re-checked against the code, the committed results and the cited papers. It found eight errors I had not caught, and five of them were in this post. I have fixed them here, in place, and the full list is in the README under <a href="https://github.com/JayeshSuryavanshi/caseload#corrections-found-before-release">Corrections found before release</a>. What changed:</p>
+          <p><strong>The FiFAR headline was backwards.</strong> I called 88:1 FiFAR&rsquo;s own cost ratio. The dataset states about 17.5:1, and there sending alerts to review saves 3.2% of expected cost (7.6% held out). 88:1 is a stress case. FiFAR&rsquo;s alerts and analysts are also synthetic, not real, and the paragraph about a published oddity in DeCCaF&rsquo;s results is withdrawn, because I had misread their table.</p>
+          <p><strong>The Elliptic numbers mixed two configurations.</strong> The frozen detector does not return exactly zero for seven steps. It finds 2 of 169 illicit transactions, with five of the seven steps at zero. The recovery figure is 49.6% against 3.3%, not 56.2% against 1.7%.</p>
+          <p><strong>The zero-shot numbers came from an archive nobody else can rebuild.</strong> On the converted archive the hand-written rule, not the always-explore policy, has the best post-break recall, and most gaps sit inside what the archive alone moves. So &ldquo;a one-line heuristic beat it by 3.6x&rdquo; is gone. What survives is weaker: on the real break the policy&rsquo;s advantage is not visible.</p>
+          <p><strong>Smaller fixes.</strong> Checking this post line by line against the repository turned up smaller ones too. 95.3% came from the retracted 320-episode run and the table&rsquo;s oracle row from a separate study, and both are replaced. I had also said the 320-episode run separated from nothing; on the paired interquartile mean it was a hair ahead of top-k, +0.010 [+0.001, +0.025]. A 27.7% with no script behind it is gone, and so is &ldquo;industry default&rdquo;. The three charts had been typed by hand and are now regenerated from the committed result files.</p>
+        </div>
       </div>
 
       <section class="abstract" aria-label="Abstract">
         <h2>Abstract</h2>
-        <p>A fraud detector frozen before a regime break does not degrade, it returns exactly zero for seven consecutive steps while the fraud is still findable. That makes budgeted investigation a sequential decision problem rather than a classification one, because investigating a case is the only way to learn its label. Trained on a procedural drift simulator for 1,600 episodes across six seeds, a small PPO policy beats the industry-default top-k by +0.076 [+0.056, +0.091] and clears a hand-written adaptive rule by +0.073. Evaluated zero-shot on the real break it is ahead by 0.006, on four of six seeds, and its post-break recall ranges from 0.063 to 0.440. A policy that always spends 60% of its budget exploring still holds the record on real data. The second environment, built on 30,622 real alerts with 50 analysts' recorded decisions, produces a cleaner result by refusing to cooperate: at the cost ratio that dataset itself uses, routing an alert to a human raises expected cost by 11.6%.</p>
+        <p>A fraud detector frozen before a regime break does not degrade gracefully. On Elliptic it finds 2 of the 169 illicit transactions in the seven steps after the break, with five of those steps at zero, while the fraud is still findable. That makes budgeted investigation a sequential decision problem rather than a classification one, because investigating a case is the only way to learn its label. Trained on a procedural drift simulator for 1,600 episodes across six seeds, a small PPO policy beats top-k by +0.076 [+0.056, +0.091] and clears a hand-written adaptive rule by +0.073. Evaluated zero-shot on the real break, that advantage is not visible: across seeds its overall recall runs from 0.705 to 0.759 against the rule&rsquo;s 0.754, and its post-break recall from 0.051 to 0.286 against the rule&rsquo;s 0.408. On one trajectory, differences under about 0.2 post-break or 0.05 overall are within what the data archive alone can move. The second environment, built on FiFAR&rsquo;s 30,622 synthetic alerts and 50 synthetic analysts, says review pays at the cost ratio the dataset states, about 17.5:1: it saves 3.2% [2.2, 4.2] of expected cost in-sample and 7.6% [4.0, 11.2] held out. Of the three cost settings DeCCaF uses, only the 88:1 stress case makes review raise cost, and across a sweep of ratios the sign changes somewhere between about 50:1 and 25:1.</p>
       </section>
 
       <div class="prose">
-        <p class="lead">I wanted an RL project that was not another CartPole, so I built an environment for a problem I actually understand: you have a fraud detector, a limited number of investigations, and the only way to learn whether a case was fraud is to spend one of those investigations on it. Then the fraud population moves. I trained a policy, it beat every baseline I had, and I was ready to write that up. Running it on real data instead took about a minute and turned the whole thing around.</p>
+        <p class="lead">I wanted an RL project that was not another CartPole, so I built an environment for a problem I actually understand: you have a fraud detector, a limited number of investigations, and the only way to learn whether a case was fraud is to spend one of those investigations on it. Then the fraud population moves. I trained a policy, it beat every baseline I had, and I was ready to write that up. Running it on real data instead turned the whole thing around.</p>
 
         <p>The short version: the agent was never the interesting part. My simulator was, and holding out real data is the only reason I found out.</p>
 
         <div class="callout">
           <div class="label">What I measured, and what I cannot claim</div>
-          <p>Everything numeric here comes from code in one repository, run on a laptop. Two datasets: the Elliptic Bitcoin transaction graph, and Feedzai's FiFAR alert-review dataset. The drift environment is mine, which is exactly the thing this note ends up being about. I make no claim that this is the best achievable policy: the agent is a small PPO trained for 1,600 episodes per seed, and a stronger method may well transfer where this one does not.</p>
+          <p>Every number here comes from the code and committed result files in one repository, run on a laptop. Two datasets: the Elliptic Bitcoin transaction graph, and Feedzai&rsquo;s FiFAR alert-review dataset, whose alerts and analysts are both synthetic. The drift environment is mine, which is exactly the thing this note ends up being about. I make no claim that this is the best achievable policy: the agent is a small PPO trained for 1,600 episodes per seed, and a stronger method may well transfer where this one does not.</p>
         </div>
 
-        <h2>Seven steps at zero</h2>
+        <h2>Two in 169</h2>
 
-        <p>Start with the measurement that made me want to build this at all. Take the Elliptic graph, 203,769 Bitcoin transactions across 49 time steps, and fit a gradient boosting detector on steps 1 to 34. Then freeze it and watch what it finds, at a budget of 2% of each step's transactions.</p>
+        <p>Start with the measurement that made me want to build this at all. Take the Elliptic graph, 203,769 Bitcoin transactions across 49 time steps, and fit a gradient boosting detector on steps 1 to 34. Then freeze it and watch what it finds, at a budget of 2% of each step&rsquo;s transactions.</p>
 
         <figure>
-          <img src="../images/caseload-collapse.png" alt="Recall per time step for a frozen detector. It moves between 33% and 88% through step 42, then drops to exactly zero at step 43 and stays there for the remaining seven steps, well below a dashed line marking the 56% a refitted detector reaches." loading="lazy">
-          <figcaption>A frozen detector on Elliptic at a 2% investigation budget. Step 43 is a documented regime break, when a darknet market was shut down. The dashed line is what the same detector reaches once it is given labels from steps 43 and 44.</figcaption>
+          <a href="../images/caseload-collapse.png?v=2" target="_blank" rel="noopener">
+            <img src="../images/caseload-collapse.png?v=2" alt="Recall per Elliptic time step for a detector fitted on steps 1 to 34 and then frozen, at a 2% budget. It runs between 36% and 91% through step 42. After the dark-market shutdown at step 43 it finds 2 of 169 illicit transactions, with five of the seven steps at zero. Step 46 reads 50% because it has only two illicit transactions and one was found, and step 49 finds 1 of 56. A note says a detector refitted on labels up to step 44 finds 49.6% of the illicit transactions in steps 45 to 49 at a 10% budget, against 3.3% for the frozen one." width="1595" height="838" loading="lazy">
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          <figcaption>A detector frozen on Elliptic steps 1 to 34, at a 2% investigation budget. Step 43 is a documented regime break, when a darknet market was shut down. Over steps 43 to 49 it finds 2 of 169 illicit transactions, and the 50% at step 46 is one transaction out of two. Refitted on labels up to step 44, the same detector finds 49.6% of the illicit transactions in steps 45 to 49 at a 10% budget, against 3.3% frozen.</figcaption>
         </figure>
 
-        <p>It does not decay. It works, and then it returns exactly zero for seven consecutive steps. Not "degraded", not "drifted": zero illicit transactions found, repeatedly, while illicit transactions were still there to find.</p>
+        <p>It does not decay gracefully. It works, and then over the seven steps after the break it finds 2 of the 169 illicit transactions. Five of those steps come back at zero, and the 50% at step 46 is one transaction out of two. Not &ldquo;degraded&rdquo;, not &ldquo;drifted&rdquo;: almost nothing found, while illicit transactions were still there to find.</p>
 
-        <p>And the information needed to recover is sitting right there. Refit that same model with labels from just the first two post-break steps and it reaches <strong>56.2%</strong> recall on the rest, against <strong>1.7%</strong> frozen, at a 10% budget. So the fraud is findable. You just have to look somewhere the broken detector is telling you not to.</p>
+        <p>And the information needed to recover is sitting right there. Refit that same model on every label up to step 44, which includes the first two steps after the break, and at a 10% budget it finds <strong>49.6%</strong> of the illicit transactions in steps 45 to 49, against <strong>3.3%</strong> frozen and 5.0% for random picks. So the fraud is findable. You just have to look somewhere the broken detector is telling you not to.</p>
 
         <h2>Why this is not a classification problem</h2>
 
         <p>Here is the rule that makes this a decision problem. <strong>Investigating a case reveals its label. Nothing else does.</strong></p>
 
-        <p>That sounds obvious and it has a nasty consequence: your detector can only ever be retrained on cases somebody chose to investigate. A policy that always spends its budget on the highest-scoring cases will keep scoring the same kind of case highly, keep being right about them, and have no way of noticing that the population moved. It does not get a warning. It gets a zero.</p>
+        <p>That sounds obvious and it has a nasty consequence: your detector can only ever be retrained on cases somebody chose to investigate. A policy that always spends its budget on the highest-scoring cases will keep scoring the same kind of case highly, keep being right about them, and have no way of noticing that the population moved. It does not get a warning. It gets almost nothing.</p>
 
-        <p>This is the selective-labels setting from the fairness literature, written as a sequential problem instead of a static one.<span class="sn-ref">1</span> It is also an instance of what the RL literature calls a Monitored MDP, where the reward exists whether or not you observe it and observing it competes for the same budget as exploiting it. Every published Monitored MDP experiment I could find is a gridworld.</p>
+        <aside class="sidenote"><span class="sn-num">1</span>Lakkaraju et al., KDD 2017 for selective labels; Parisi et al., AAMAS 2024 for Monitored MDPs. The closest RL work I know of on fraud alerts is Tong et al., AAAI 2020, who learn alert prioritization against attackers that adapt. The caseload README lists the rest.</aside>
 
-        <aside class="sidenote"><span class="sn-num">1</span>Lakkaraju et al., KDD 2017 for selective labels; Parisi et al., AAMAS 2024 for Monitored MDPs. The gap between "there is a formalism for this" and "somebody has run it on real fraud data" is most of why I thought the project was worth doing.</aside>
+        <p>This is the selective-labels setting from the fairness literature, written as a sequential problem instead of a static one.<span class="sn-ref">1</span> It is also an instance of what the RL literature calls a Monitored MDP, where the reward exists whether or not you observe it and observing it competes for the same budget as exploiting it.</p>
 
         <h2>The opponent that matters</h2>
 
         <p>The easiest way to make an RL result look good is to pick a weak baseline. So before training anything I built the two that actually matter.</p>
 
-        <p><strong>Top-k</strong> is what production systems run: score everything, investigate the highest scores, spend the budget evenly over time. It is not a strawman. Before the break it achieves <strong>95.3%</strong> recall in my environment. Any policy that cannot beat it is not worth deploying.</p>
+        <p><strong>Top-k</strong> is the common baseline: score everything, investigate the highest scores, spend the budget evenly over time. It is not a strawman. Before the break it finds <strong>95.8%</strong> of the fraud in my environment, over 30 seeds. Any policy that cannot beat it is not worth deploying.</p>
 
-        <p><strong>Yield-triggered</strong> is the real bar, and I want to be honest that it took ten minutes to write. It watches its own hit rate, and when yield collapses relative to what it had been getting, it switches budget into exploring cases the detector ranks low until yield recovers. That is what a competent engineer does without any machine learning, and it is the thing a learned policy has to justify itself against.</p>
+        <p><strong>Yield-triggered</strong> is the real bar, and I want to be honest that there is nothing clever in it. It watches its own hit rate, and when yield collapses relative to what it had been getting, it switches budget into exploring cases the detector ranks low until yield recovers. That is what a competent engineer writes in an afternoon without any machine learning, and it is the thing a learned policy has to justify itself against.</p>
 
-        <p>I also report an oracle ceiling everywhere, because recall under a budget is meaningless without knowing what was achievable. A perfect ranker with the same budget gets 98.8%. Every number below should be read against that.</p>
+        <p>I also report an oracle ceiling everywhere, because recall under a budget is meaningless without knowing what was achievable. Over the same 30 seeds, a perfect ranker with the same budget gets 98.7% before the break (98.8% overall). Every result should be read against a ceiling like that one.</p>
 
         <h2>Building a simulator that lied to me</h2>
 
-        <p>Elliptic has exactly one regime break. One break is one trajectory, and a policy fitted to one trajectory has memorised it, so I could not train on it. I wrote a procedural drift simulator instead: fraud is a mixture of modes in feature space, and at a randomly placed break some modes stop emitting and new ones start. Train on random breaks, evaluate on the real one.</p>
+        <p>Elliptic has exactly one regime break. One break is one trajectory, and a policy fitted to one trajectory has memorized it, so I could not train on it. I wrote a procedural drift simulator instead: fraud is a mixture of modes in feature space, and at a randomly placed break some modes stop emitting and new ones start. Train on random breaks, evaluate on the real one.</p>
 
-        <p>The first version was useless and it took a while to see why. In it, top-k recovered on its own to <strong>27.7%</strong> post-break recall, nothing like Elliptic's seven zeros. The reason is that my new fraud modes landed somewhere the old detector still scored middling, so top-k stumbled into a few of them every round, fed them to the refit, and quietly healed itself. Exploration had nothing left to contribute, which made the environment a poor model of the thing I built it for.</p>
+        <p>The first version was useless and it took a while to see why. In it, top-k recovered a large share of the post-break fraud on its own, with no exploration at all, which is nothing like Elliptic&rsquo;s near-total collapse. The reason is that my new fraud modes landed somewhere the old detector still scored middling, so top-k stumbled into a few of them every round, fed them to the refit, and quietly healed itself. Exploration had nothing left to contribute, which made the environment a poor model of the thing I built it for.</p>
 
         <p>The fix was to make the break adversarial: generate candidate fraud modes, score them with a detector trained on pre-break traffic, and keep the ones it scores <em>lowest</em>. That reproduces the real collapse, and it is also the more honest story, because an adversary who adapts moves to where the current model is not looking.</p>
 
@@ -158,9 +176,9 @@
 
         <h2>The first run said it did not work</h2>
 
-        <p>I trained a small PPO for 320 episodes and evaluated on held-out drift seeds. It got 0.596 recall against top-k's 0.570 and yield-triggered's 0.594, with a standard deviation of 0.079. In other words, it separated from nothing.</p>
+        <p>I trained a small PPO for 320 episodes, on one seed, and evaluated on held-out drift seeds. It got 0.596 mean recall against top-k&rsquo;s 0.570 and yield-triggered&rsquo;s 0.594, with a standard deviation of 0.079. In other words, it was level with the hand-written rule, and on the paired interquartile mean only a hair ahead of top-k (+0.010 [+0.001, +0.025]).</p>
 
-        <p>I wrote that up as a negative result, pushed it, and then noticed the obvious objection to my own work: <strong>320 episodes is not a training run.</strong> Any reviewer kills that claim in one line. So the finding was not "RL does not help here", it was "I did not train it".</p>
+        <p>I wrote that up as a negative result, pushed it, and then noticed the obvious objection to my own work: <strong>320 episodes is not a training run.</strong> Any reviewer kills that claim in one line. So the finding was not &ldquo;RL does not help here&rdquo;, it was &ldquo;I did not train it&rdquo;.</p>
 
         <h2>The second run said it did</h2>
 
@@ -176,77 +194,94 @@
               <tr><td>top-k</td><td>0.579</td><td>0.042</td><td>reference</td></tr>
               <tr><td>yield-triggered</td><td>0.582</td><td>0.105</td><td>+0.004</td></tr>
               <tr><td>always explore 60%</td><td>0.455</td><td>0.152</td><td>-0.124</td></tr>
-              <tr><td>oracle ceiling</td><td>0.988</td><td>0.996</td><td></td></tr>
+              <tr><td>oracle ceiling</td><td>0.997</td><td></td><td></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p>Paired against the hand-written rule it comes out at <strong>+0.073 [+0.053, +0.088]</strong>, so it clears it, which it never did at 320 episodes. Post-break it finds 4.7 times what top-k finds. It had learned the behaviour I designed the environment to reward: keep nearly all of top-k's pre-break performance, and spend on exploration once yield collapses.</p>
+        <p>Paired against the hand-written rule it comes out at <strong>+0.073 [+0.053, +0.088]</strong>, so it clears it, which it never did at 320 episodes. Post-break it finds 4.7 times what top-k finds. It had learned the behavior I designed the environment to reward: keep nearly all of top-k&rsquo;s pre-break performance, and spend on exploration once yield collapses. (The oracle row is overall recall only. These result files do not split it before and after the break.)</p>
 
-        <p>At this point I had a result. A learned policy beating both the industry default and a sensible hand-written rule, with intervals, on six seeds. This is the version of the story I would have published if I had stopped here.</p>
+        <p>At this point I had a result. A learned policy beating both top-k and a sensible hand-written rule, with intervals, on six seeds. This is the version of the story I would have published if I had stopped here.</p>
 
         <h2>Then I ran it on the real break</h2>
 
         <figure>
-          <img src="../images/caseload-transfer.png" alt="A slope chart of post-break recall on the synthetic simulator versus the real Elliptic break. PPO is the only line that falls, from 20% to 16%. Always-explore rises steeply from 15% to 56%, yield-triggered rises from 11% to 23%, and top-k rises slightly from 4% to 8%." loading="lazy">
-          <figcaption>Post-break recall, same policies, two environments. Left is the simulator the policy trained on. Right is Elliptic's real regime break, zero-shot. The learned policy is the only one that gets worse.</figcaption>
+          <a href="../images/caseload-transfer.png?v=2" target="_blank" rel="noopener">
+            <img src="../images/caseload-transfer.png?v=2" alt="Slope chart of post-break recall on the simulator&#x27;s held-out episodes versus Elliptic&#x27;s real break, zero-shot. Top-k goes from 4% to 8%, yield-triggered from 11% to 41%, and always explore 60% from 15% to 36%. PPO is drawn as six thin lines, one per training seed. They start between 9% and 30% on the simulator and end between 5% and 29% on Elliptic, and five of the six end below 12%. A note says Elliptic is one trajectory, and that post-break gaps under about 20 points are within what the archive alone moves." width="1520" height="923" loading="lazy">
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          <figcaption>Post-break recall for the same policies in two environments. Left: the simulator&rsquo;s 20 held-out episodes, interquartile mean (the baselines do not depend on the training seed). Right: Elliptic&rsquo;s real regime break, zero-shot, on the converted archive. PPO is one line per training seed. On one trajectory, post-break gaps smaller than about 20 points are within what the archive alone can move, so the right-hand column is not precise enough to rank policies finely.</figcaption>
         </figure>
 
-        <p>On my simulator, PPO has the best post-break recall of anything I tested. On the real break it is third, and the crude rule that always spends 60% of its budget on exploration beats it by <strong>3.6 times</strong>.</p>
+        <p>On my simulator, PPO has the best post-break recall of anything I tested. On the real break, every one of the six seeds finds less after the break than the hand-written rule (0.408) and the always-explore policy (0.361), and three of them find less than top-k (0.077). Five of the six seeds fall from where they were on the simulator. One rises.</p>
 
-        <p>Overall on Elliptic, PPO gets 0.737 against top-k's 0.730. That is +0.006, on four of six seeds. After being worth +0.076 in distribution. And its post-break recall across training seeds ranges from <strong>0.063 to 0.440</strong>, a seven-fold spread, so on the real break its behaviour is close to a lottery.</p>
+        <p>Overall on Elliptic, the seeds run from 0.705 to 0.759, against top-k&rsquo;s 0.730 and the rule&rsquo;s 0.754. Three seeds are above top-k and three below. The rule is ahead of five of them, and the sixth is level with it. After being worth +0.076 in distribution, that is no visible advantage at all. And post-break recall across seeds runs from <strong>0.051 to 0.286</strong>, more than a five-fold spread, so on the real break what the policy does depends heavily on which seed trained it.</p>
 
-        <p>The honest statement is narrower than either "RL works here" or "RL does not". It is: <strong>the policy reliably beats every baseline on the simulator it trained on, and that advantage does not survive contact with the real thing.</strong> More training bought in-distribution skill, not transfer.</p>
+        <p>There is a second reason not to lean on these numbers, and the first version of this post missed it. They depend on the last bits of the features. I first ran the evaluation on an Elliptic archive built by a different parser, and with the same checkpoints and code, that archive gives yield-triggered 0.231 post-break instead of 0.408, always-explore 0.560 instead of 0.361, and seed 0 0.440 instead of 0.286. So on this single trajectory, a difference under about 0.2 post-break, or about 0.05 overall, is not a difference between policies. That older archive is where the &ldquo;3.6 times&rdquo; in the first version came from.</p>
 
-        <p>Which means my simulator does not present what the real collapse presents. I do not fully know what the difference is, and that is the most interesting open question the project produced. The drift I generate is a mode substitution in feature space; whatever happens at Elliptic's step 43 evidently offers a different signal, or none that my observation vector exposes.</p>
+        <p>The honest statement is narrower than either &ldquo;RL works here&rdquo; or &ldquo;RL does not&rdquo;. It is: <strong>on the simulator it trained on, the policy beats every baseline on overall recall across six seeds, and on the real break that advantage is not visible.</strong> That is an absence of evidence for transfer, not a measured loss. More training bought in-distribution skill, not transfer.</p>
 
-        <h2>The other half: when not to use a human at all</h2>
+        <p>Which means my simulator does not present what the real collapse presents. I do not fully know what the difference is, and that is the most interesting open question the project produced. The drift I generate is a mode substitution in feature space; whatever happens at Elliptic&rsquo;s step 43 evidently offers a different signal, or none that my observation vector exposes.</p>
 
-        <p>The second environment was supposed to be the easy one, and it produced the cleanest result in the project by refusing to cooperate.</p>
+        <h2>The other half: when review pays</h2>
 
-        <p>Feedzai's FiFAR records, for 30,622 real fraud alerts, what each of <strong>50 analysts would have decided</strong>. Routing a case to a human is an exact table lookup rather than a model of a human, which is unusual and valuable. The analysts are also fallible in measured, uneven ways: false-negative rates from 0.015 to 0.312, false-positive rates from 0.015 to 0.759.</p>
+        <p>The second environment was supposed to be the easy one. It is also where the first version of this post got its headline backwards.</p>
 
-        <p>I opened the shipped scenarios expecting a sequential capacity problem and found neither sequence nor scarcity. Each test scenario is a <strong>single batch</strong> whose review capacity is <strong>90.9%</strong> of its alerts. The training scenarios run at <strong>100%</strong>. There is no horizon to ration across and the constraint barely binds, which is why the dataset's own baseline solves each batch to optimality with constraint programming and does well.</p>
+        <p>Feedzai&rsquo;s FiFAR records, for 30,622 synthetic fraud alerts, what each of <strong>50 synthetic analysts would have decided</strong>. The alerts are the applications an alert model flags in the Bank Account Fraud dataset, which is itself privacy-preserving synthetic data, and the analysts come from the paper&rsquo;s own generator. None of it measures real people. What makes it worth building on is that routing a case to an analyst is an exact table lookup rather than a model of a reviewer. The analysts are also fallible in uneven ways that the generator sets: false-negative rates from 0.015 to 0.312, false-positive rates from 0.015 to 0.759.</p>
 
-        <p>Then the cost ratio. FiFAR's realistic setting prices a missed fraud at roughly 88 times a false alarm. Under that ratio, the cost-optimal automated policy on these alerts is to <strong>block every one of them</strong>, which leaves zero missed fraud for a reviewer to catch. Review can then only rescue false positives, and it is not good enough at it:</p>
+        <p>I opened the shipped scenarios expecting a sequential capacity problem and found neither sequence nor scarcity. Each test scenario is a <strong>single batch</strong> whose review capacity is <strong>90.9%</strong> of its alerts. The training scenarios run at <strong>100%</strong>. There is no horizon to ration across and the constraint barely binds, which is why the dataset&rsquo;s own baseline solves each batch to optimality with constraint programming and does well.</p>
+
+        <p>Then the cost ratio, which is where I went wrong. FiFAR&rsquo;s paper and DeCCaF, the dataset&rsquo;s own baseline, both price a false alarm at &lambda;<sub>t</sub> = 0.057 of a missed fraud, about 17.5:1, and that is the regime the synthetic analysts were generated for. DeCCaF also runs about 88:1 and about 3.5:1 to test other cost structures. The first version of this post called 88:1 FiFAR&rsquo;s realistic setting. It is a stress case.</p>
+
+        <p>At the stated regime, review pays. Sending 10% of alerts to the analysts, paced evenly and chosen nearest the model&rsquo;s decision threshold, cuts expected cost by <strong>3.2% [2.2, 4.2]</strong> across the 25 training scenarios and by <strong>7.6% [4.0, 11.2]</strong> on held-out month-8 alerts. All 50 analysts beat blocking every alert at that ratio.</p>
+
+        <p>At 88:1 it flips, and the mechanism is arithmetic. There the cost-optimal threshold (0.0510) sits at the bottom of the alert scores, so the model alone blocks every alert and leaves no missed fraud for a reviewer to catch. Review can then only rescue false positives, and only 6 of the 50 analysts cost less than blocking everything:</p>
 
         <div class="code">
-          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">expected cost of one review</span><span class="lang">measured</span></div>
-          <pre><code>lose = P(fraud) x analyst_miss_rate       = 0.121 x 0.157 = 0.0190
-gain = P(legit) x analyst_correct x cost = 0.879 x 0.689 x 0.0114 = 0.0069
-                                           net              = -0.0121
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">value of one review: a blocked alert sent to a random analyst</span><span class="lang">cost_ratio_sweep.log</span></div>
+          <pre><code>saves = P(legit) x (1 - FPR) x fp_cost
+loses = P(fraud) x FNR                      averaged over the 50 analysts
 
-measured in the environment                                  = -0.0118</code></pre>
+ratio              fp_cost   analytic   measured in the environment
+87.7:1  stress     0.0114    -0.0121    -0.0134 [-0.0181, -0.0090]
+17.5:1  stated     0.0570    +0.0155    +0.0160 [+0.0110, +0.0208]</code></pre>
         </div>
 
-        <p>A 15.7% analyst miss rate against a 12.1% fraud base rate costs more than the false alarms those analysts correctly clear. At a 10% review budget this raises total cost by <strong>11.6%</strong>. So the useful question is not which routing policy wins, it is when review is worth doing at all.</p>
+        <p>At a 10% review budget, the 88:1 case raises total cost by <strong>13.27% [8.86, 17.92]</strong>. That is a property of how the synthetic analysts were calibrated, for a different cost ratio, and not a finding about human review. The useful question is still when review is worth doing at all, and on this data the answer is a band rather than a line.</p>
 
         <figure>
-          <img src="../images/caseload-crossover.png" alt="Bar chart of cost avoided per review against the cost ratio. At 88 to 1 the bar is negative. It crosses zero around 33 to 1 and rises steadily to strongly positive at 2 to 1." loading="lazy">
-          <figcaption>Cost avoided per review, sweeping how expensive a missed fraud is relative to a false alarm. Human review on this data only pays once a missed fraud costs less than about 35 false alarms.</figcaption>
+          <a href="../images/caseload-crossover.png?v=2" target="_blank" rel="noopener">
+            <img src="../images/caseload-crossover.png?v=2" alt="Dot and whisker chart of the saving from human review, as a share of the model-only cost, at eight cost ratios from 88:1 down to 2:1. Filled dots are in-sample over 25 scenarios and hollow dots are a held-out month, each with a 95% bootstrap interval. At 88:1, marked as the λt/5 stress case, review raises cost by about 13% in-sample and 17% held out. A shaded band from 50:1 to 25:1 marks where the sign changes. At 17.5:1, marked λt, the stated regime, review saves 3.2% [2.2, 4.2] in-sample and 7.6% [4.0, 11.2] held out. Savings stay positive through 3.5:1 and fall back near zero at 2:1." width="1523" height="819" loading="lazy">
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          <figcaption>What sending 10% of alerts, those nearest the model&rsquo;s threshold, to FiFAR&rsquo;s synthetic analysts saves, as a share of the model-only cost, across cost ratios (threshold refit per ratio, 95% bootstrap intervals). The stated regime is &lambda;<sub>t</sub> = 0.057, about 17.5:1, where review saves money. 88:1 and 3.5:1 are DeCCaF&rsquo;s stress cases. The sign changes somewhere in the band between about 50:1 and 25:1, not at a single crossover.</figcaption>
         </figure>
 
-        <p>This also explains a published oddity I had read past twice. On FiFAR's own evaluation in that cost regime, the dataset's method scores 0.79 and <em>random assignment</em> scores 0.80. Not because the method is bad, but because the realistic cell of that benchmark is close to degenerate for anything involving a human. No amount of reinforcement learning wins it, and I am glad I found that out by opening the data rather than after training something.</p>
+        <p>In-sample, review is significantly negative at 50:1 and above, indistinguishable from zero at 33:1, and significantly positive from 25:1 down to 3.5:1. It is not monotone either: at 2:1 the refit threshold moves to 0.42 and review&rsquo;s saving falls back to +0.32% [-1.43, +2.09]. The first version of this post drew a sharp crossover at about 35:1 from a single scenario at a fixed threshold, and most of the value that chart showed at low ratios was threshold re-tuning, not review.</p>
+
+        <p>I have also withdrawn a paragraph. It said all this explained a published oddity in DeCCaF&rsquo;s results, and that the realistic cell of that benchmark was close to degenerate for anything involving a human. I had misread their table. In DeCCaF&rsquo;s own results at the 88:1 setting, every method that routes to humans, random routing included, has lower expected cost than rejecting every alert, and DeCCaF regenerates its experts for each cost setting while FiFAR&rsquo;s 50 analysts are generated once. I have not trained a policy on FiFAR, so this post makes no claim about what one would do there.</p>
 
         <h2>What I would take from this</h2>
 
-        <p>Five results in this project were wrong before they were right. A simulator whose break was too gentle. A baseline that divided budget by batch count rather than batch size. A metric that ranked policies by how fast they burned budget, where the saving ranking turned out to be exactly the spend ranking. A decision threshold set at 0.5 on alerts that were already everything above 0.051, which manufactured a "routing matters ten times more than pacing" finding that evaporated when I fixed it. And a negative result about RL that was really a statement about my patience.</p>
+        <p>Five results in this project were wrong before I published. A simulator whose break was too gentle. A baseline that divided budget by batch count rather than batch size. A metric that ranked policies by how fast they burned budget, where the saving ranking turned out to be exactly the spend ranking. A decision threshold set at 0.5 on alerts that were already everything above 0.051, which manufactured a finding that routing near-threshold cases was worth ten times more per review than routing the most suspicious ones, and which evaporated when I fixed the threshold. And a negative result about RL that was really a statement about my patience.</p>
 
-        <p>Every one of them was caught the same way: by comparing a number against something outside the thing that produced it. The simulator against real data. The policy against a rule I could write by hand. The arithmetic against the measurement. None of them were caught by the tests, which all passed throughout.</p>
+        <p>Then the pre-release re-check of caseload found eight more, and five of them had made it into the first version of this post: the cost regime, a cost-ratio chart from an ad hoc run, an Elliptic headline spliced from two configurations with charts typed by hand, synthetic data called real, and a zero-shot table from an archive nobody else could build. The other three were reviews the triage environment counted when no analyst had made them, a routing band that picked the lowest row indices instead of the highest scores, and a stale rule in the README. That makes thirteen.</p>
 
-        <p>The specific lesson I did not expect is about simulators. I built one to make a phenomenon studyable, which is standard practice, and then trained a policy that got very good at it. The policy's in-distribution dominance was real, reproducible across six seeds, and almost entirely uninformative about the question I cared about. A held-out real trajectory, which is one episode and carries no confidence interval at all, was worth more than 9,600 synthetic ones.</p>
+        <p>The first five were caught the same way: by comparing a number against something outside the thing that produced it. The simulator against real data. The policy against a rule I could write by hand. The arithmetic against the measurement. The eight came from doing that on purpose, claim by claim, against the code, the committed results and the cited papers, before the repository went public. The phantom-review bug only got its regression test after the re-check found it.</p>
+
+        <p>The specific lesson I did not expect is about simulators. I built one to make a phenomenon studyable, which is standard practice, and then trained a policy that got very good at it. The policy&rsquo;s in-distribution dominance was real, reproducible across six seeds, and almost entirely uninformative about the question I cared about. A held-out real trajectory, which is one episode and carries no confidence interval at all, was worth more than 9,600 synthetic ones, even though that one trajectory turned out to be too noisy to rank policies finely.</p>
 
         <div class="rule"></div>
 
         <div class="takeaways">
           <h2>Bottom line</h2>
           <ul>
-            <li><strong>A frozen fraud detector does not degrade, it stops.</strong> Exactly zero for seven consecutive steps on real data, with 56% recoverable from two steps of labels.</li>
+            <li><strong>A frozen fraud detector does not degrade gracefully, it nearly stops.</strong> 2 of 169 illicit transactions found in the seven steps after a real break, five of those steps at zero, while a refit on labels up to step 44 finds 49.6% of the illicit transactions in steps 45 to 49 at a 10% budget (3.3% frozen).</li>
             <li><strong>In-distribution wins are cheap.</strong> The learned policy beat every baseline on my simulator by a clear, six-seed, interval-backed margin, and that predicted almost nothing about the real break.</li>
-            <li><strong>Hold out something you did not build.</strong> One real trajectory told me more than 9,600 synthetic episodes, and it is the only reason I am not publishing the wrong conclusion.</li>
-            <li><strong>Train properly before you believe a negative result.</strong> My first "RL does not help" was a statement about 320 episodes, not about RL.</li>
-            <li><strong>Sometimes the answer is not to use the human.</strong> At an 88:1 cost ratio with a 15.7% analyst miss rate, routing a fraud alert to a person raises expected cost. Check the crossover before building a triage policy.</li>
-            <li><strong>The crude baseline still holds the record.</strong> Best post-break recall on the real data belongs to a policy that always spends 60% of its budget looking where the model says not to.</li>
+            <li><strong>Hold out something you did not build.</strong> One real trajectory told me more than 9,600 synthetic episodes, and it is the only reason I did not publish &ldquo;RL works here&rdquo;.</li>
+            <li><strong>Train properly before you believe a negative result.</strong> My first &ldquo;RL does not help&rdquo; was a statement about 320 episodes, not about RL.</li>
+            <li><strong>Check the cost ratio before you judge the reviewer.</strong> At the ratio FiFAR states, about 17.5:1, sending alerts to its synthetic analysts saves 3.2% [2.2, 4.2]. It raises cost at 88:1, a stress case, and already at 50:1 in the sweep. On this data the sign changes in a band between about 50:1 and 25:1, so find that band before building a triage policy.</li>
+            <li><strong>The crude baselines cannot be ranked on one trajectory.</strong> On the real break the hand-written rule has the best post-break recall (0.408) and always-explore is next (0.361), but a different Elliptic archive swaps them, so neither holds a record I would defend.</li>
           </ul>
         </div>
 
@@ -255,10 +290,10 @@ measured in the environment                                  = -0.0118</code></p
         <div class="sources">
           <h3>Sources</h3>
           <ul>
-            <li>Code, environments and every number above: <a href="https://github.com/JayeshSuryavanshi/caseload">JayeshSuryavanshi/caseload</a>. Figures are generated from the committed result files, not typed by hand.</li>
-            <li>Selective labels: Lakkaraju, Kleinberg, Leskovec, Ludwig, Mullainathan, KDD&nbsp;2017. Monitored MDPs: Parisi et al., AAMAS&nbsp;2024.</li>
-            <li>FiFAR: Feedzai, <em>A Fraud Detection Dataset for Learning to Defer</em>, Nature Scientific Data, April&nbsp;2025. CC&nbsp;BY.</li>
-            <li>Elliptic Data Set, via Kaggle. Only 22.9% of its transactions carry a label, and the unlabelled majority is left in, because investigating one costs budget and reveals nothing.</li>
+            <li>Code, environments and every number above: <a href="https://github.com/JayeshSuryavanshi/caseload">JayeshSuryavanshi/caseload</a>, including its list of <a href="https://github.com/JayeshSuryavanshi/caseload#corrections-found-before-release">corrections found before release</a>. The three charts are regenerated from its committed result files; the versions first published with this post were typed by hand.</li>
+            <li>Selective labels: Lakkaraju, Kleinberg, Leskovec, Ludwig, Mullainathan, KDD&nbsp;2017. Monitored MDPs: Parisi et al., AAMAS&nbsp;2024. Adversarial alert prioritization: Tong et al., AAAI&nbsp;2020.</li>
+            <li>FiFAR: Alves et al., <em>A benchmarking framework and dataset for learning to defer in human-AI decision-making</em>, Scientific Data 12, 506 (2025); dataset CC&nbsp;BY&nbsp;4.0. DeCCaF: Alves et al., <em>Cost-Sensitive Learning to Defer to Multiple Experts with Workload Constraints</em>, TMLR&nbsp;2024. Bank Account Fraud dataset: Jesus et al., NeurIPS&nbsp;2022 Datasets and Benchmarks.</li>
+            <li>Elliptic Data Set (Weber et al., 2019), via Kaggle. Only 22.9% of its transactions carry a label, and the unlabeled majority is left in, because investigating one costs budget and reveals nothing.</li>
             <li>Evaluation follows Agarwal et al., NeurIPS&nbsp;2021 for interquartile means and stratified bootstraps, and Patterson et al., JMLR&nbsp;2024 on why ten runs is not enough.</li>
             <li>Companion piece: <a href="wrong-opponent.html">The wrong opponent</a>, on picking benchmark opponents that flatter you.</li>
           </ul>
@@ -270,7 +305,7 @@ measured in the environment                                  = -0.0118</code></p
 
     <footer class="post-foot">
       <a class="back" href="./">&larr; All writing</a>
-      <p class="made">Built and measured over two days on a laptop. Five results in it were wrong before they were right, and each is named in the text rather than removed. The agent that looked like the finding turned out to be the least informative part.</p>
+      <p class="made">Built and measured on a laptop. Five results in it were wrong before I published, and a pre-release re-check of the repository found eight more; the ones that had reached this post are corrected in place rather than removed, and all thirteen are named in the text. The agent that looked like the finding turned out to be the least informative part.</p>
     </footer>
 
   </div>
@@ -285,6 +320,94 @@ measured in the environment                                  = -0.0118</code></p
       }
       document.addEventListener('scroll', tick, { passive: true });
       tick();
+    })();
+  </script>
+  <script>
+    /* a table gets the pinned-column hairline only while it really overflows
+       its box, rechecked on resize. the class is cleared before measuring
+       because the rule it enables widens the first column */
+    (function () {
+      var boxes = document.querySelectorAll('.table-scroll');
+      if (!boxes.length) { return; }
+      function check() {
+        for (var i = 0; i < boxes.length; i++) {
+          boxes[i].classList.remove('is-scrolling');
+          if (boxes[i].scrollWidth > boxes[i].clientWidth + 1) { boxes[i].classList.add('is-scrolling'); }
+        }
+      }
+      check();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(check); }
+      window.addEventListener('resize', check);
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
     })();
   </script>
   <script>

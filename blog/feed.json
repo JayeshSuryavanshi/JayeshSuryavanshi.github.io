@@ -16,9 +16,11 @@
       "id": "https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html",
       "title": "The simulator was the experiment",
-      "summary": "I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a rule I wrote in ten minutes. On the real regime break a one-line heuristic beat it by 3.6x. Five results in the project were wrong before they were right.",
-      "image": "https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png",
+      "summary": "I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a hand-written rule. On the real regime break that advantage did not show up. The agent was never the thing under test.",
+      "content_text": "I built a reinforcement learning environment for budgeted fraud investigation and trained a policy that beat every baseline, including a hand-written rule. On the real regime break that advantage did not show up. The agent was never the thing under test.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-simulator-was-the-experiment.png?v=2",
       "date_published": "2026-09-24T12:00:00Z",
+      "date_modified": "2026-09-25T12:00:00Z",
       "tags": [
         "research-notes"
       ]
