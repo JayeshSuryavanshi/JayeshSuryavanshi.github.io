@@ -4261,6 +4261,98 @@ html.no-csstransitions .hero-content {
   margin-bottom: 0;
 }
 
+/* the story behind each project, shown only in the lightbox */
+.pswp .pswp__caption__center .folio-story {
+  margin-top: 1.4rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pswp .folio-story__label {
+  display: block;
+  margin-bottom: .2rem;
+  font-family: "Neue Machina", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: #f9861a;
+}
+
+.pswp .folio-story a {
+  color: #f9861a;
+}
+
+.pswp .folio-story a:hover,
+.pswp .folio-story a:focus {
+  color: #ffffff;
+}
+
+.pswp .folio-story p {
+  margin: 0;
+}
+
+/* folded on phones and short windows (main.js swaps in <details>) */
+.pswp details.folio-story > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: .8rem;
+  margin: 0;
+  padding: .8rem 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pswp details.folio-story > summary::-webkit-details-marker {
+  display: none;
+}
+
+.pswp details.folio-story > summary::after {
+  content: "+";
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  transition: transform .2s ease;
+}
+
+.pswp details.folio-story[open] > summary::after {
+  transform: rotate(45deg);
+}
+
+.pswp details.folio-story > summary:focus-visible {
+  outline: 2px solid #f9861a;
+  outline-offset: 2px;
+}
+
+.pswp details.folio-story[open] > p {
+  padding-bottom: .4rem;
+}
+
+@media screen and (max-width:600px), screen and (max-height:760px) {
+  .pswp .folio-story {
+    margin-top: .4rem;
+  }
+
+  /* the picture keeps at least half the screen; a long caption scrolls,
+     and main.js marks it so the last lines fade out as a cue */
+  .pswp .pswp__caption {
+    max-height: 50%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .pswp .pswp__caption.has-more {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 4.8rem), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 4.8rem), transparent);
+  }
+
+  .pswp .pswp__caption:has(details.folio-story[open]) {
+    max-height: calc(100% - 44px);
+    background-color: #000000;
+  }
+
+}
+
 .pswp .pswp__cta a {
   color: #f9861a;
   font-weight: 700;

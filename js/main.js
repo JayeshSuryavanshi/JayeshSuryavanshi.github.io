@@ -260,14 +260,59 @@
                     ' <span aria-hidden="true">\u279c</span><span class="visually-hidden"> (opens in a new tab)</span></a></p>';
             }
 
+            item.fullTitle = item.title;
             items.push(item);
         });
+
+        // Phones and short windows: the story starts folded, so the picture
+        // keeps its room and the story opens over it on a tap.
+        const compactQuery = window.matchMedia('(max-width: 600px), (max-height: 760px)');
+        const foldStory = function(html) {
+            const t = document.createElement('template');
+            t.innerHTML = html;
+            t.content.querySelectorAll('p.folio-story').forEach(function(p) {
+                const details = document.createElement('details'),
+                      summary = document.createElement('summary'),
+                      body = document.createElement('p'),
+                      label = p.querySelector('.folio-story__label');
+                if (label) { label.remove(); }
+                details.className = 'folio-story';
+                summary.className = 'folio-story__label';
+                summary.textContent = 'The story';
+                body.innerHTML = p.innerHTML.trim();
+                details.append(summary, body);
+                p.replaceWith(details);
+            });
+            return t.innerHTML;
+        };
+
+        // PhotoSwipe reads every press as the start of a drag, so a swipe on
+        // the caption moved or closed the picture; keep the caption's own
+        // presses, scrolls and taps to itself.
+        const caption = $pswp && $pswp.querySelector('.pswp__caption');
+        if (caption) {
+            ['pointerdown', 'mousedown', 'touchstart', 'wheel'].forEach(function(type) {
+                caption.addEventListener(type, function(e) { e.stopPropagation(); }, { passive: true });
+            });
+            const markMore = function() {
+                caption.classList.toggle('has-more', caption.scrollTop + caption.clientHeight < caption.scrollHeight - 4);
+            };
+            caption.addEventListener('scroll', markMore, { passive: true });
+            caption.addEventListener('toggle', markMore, true);
+            new MutationObserver(function() { requestAnimationFrame(markMore); })
+                .observe(caption, { childList: true, subtree: true });
+            window.addEventListener('resize', markMore);
+        }
 
         // bind click event
         $folioItems.each(function(i) {
 
             $(this).find('.folio-item__thumb-link').on('click', function(e) {
                 e.preventDefault();
+                const compact = compactQuery.matches;
+                items.forEach(function(it) {
+                    if (it.fullTitle) { it.title = compact ? foldStory(it.fullTitle) : it.fullTitle; }
+                });
                 let options = {
                     index: i,
                     showHideOpacity: true,

@@ -42,7 +42,7 @@
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="css/base.css?v=2">
-    <link rel="stylesheet" href="css/main.css?v=5">
+    <link rel="stylesheet" href="css/main.css?v=6">
     <link rel="stylesheet" href="css/vendor.css?v=2">
 
     <!-- script
@@ -683,6 +683,8 @@
                         Link<span class="visually-hidden">: graphspot on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>Inductive graph anomaly detection (on PyPI as graphspot), with a core that installs and runs without torch. It ships flat baselines next to the graph models on purpose, because a detector on raw features is a genuinely hard baseline to beat. The thumbnail is real output: OddBall, unsupervised, scoring a neighborhood of the Tolokers graph. I also mirror four graph anomaly benchmarks (Tolokers, Questions, Weibo and Reddit) as Parquet datasets on <a href="https://huggingface.co/JaySuryavanshi" target="_blank" rel="noopener">Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> My build plan had a stop rule: if week one could not reproduce GADBench&rsquo;s published YelpChi and Amazon results, I would stop and reassess. The first commit is where that test passed. Every benchmark number in the README now regenerates from one command, and a monthly CI job reruns them from scratch.</p>
+
                     </div>
                 </div>
             </div>
@@ -705,6 +707,8 @@
                         Link<span class="visually-hidden">: Social Unrest Forecasting on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>A leakage-controlled study of subnational unrest forecasting on ACLED, UCDP and GDELT data: rolling-origin backtests over 55 countries against persistence baselines the field rarely beats. Headline finding: news text is informative but nearly subsumed by the event record. It adds a small but significant gain on escalation (+0.3-0.6 AUPRC points) and nothing on onset, and text-only models fall well short. A rigorous 2026 rebuild of my 2022 UB NLP course project.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> The rebuild started with an audit of our original course notebooks. Their headline 85% accuracy was label leakage: each article was labeled by its own text&rsquo;s similarity to ACLED event notes, and the classifier simply learned that rule back. That is why everything here is scored strictly out of time. <a href="blog/subsumed-signal.html">Read what the rebuild found</a>.</p>
+
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -725,6 +729,8 @@
                         Link<span class="visually-hidden">: GeoSocialX on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>A Python package (on PyPI as geosocialx) that maps the geography of geotagged social and location data from any source (CSV, GeoJSON, Bluesky, or an X dump), reporting coverage before it maps anything, then hotspots and time trends.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> I started this in 2023 as a tool that fetched geotagged tweets within a radius. Twitter&rsquo;s legacy API has since been retired and search on its replacement needs a paid tier, so I decoupled the analysis from X and let it run on data people already have. Building it also showed me <a href="blog/geosocialx-coverage.html">how much a map hides</a>.</p>
+
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -745,6 +751,8 @@
                         Link<span class="visually-hidden">: caseload on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>Reinforcement learning environments for budgeted fraud investigation, where investigating a case is the only way to learn its label. On the Elliptic transaction graph, a detector frozen before the step-43 regime break finds 2 of 169 illicit transactions after it. On Feedzai&rsquo;s synthetic FiFAR alerts, sending 10% of them to analysts cuts expected cost by 3.2% at the dataset&rsquo;s stated cost ratio. The chart is the per-step recall around the break.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> A small PPO policy trained on my own drift simulator beat every baseline there on overall recall, including a hand-written rule. Zero-shot on Elliptic&rsquo;s real regime break, that advantage did not show up. What got tested was my simulator, not the agent, and I wrote that up in <a href="blog/simulator-was-the-experiment.html">The simulator was the experiment</a>.</p>
+
                     </div>
                 </div>
             </div><!-- end column -->
@@ -765,6 +773,8 @@
                         Link<span class="visually-hidden">: L5 Motion Prediction Study on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>Motion prediction on the Lyft Level 5 dataset, run as a study of what the task looks like on a single laptop&rsquo;s compute budget rather than a leaderboard run. In progress: the kinematic baselines and a history-only MLP are done, raster and vector models are next. The chart is the holdout results so far.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> I set the study up as a ladder starting from plain physics, so each learned model has a floor to beat. An early result: fitting a turn rate from 0.4 seconds of noisy history did worse than assuming constant velocity. A mixture of kinematic modes beat its best single mode on likelihood, from mode diversity alone.</p>
+
                     </div>
                 </div>
             </div><!-- end column -->
@@ -785,6 +795,8 @@
                         Demo<span class="visually-hidden">: Triangulation SQL Explorer (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>An IMDb-style movie/TV database you can query with free-form SQL, entirely in the browser: a real SQLite engine compiled to WebAssembly with a bundled sample dataset, and no backend or network. Rebuilt from a 2022 database-course project into a self-contained live demo with pre-built analytics views and 16 passing tests.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> Our team&rsquo;s original version pasted user input straight into SQL strings and sent free-form queries to a live database, a textbook injection hole. In the rebuild I switched every input to bound parameters. The free-form console now runs against an in-memory SQLite database that lives only in your browser tab, so there is nothing shared to compromise.</p>
+
                     </div>
                 </div>
             </div><!-- end column -->
@@ -807,6 +819,8 @@
                         Link<span class="visually-hidden">: Walleto on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
                         <p>I led development of a full-stack digital wallet app, enabling users to connect bank accounts, view transactions, pay bills, and earn cashback.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> An audit of the 2021 code, written up in the repo&rsquo;s blueprint, showed that its password reset needed no token, so anyone could take over an account. A version bump would never have fixed that. I added real authentication with signed JWTs and made every debit atomic under a row lock.</p>
+
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -826,7 +840,9 @@
                     <a href="https://github.com/JayeshSuryavanshi/Blockchain-Application-Development" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
                         Link<span class="visually-hidden">: Beacon on GitHub (opens in a new tab)</span></a>
                     <div class="folio-item__caption">
-                        <p>A peer-to-peer marketplace for sharing home EV chargers, built as an Ethereum dApp: a pay-as-you-go Solidity contract audited and hardened against fund-drain bugs (15 passing Hardhat tests), with a React + ethers v6 frontend where hosts list chargers and drivers pay per charge in ETH. UB blockchain-course project.</p>
+                        <p>A peer-to-peer marketplace for sharing home EV chargers, built as an Ethereum dApp: a pay-as-you-go Solidity contract hardened against fund-drain bugs (15 passing Hardhat tests), with a React + ethers v6 frontend where hosts list chargers and drivers pay per charge in ETH. UB blockchain-course project.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> My first contract compiled and demoed fine, which is exactly why I didn&rsquo;t notice it was broken. Anyone could &ldquo;buy&rdquo; a charge for free and have the contract pay them, and the guard modifiers I&rsquo;d written sat there commented out. Part of the fix was deletion: pay-as-you-go never needed the contract to hold money.</p>
+
                     </div>
                 </div>
             </div> <!-- end column -->
@@ -955,7 +971,7 @@
     ================================================== -->
     <script src="js/jquery-3.2.1.min.js?v=2"></script>
     <script src="js/plugins.js?v=2"></script>
-    <script src="js/main.js?v=5"></script>
+    <script src="js/main.js?v=6"></script>
     <script>
         var _cy = document.getElementById('copyright-year');
         if (_cy) { _cy.textContent = new Date().getFullYear(); }
