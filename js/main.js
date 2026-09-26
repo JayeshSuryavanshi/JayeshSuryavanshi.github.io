@@ -374,19 +374,15 @@
     * ------------------------------------------------------ */
     const ssHeroVideo = function() {
 
-        const video = document.querySelector('.s-hero video'),
-              toggle = document.querySelector('.hero-video-toggle'),
-              label = toggle && toggle.querySelector('.hero-video-toggle__label');
+        const video = document.querySelector('.s-hero video');
 
-        if (!video || !label) return;
+        if (!video) return;
 
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         // autoplay stays in the markup so the loop still runs if this script
-        // does not; here it is paused for reduced motion or from the button.
+        // does not; here it holds still for reduced motion.
         const setPaused = function(paused) {
-            toggle.classList.toggle('is-paused', paused);
-            label.textContent = paused ? 'Play video' : 'Pause video';
             if (paused) {
                 video.pause();
             } else {
@@ -394,11 +390,6 @@
                 if (p && p.catch) { p.catch(function() {}); }
             }
         };
-
-        toggle.hidden = false;
-        toggle.addEventListener('click', function() {
-            setPaused(!toggle.classList.contains('is-paused'));
-        });
 
         if (reduce.matches) { setPaused(true); }
 
