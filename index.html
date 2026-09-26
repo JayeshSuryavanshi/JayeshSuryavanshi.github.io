@@ -42,7 +42,7 @@
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="css/base.css?v=2">
-    <link rel="stylesheet" href="css/main.css?v=6">
+    <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="stylesheet" href="css/vendor.css?v=2">
 
     <!-- script
@@ -169,12 +169,17 @@
     <!-- hero
     ================================================== -->
     <section id="hero" class="s-hero target-section">
-        <video aria-hidden="true" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" poster="/images/hero-poster.webp" preload="metadata">
-            <!-- Gated: this file is 4.1 MB, the bulk of the page weight, and object-fit
-                 crops most of it away on a portrait phone. Below 901px the poster
-                 carries the hero instead. -->
-            <source media="(min-width: 901px)" src="/images/hero.mp4?v=2" type="video/mp4">
-        </video>
+        <!-- The still is frame 0 of the video, cut from the 4K master: the
+             whole hero on phones and tablets (a portrait crop there), and what
+             shows on desktop until the first video frame lands. -->
+        <picture class="hero-still">
+            <source media="(max-width: 900px) and (orientation: portrait)" srcset="/images/hero-still-portrait.webp" width="1512" height="2160">
+            <img src="/images/hero-still-1920.webp" srcset="/images/hero-still-1920.webp 1920w, /images/hero-still-2560.webp 2560w, /images/hero-still-3840.webp 3840w" sizes="max(100vw, 177.7vh)" width="3840" height="2160" alt="" fetchpriority="high" decoding="async">
+        </picture>
+        <!-- Desktop only, no sources here on purpose: main.js picks the file
+             the browser can decode in hardware (4K AV1, 4K HEVC or 1080p
+             H.264), fetches all of it, and only then starts the loop. -->
+        <video aria-hidden="true" playsinline="playsinline" muted="muted" loop="loop" preload="none"></video>
 
         <div class="row hero-content">
 
@@ -238,7 +243,7 @@
                     </div>
 
                     <div class="profile-pic" data-aos="fade-up">
-                        <img src="images/jayesh-portrait.webp?v=3" width="800" height="800" loading="lazy" decoding="async" alt="Illustrated portrait of Jayesh Suryavanshi">
+                        <img src="images/jayesh-portrait.webp?v=3" srcset="images/jayesh-portrait.webp?v=3 800w, images/jayesh-portrait-1024.webp 1024w" sizes="(max-width: 800px) min(62vw, 300px), (max-width: 1200px) 26vw, 24vw" width="800" height="800" loading="lazy" decoding="async" alt="Illustrated portrait of Jayesh Suryavanshi">
                     </div>
 
                     <h2 data-aos="fade-up">Background</h2>
@@ -670,8 +675,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/graphspot-3200.webp"
-                            title="graphspot: OddBall scoring a Tolokers neighborhood" data-size="3200x1800">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/graphspot-3840.webp" data-small="images/portfolio/gallery/graphspot.webp 1600x900"
+                            title="graphspot: OddBall scoring a Tolokers neighborhood" data-size="3840x2160">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/graphspot-800.webp" srcset="images/portfolio/gallery/graphspot-800.webp 800w, images/portfolio/gallery/graphspot-1200.webp 1200w, images/portfolio/gallery/graphspot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="A dense network of 300 Tolokers nodes in gray with the fifteen most structurally anomalous nodes marked in blue, scored by OddBall">
                         </a>
                     </div>
@@ -692,8 +697,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/riot.webp"
-                            title="Social Unrest Forecasting" data-size="1600x900">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/riot-3840.webp" data-small="images/portfolio/gallery/riot.webp 1600x900"
+                            title="Social Unrest Forecasting" data-size="3840x2160">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/riot-800.webp" srcset="images/portfolio/gallery/riot-800.webp 800w, images/portfolio/gallery/riot-1200.webp 1200w, images/portfolio/gallery/riot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Social Unrest Forecasting project thumbnail">
                         </a>
                     </div>
@@ -738,8 +743,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/caseload-3200.webp" title="caseload"
-                            data-size="3200x1800">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/caseload-3840.webp" data-small="images/portfolio/gallery/caseload.webp 1600x900" title="caseload"
+                            data-size="3840x2160">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/caseload-800.webp" srcset="images/portfolio/gallery/caseload-800.webp 800w, images/portfolio/gallery/caseload-1200.webp 1200w, images/portfolio/gallery/caseload.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Bar chart of per-step recall at a 2% budget for a detector frozen at Elliptic step 34: 36% to 91% on steps 35 to 42, then zero on five of the seven steps after the break at step 43, with 2 of 169 illicit transactions found in total.">
                         </a>
                     </div>
@@ -760,8 +765,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/l5-study-3200.webp" title="L5 Motion Prediction Study"
-                            data-size="3200x1800">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/l5-study-3840.webp" data-small="images/portfolio/gallery/l5-study.webp 1600x900" title="L5 Motion Prediction Study"
+                            data-size="3840x2160">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/l5-study-800.webp" srcset="images/portfolio/gallery/l5-study-800.webp 800w, images/portfolio/gallery/l5-study-1200.webp 1200w, images/portfolio/gallery/l5-study.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Dot plot of holdout negative log-likelihood on a log scale: history MLP 128.9, kinematic mixture 289.0, constant velocity 310.5, constant turn 701.7, stationary 7,496.9">
                         </a>
                     </div>
@@ -782,8 +787,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/triangulation-2100.webp" title="Triangulation SQL Explorer (click to see the app)"
-                            data-size="2100x1400">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/triangulation-3150.webp" data-small="images/portfolio/gallery/triangulation.webp 1050x700" title="Triangulation SQL Explorer (click to see the app)"
+                            data-size="3150x2100">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/triangulation-bg-800.webp" srcset="images/portfolio/gallery/triangulation-bg-800.webp 800w, images/portfolio/gallery/triangulation-bg-1200.webp 1200w, images/portfolio/gallery/triangulation-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Triangulation SQL Explorer project thumbnail">
                         </a>
                     </div>
@@ -806,8 +811,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/walleto.webp"
-                            title="Walleto: Digital Wallet" data-size="1600x900">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/walleto-3840.webp" data-small="images/portfolio/gallery/walleto.webp 1600x900"
+                            title="Walleto: Digital Wallet" data-size="3840x2160">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/walleto-800.webp" srcset="images/portfolio/gallery/walleto-800.webp 800w, images/portfolio/gallery/walleto-1200.webp 1200w, images/portfolio/gallery/walleto.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Walleto full-stack digital wallet thumbnail">
                         </a>
                     </div>
@@ -828,8 +833,8 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
-                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/beacon.webp"
-                            title="Beacon EV Charging dApp (click to see the app)" data-size="1050x700">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/beacon-3150.webp" data-small="images/portfolio/gallery/beacon.webp 1050x700"
+                            title="Beacon EV Charging dApp (click to see the app)" data-size="3150x2100">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/beacon-bg-800.webp" srcset="images/portfolio/gallery/beacon-bg-800.webp 800w, images/portfolio/gallery/beacon-bg-1200.webp 1200w, images/portfolio/gallery/beacon-bg.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Beacon P2P EV charging dApp thumbnail">
                         </a>
                     </div>
@@ -971,7 +976,7 @@
     ================================================== -->
     <script src="js/jquery-3.2.1.min.js?v=2"></script>
     <script src="js/plugins.js?v=2"></script>
-    <script src="js/main.js?v=6"></script>
+    <script src="js/main.js?v=9"></script>
     <script>
         var _cy = document.getElementById('copyright-year');
         if (_cy) { _cy.textContent = new Date().getFullYear(); }

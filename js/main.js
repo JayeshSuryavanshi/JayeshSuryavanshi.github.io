@@ -245,7 +245,17 @@
                 src  : $href,
                 w    : $width,
                 h    : $height,
-                alt  : $thumbLink.find('img').attr('alt') || ''
+                alt  : $thumbLink.find('img').attr('alt') || '',
+                big  : { src: $href, w: +$width, h: +$height },
+                thumb: $thumbLink.find('img')[0]
+            }
+
+            // a phone does not need the 4K file: it would decode three of them
+            // for the neighbours PhotoSwipe preloads
+            const small = ($thumbLink.attr('data-small') || '').split(' ');
+            if (small.length === 2) {
+                const sz = small[1].split('x');
+                item.small = { src: small[0], w: +sz[0], h: +sz[1] };
             }
 
             if ($caption.length > 0) {
@@ -309,9 +319,22 @@
 
             $(this).find('.folio-item__thumb-link').on('click', function(e) {
                 e.preventDefault();
-                const compact = compactQuery.matches;
-                items.forEach(function(it) {
-                    if (it.fullTitle) { it.title = compact ? foldStory(it.fullTitle) : it.fullTitle; }
+                const compact = compactQuery.matches,
+                      useSmall = window.matchMedia('(pointer: coarse)').matches
+                          || window.innerWidth * (window.devicePixelRatio || 1) <= 1700;
+                const stem = function(p) {
+                    return p.split('/').pop().split('?')[0].replace(/\.(webp|png|jpe?g)$/, '').replace(/-(800|1200|1600|3150|3840)$/, '');
+                };
+
+                // fresh objects each time: PhotoSwipe caches load state on them
+                const openItems = items.map(function(it) {
+                    const v = (useSmall && it.small) || it.big,
+                          o = { src: v.src, w: v.w, h: v.h, alt: it.alt,
+                                title: it.fullTitle ? (compact ? foldStory(it.fullTitle) : it.fullTitle) : it.title };
+                    // open on the thumbnail already on screen, when it is the same picture
+                    const t = it.thumb && (it.thumb.currentSrc || it.thumb.getAttribute('src'));
+                    if (t && stem(t) === stem(v.src)) { o.msrc = t; }
+                    return o;
                 });
                 let options = {
                     index: i,
@@ -323,7 +346,7 @@
                       $behind = $('.skip-link, .s-header, #main, .s-footer');
 
                 // initialize PhotoSwipe
-                let lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, items, options);
+                let lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, openItems, options);
 
                 // PhotoSwipe builds its <img> elements without alt, and adds
                 // them after its own events have fired; copy the thumbnail's
@@ -331,7 +354,7 @@
                 const altWatch = new MutationObserver(function() {
                     $($pswp).find('img.pswp__img').each(function() {
                         const src = this.getAttribute('src');
-                        const it = items.find(function(x) { return x.src === src; });
+                        const it = openItems.find(function(x) { return x.src === src || x.msrc === src; });
                         if (it && this.getAttribute('alt') !== it.alt) { this.setAttribute('alt', it.alt); }
                     });
                 });
@@ -421,14 +444,44 @@
 
         const video = document.querySelector('.s-hero video');
 
-        if (!video) return;
+        if (!video || !window.fetch || !window.URL || !URL.createObjectURL) return;
 
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)'),
+              desktop = window.matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)');
 
-        // autoplay stays in the markup so the loop still runs if this script
-        // does not; here it holds still for reduced motion.
-        const setPaused = function(paused) {
-            if (paused) {
+        // Preferred first. All three are the same 10 s loop from the 4K master.
+        const sources = [
+            { src: '/images/hero-4k-av1.mp4',  type: 'video/mp4; codecs="av01.0.12M.10"',    width: 3840, height: 2160, bitrate: 10431000 },
+            { src: '/images/hero-4k-hevc.mp4', type: 'video/mp4; codecs="hvc1.1.6.L150.90"', width: 3840, height: 2160, bitrate: 13834000 },
+            { src: '/images/hero-1080.mp4',    type: 'video/mp4; codecs="avc1.640028"',      width: 1920, height: 1080, bitrate: 9865000 }
+        ];
+
+        // Take the first file this browser decodes in hardware: a 4K AV1
+        // decode in software keeps a whole CPU core busy. Without that
+        // answer, fall back to the 1080p file every desktop decodes cheaply.
+        const pick = function() {
+            const mc = navigator.mediaCapabilities;
+            if (!mc || !mc.decodingInfo) {
+                const last = sources[sources.length - 1];
+                return Promise.resolve(video.canPlayType(last.type) ? last : null);
+            }
+            return Promise.all(sources.map(function(s) {
+                return mc.decodingInfo({ type: 'file', video: {
+                    contentType: s.type, width: s.width, height: s.height, bitrate: s.bitrate, framerate: 25
+                } }).catch(function() { return null; });
+            })).then(function(res) {
+                const ok = function(r, needEfficient) { return r && r.supported && (!needEfficient || r.powerEfficient); };
+                for (let i = 0; i < sources.length; i++) { if (ok(res[i], true)) return sources[i]; }
+                for (let i = sources.length - 1; i >= 0; i--) { if (ok(res[i], false)) return sources[i]; }
+                return null;
+            });
+        };
+
+        let onScreen = false, ready = false, started = false, startTimer = 0;
+
+        const update = function() {
+            if (!ready) return;
+            if (reduce.matches || !onScreen || !desktop.matches) {
                 video.pause();
             } else {
                 const p = video.play();
@@ -436,14 +489,60 @@
             }
         };
 
-        if (reduce.matches) { setPaused(true); }
+        // The still under the video is its frame 0, so until the whole file
+        // is here the hero just looks paused; once it is, the loop never
+        // waits on the network.
+        const wanted = function() {
+            const c = navigator.connection;
+            return onScreen && desktop.matches && !reduce.matches && !(c && c.saveData);
+        };
 
-        const onMotionChange = function(e) { setPaused(e.matches); };
-        if (reduce.addEventListener) {
-            reduce.addEventListener('change', onMotionChange);
-        } else if (reduce.addListener) {
-            reduce.addListener(onMotionChange);
+        const start = function() {
+            if (started || !wanted()) return;
+            started = true;
+            pick().then(function(s) {
+                // a deep link scrolls the hero away just after the first check
+                if (!s || !wanted()) { started = false; return; }
+                return fetch(s.src).then(function(r) {
+                    if (!r.ok) throw new Error(r.status);
+                    return r.blob();
+                }).then(function(blob) {
+                    video.muted = true;
+                    video.src = URL.createObjectURL(blob);
+                    ready = true;
+                    update();
+                });
+            }).catch(function() {});
+        };
+
+        if ('IntersectionObserver' in window) {
+            // Off screen below 1% visible. The About link lands with the
+            // hero's edge touching the viewport, which still counts as
+            // intersecting, and the last callback on the way out reports a
+            // sliver just under the 1% threshold.
+            new IntersectionObserver(function(entries) {
+                onScreen = entries[0].isIntersecting && entries[0].intersectionRatio >= 0.01;
+                // the first report comes before a #fragment scroll: let it settle
+                clearTimeout(startTimer);
+                if (onScreen) { startTimer = setTimeout(start, 300); }
+                update();
+            }, { threshold: [0, 0.01] }).observe(document.querySelector('.s-hero'));
+        } else {
+            onScreen = true;
+            start();
         }
+
+        const onChange = function() {
+            start();
+            update();
+        };
+        [reduce, desktop].forEach(function(q) {
+            if (q.addEventListener) {
+                q.addEventListener('change', onChange);
+            } else if (q.addListener) {
+                q.addListener(onChange);
+            }
+        });
     };
 
 

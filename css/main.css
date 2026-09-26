@@ -2075,13 +2075,22 @@ input::-moz-focus-inner {
   background-color: transparent;
 }
 
-.s-hero video {
+.s-hero video,
+.s-hero .hero-still img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* no source below 901px, so nothing to draw over the still */
+@media screen and (max-width:900px) {
+  .s-hero video {
+    display: none;
+  }
+
 }
 
 

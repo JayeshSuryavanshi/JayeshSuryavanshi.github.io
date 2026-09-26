@@ -133,7 +133,7 @@
         <p>Start with the measurement that made me want to build this at all. Take the Elliptic graph, 203,769 Bitcoin transactions across 49 time steps, and fit a gradient boosting detector on steps 1 to 34. Then freeze it and watch what it finds, at a budget of 2% of each step&rsquo;s transactions.</p>
 
         <figure>
-          <a href="../images/caseload-collapse.png?v=2" target="_blank" rel="noopener">
+          <a href="../images/caseload-collapse-3x.webp" target="_blank" rel="noopener">
             <img src="../images/caseload-collapse.png?v=2" alt="Recall per Elliptic time step for a detector fitted on steps 1 to 34 and then frozen, at a 2% budget. It runs between 36% and 91% through step 42. After the dark-market shutdown at step 43 it finds 2 of 169 illicit transactions, with five of the seven steps at zero. Step 46 reads 50% because it has only two illicit transactions and one was found, and step 49 finds 1 of 56. A note says a detector refitted on labels up to step 44 finds 49.6% of the illicit transactions in steps 45 to 49 at a 10% budget, against 3.3% for the frozen one." width="1595" height="838" loading="lazy">
             <span class="visually-hidden"> (opens in a new tab)</span>
           </a>
@@ -206,7 +206,7 @@
         <h2>Then I ran it on the real break</h2>
 
         <figure>
-          <a href="../images/caseload-transfer.png?v=2" target="_blank" rel="noopener">
+          <a href="../images/caseload-transfer-3x.webp" target="_blank" rel="noopener">
             <img src="../images/caseload-transfer.png?v=2" alt="Slope chart of post-break recall on the simulator&#x27;s held-out episodes versus Elliptic&#x27;s real break, zero-shot. Top-k goes from 4% to 8%, yield-triggered from 11% to 41%, and always explore 60% from 15% to 36%. PPO is drawn as six thin lines, one per training seed. They start between 9% and 30% on the simulator and end between 5% and 29% on Elliptic, and five of the six end below 12%. A note says Elliptic is one trajectory, and that post-break gaps under about 20 points are within what the archive alone moves." width="1520" height="923" loading="lazy">
             <span class="visually-hidden"> (opens in a new tab)</span>
           </a>
@@ -250,7 +250,7 @@ ratio              fp_cost   analytic   measured in the environment
         <p>At a 10% review budget, the 88:1 case raises total cost by <strong>13.27% [8.86, 17.92]</strong>. That is a property of how the synthetic analysts were calibrated, for a different cost ratio, and not a finding about human review. The useful question is still when review is worth doing at all, and on this data the answer is a band rather than a line.</p>
 
         <figure>
-          <a href="../images/caseload-crossover.png?v=2" target="_blank" rel="noopener">
+          <a href="../images/caseload-crossover-3x.webp" target="_blank" rel="noopener">
             <img src="../images/caseload-crossover.png?v=2" alt="Dot and whisker chart of the saving from human review, as a share of the model-only cost, at eight cost ratios from 88:1 down to 2:1. Filled dots are in-sample over 25 scenarios and hollow dots are a held-out month, each with a 95% bootstrap interval. At 88:1, marked as the λt/5 stress case, review raises cost by about 13% in-sample and 17% held out. A shaded band from 50:1 to 25:1 marks where the sign changes. At 17.5:1, marked λt, the stated regime, review saves 3.2% [2.2, 4.2] in-sample and 7.6% [4.0, 11.2] held out. Savings stay positive through 3.5:1 and fall back near zero at 2:1." width="1523" height="819" loading="lazy">
             <span class="visually-hidden"> (opens in a new tab)</span>
           </a>
