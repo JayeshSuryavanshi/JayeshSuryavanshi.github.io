@@ -6,8 +6,17 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>Small updates break first</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html</guid>
+      <pubDate>Wed, 07 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Research Notes</category>
+      <description>Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In five pre-registered rounds, LoRAs trained at mlx-lm&#x27;s default learning rate lost more of it at 3 bits, and in MLX, training on the quantized base won most of it back.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-small-updates-break-first.png" length="125709" type="image/png"/>
+    </item>
     <item>
       <title>The simulator was the experiment</title>
       <link>https://www.jayeshsuryavanshi.com/blog/simulator-was-the-experiment.html</link>
