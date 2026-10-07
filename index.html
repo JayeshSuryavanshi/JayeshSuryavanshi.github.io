@@ -724,6 +724,28 @@
             <div class="column">
                 <div class="folio-item">
                     <div class="folio-item__thumb">
+                        <a class="folio-item__thumb-link" href="images/portfolio/gallery/ftquant-3840.webp" data-small="images/portfolio/gallery/ftquant.webp 1600x900"
+                            title="ftquant: share of the gain kept at MLX 3-bit, by learning rate" data-size="3840x2160">
+                            <img decoding="async" loading="lazy" src="images/portfolio/gallery/ftquant-800.webp" srcset="images/portfolio/gallery/ftquant-800.webp 800w, images/portfolio/gallery/ftquant-1200.webp 1200w, images/portfolio/gallery/ftquant.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="Line chart of the share of a fine-tune&rsquo;s accuracy gain kept after MLX 3-bit quantization, by learning rate, for Qwen3-0.6B on banking77. A LoRA keeps 0% at 3e-6, 6% at 1e-5, 63% at 3e-5 and 95% at 1e-4. A full fine-tune keeps 0%, 14% and 78% at the first three.">
+                        </a>
+                    </div>
+                    <div class="folio-item__info">
+                        <div class="folio-item__cat">LLM fine-tuning &middot; Quantization</div>
+                        <h3 class="folio-item__title">ftquant</h3>
+                    </div>
+                    <a href="https://github.com/JayeshSuryavanshi/ftquant" target="_blank" rel="noopener" title="Project Link" class="folio-item__project-link">Project
+                        Link<span class="visually-hidden">: ftquant on GitHub (opens in a new tab)</span></a>
+                    <div class="folio-item__caption">
+                        <p>A pre-registered study of whether a fine-tune&rsquo;s gain survives quantization to MLX and GGUF, and a tool that measures the risk from the weights before you quantize. The fine-tunes that lost the most were the gentle ones: at MLX 3-bit, a Qwen3-0.6B LoRA trained at 1e-5, mlx-&#8288;lm&rsquo;s default learning rate, kept 6% of its accuracy gain on banking77, while the same LoRA at 1e-4 kept 95%. Before quantization, the gentle one was the more accurate model. The chart is that learning-rate sweep, with full fine-tuning beside it.</p>
+                        <p class="folio-story"><span class="folio-story__label">The story</span> I ran it as five pre-registered rounds on one laptop, writing down each round&rsquo;s hypotheses and pass criteria before seeing its results and reporting every criterion, met or not. The direction held on a second model family (OLMo-2 1B), a second task (MASSIVE slot annotation), second seeds and Qwen3-4B: in all 10 pre-registered tests at MLX 3-bit and GGUF Q3_K_M, the LoRA at 1e-4 kept more of its gain than the one at 1e-5. A script recomputes every result quoted in the write-&#8288;up from the raw predictions and checks it against the text.</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="folio-item">
+                    <div class="folio-item__thumb">
                         <a class="folio-item__thumb-link" href="images/portfolio/gallery/graphspot-3840.webp" data-small="images/portfolio/gallery/graphspot.webp 1600x900"
                             title="graphspot: OddBall scoring a Tolokers neighborhood" data-size="3840x2160">
                             <img decoding="async" loading="lazy" src="images/portfolio/gallery/graphspot-800.webp" srcset="images/portfolio/gallery/graphspot-800.webp 800w, images/portfolio/gallery/graphspot-1200.webp 1200w, images/portfolio/gallery/graphspot.webp 1600w" sizes="(min-width: 1350px) 600px, (min-width: 601px) 45vw, calc(100vw - 48px)" alt="A dense network of 300 Tolokers nodes in gray with the fifteen most structurally anomalous nodes marked in blue, scored by OddBall">
