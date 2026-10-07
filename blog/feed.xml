@@ -14,7 +14,7 @@
       <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html</guid>
       <pubDate>Wed, 07 Oct 2026 12:00:00 GMT</pubDate>
       <category>Research Notes</category>
-      <description>Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In five pre-registered rounds, LoRAs trained at mlx-lm&#x27;s default learning rate lost more of it at 3 bits, and in MLX, training on the quantized base won most of it back.</description>
+      <description>Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In pre-registered tests, LoRAs at mlx-lm&#x27;s default learning rate kept less of it at MLX 3-bit and GGUF Q3_K_M, and in MLX, training on the 4-bit base won most of it back.</description>
       <enclosure url="https://www.jayeshsuryavanshi.com/images/og-small-updates-break-first.png" length="125709" type="image/png"/>
     </item>
     <item>

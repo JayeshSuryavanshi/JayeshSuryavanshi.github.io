@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Small updates break first · Jayesh Suryavanshi</title>
-  <meta name="description" content="Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In five pre-registered rounds, LoRAs trained at mlx-lm's default learning rate lost more of it at 3 bits, and in MLX, training on the quantized base won most of it back.">
+  <meta name="description" content="Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In pre-registered tests, LoRAs at mlx-lm's default learning rate kept less of it at MLX 3-bit and GGUF Q3_K_M, and in MLX, training on the 4-bit base won most of it back.">
   <meta name="author" content="Jayesh Suryavanshi">
   <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html">
 
@@ -11,7 +11,7 @@
   <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html">
   <meta property="og:site_name" content="Jayesh Suryavanshi">
   <meta property="og:title" content="Small updates break first">
-  <meta property="og:description" content="Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In five pre-registered rounds, LoRAs trained at mlx-lm's default learning rate lost more of it at 3 bits, and in MLX, training on the quantized base won most of it back.">
+  <meta property="og:description" content="Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In pre-registered tests, LoRAs at mlx-lm's default learning rate kept less of it at MLX 3-bit and GGUF Q3_K_M, and in MLX, training on the 4-bit base won most of it back.">
   <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-small-updates-break-first.png">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
@@ -22,7 +22,7 @@
   <meta name="twitter:site" content="@2jayesh3">
   <meta name="twitter:creator" content="@2jayesh3">
   <meta name="twitter:title" content="Small updates break first">
-  <meta name="twitter:description" content="Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In five pre-registered rounds, LoRAs trained at mlx-lm's default learning rate lost more of it at 3 bits, and in MLX, training on the quantized base won most of it back.">
+  <meta name="twitter:description" content="Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In pre-registered tests, LoRAs at mlx-lm's default learning rate kept less of it at MLX 3-bit and GGUF Q3_K_M, and in MLX, training on the 4-bit base won most of it back.">
   <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-small-updates-break-first.png">
   <meta name="twitter:image:alt" content="Small updates break first, research notes by Jayesh Suryavanshi">
 
@@ -40,7 +40,7 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "Small updates break first",
-    "description": "Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In five pre-registered rounds, LoRAs trained at mlx-lm's default learning rate lost more of it at 3 bits, and in MLX, training on the quantized base won most of it back.",
+    "description": "Fine-tune a small model, ship it at 3 or 4 bits, and the gain you trained for may not come along. In pre-registered tests, LoRAs at mlx-lm's default learning rate kept less of it at MLX 3-bit and GGUF Q3_K_M, and in MLX, training on the 4-bit base won most of it back.",
     "image": "https://www.jayeshsuryavanshi.com/images/og-small-updates-break-first.png",
     "datePublished": "2026-10-07",
     "dateModified": "2026-10-07",
@@ -91,7 +91,7 @@
     <article>
       <p class="kicker">Research Notes</p>
       <h1 class="title">Small updates break first</h1>
-      <p class="dek">I fine-tuned small language models, quantized them the way people ship them, and measured how much of the gain survived. Across five pre-registered rounds, the gentle fine-tunes lost the most, and gentle is mlx-&#8288;lm&rsquo;s default learning rate.</p>
+      <p class="dek">I fine-tuned small language models, quantized them the way people ship them, and measured how much of the gain survived. In all ten pre-registered tests at MLX 3-bit and GGUF Q3_K_M, the gentle LoRA kept less of its gain than the strong one, and gentle is mlx-&#8288;lm&rsquo;s default learning rate.</p>
       <div class="byline">
         <span>By <strong>Jayesh Suryavanshi</strong></span>
         <span class="sep">&middot;</span>
@@ -102,7 +102,7 @@
 
       <section class="abstract" aria-label="Abstract">
         <h2>Abstract</h2>
-        <p>Small open models are often fine-tuned and then shipped at 3 to 6 bits per weight, as MLX or GGUF files, on the assumption that the fine-tuning gain survives. I tested that assumption in five pre-registered rounds on one laptop: Qwen3 at 0.6B, 1.7B and 4B and OLMo-2 1B, fine-tuned on banking77 intent classification and MASSIVE slot annotation, and evaluated on their full test sets at bf16 and up to ten quantized formats. At MLX 3-bit and GGUF Q3_K_M, a LoRA trained at learning rate 1e-5, mlx-&#8288;lm&rsquo;s default, kept less of its gain than the same LoRA at 1e-4 in all 10 pre-registered tests, by 0.06 to 0.63 in gain retention. In all eight settings where both were trained, the 1e-5 LoRA was the more accurate model at full precision and kept a smaller share of that accuracy at every one of the five formats compared, 40 of 40. Which one to ship depends on the file: the 1e-5 LoRA was more accurate at Q4_K_M in all eight settings, the 1e-4 LoRA at MLX 3-bit and Q2_K in all eight. In MLX the loss does not come from rounding the update. Keeping it exact on OLMo-2 1B recovered 5% and 12% of the lost gain, while training the 1e-5 LoRA on the quantized Qwen3-0.6B base delivered 96% of its gain at 4 bits, against 84%. A predictor built from the weights met its pre-registered error bar, but a simple model of the update&rsquo;s size and the base damage did better.</p>
+        <p>Small open models are often fine-tuned and then shipped at 3 to 6 bits per weight, as MLX or GGUF files, on the assumption that the fine-tuning gain survives. I tested that assumption in five pre-registered rounds on one laptop: Qwen3 at 0.6B, 1.7B and 4B and OLMo-2 1B, fine-tuned on banking77 intent classification and MASSIVE slot annotation, and evaluated on their full test sets at bf16 and up to ten quantized formats. At MLX 3-bit and GGUF Q3_K_M, a LoRA trained at learning rate 1e-5, mlx-&#8288;lm&rsquo;s default, kept less of its gain than the same LoRA at 1e-4 in all 10 pre-registered tests, by 0.06 to 0.63 in gain retention. In exploratory comparisons over the eight settings where both were trained, the 1e-5 LoRA was the more accurate model at full precision and kept a smaller share of that accuracy at every one of the five formats compared, 40 of 40. Which one to ship depends on the file, also exploratory: the 1e-5 LoRA was more accurate at Q4_K_M in all eight settings, the 1e-4 LoRA at MLX 3-bit and Q2_K in all eight. In MLX the loss does not come from rounding the update. Keeping it exact on OLMo-2 1B at MLX 3-bit recovered 5% and 12% of the lost gain for two seeds, while training the 1e-5 LoRA on the 4-bit Qwen3-0.6B base delivered 96% of the bf16 gain, against 84%. A predictor built from the weights met its pre-registered error bar, but a post hoc model of the update&rsquo;s size and the base damage did better.</p>
       </section>
 
       <div class="prose">
@@ -112,7 +112,7 @@
 
         <div class="callout">
           <div class="label">What I measured, and what I cannot claim</div>
-          <p>Four base models, none larger than 4B: Qwen3 at 0.6B, 1.7B and 4B, and OLMo-2 1B. Two tasks with short answers scored by exact match. LoRA at rank 8 and scale 20, plus full fine-tuning on Qwen3-0.6B, for 500 steps each. MLX affine quantization at group size 64 and GGUF k-quants without an importance matrix, so no GPTQ or AWQ. Everything ran on one Apple M1 Pro laptop with 16 GB of memory. Every number below comes from the paper in the <a href="https://github.com/JayeshSuryavanshi/ftquant">ftquant repository</a>, where a script recomputes each one from the per-item predictions. Larger models, long-form generation and calibrated formats may behave differently.</p>
+          <p>Four base models, none larger than 4B: Qwen3 at 0.6B, 1.7B and 4B, and OLMo-2 1B. Two tasks with short answers scored by exact match. LoRA at rank 8 and scale 20, plus full fine-tuning on Qwen3-0.6B, for 500 steps each. MLX affine quantization at group size 64 and GGUF k-quants without an importance matrix, so no GPTQ or AWQ. Everything ran on one Apple M1 Pro laptop with 16 GB of memory. Every number below comes from the paper in the <a href="https://github.com/JayeshSuryavanshi/ftquant">ftquant repository</a>, where a script recomputes each one from the committed per-item predictions, run logs and result files. Larger models, long-form generation and calibrated formats may behave differently.</p>
         </div>
 
         <h2>Two ways to count what survives</h2>
@@ -133,7 +133,7 @@
 
         <figure>
           <a href="../images/ftquant-retention-3x.webp" target="_blank" rel="noopener">
-            <img src="../images/ftquant-retention.webp" alt="Line chart of fine-tune gain retained against measured bits per weight on a log scale, for three Qwen3-0.6B fine-tunes on banking77. All three keep close to 100% from 16 bits down to 6.5. The LoRA at learning rate 1e-4 stays near 95% at MLX 3-bit, 3.5 bits per weight. The LoRA at 1e-5 falls to 6% and the full fine-tune at 1e-5 to 14% there. GGUF k-quants, drawn dashed, follow the same order. At MLX 2-bit all three are at 0%." width="1600" height="900" loading="lazy">
+            <img src="../images/ftquant-retention.webp" alt="Line chart of fine-tune gain retained against measured bits per weight on a log scale, for three Qwen3-0.6B fine-tunes on banking77. All three keep close to 100% from 16 bits down to 6.5. The LoRA at learning rate 1e-4 stays near 95% at MLX 3-bit, 3.5 bits per weight. The LoRA at 1e-5 falls to 6% and the full fine-tune at 1e-5 to 14% there. GGUF k-quants, drawn dashed, keep the 1e-4 LoRA on top, at 87% at Q2_K, while the other two swap places at Q3_K_M. At MLX 2-bit all three are at 0%." width="1600" height="900" loading="lazy">
             <span class="visually-hidden"> (opens in a new tab)</span>
           </a>
           <figcaption>Gain retained by three Qwen3-0.6B fine-tunes on banking77, against bits per weight measured from the files (log scale; 16 is bf16). Blue: LoRA at 1e-4. Orange: LoRA at 1e-5. Dark gray: full fine-tuning at 1e-5. Solid lines are MLX affine and dashed lines GGUF k-quants, with 95% bootstrap bands. Round 1, exploratory.</figcaption>
@@ -149,7 +149,7 @@
 
         <figure>
           <a href="../images/ftquant-lr-sweep-3x.webp" target="_blank" rel="noopener">
-            <img src="../images/ftquant-lr-sweep.webp" alt="Two panels of fine-tune gain retained against learning rate on a log scale, at MLX 3-bit on the left and GGUF Q3_K_M on the right. On Qwen3-0.6B, the LoRA rises from 0% at learning rate 3e-6 to 95% at 1e-4 at MLX 3-bit, and from about 45% to about 100% at Q3_K_M. Full fine-tuning rises from 0% to 78% at MLX 3-bit and from about 19% to about 98% at Q3_K_M. Hollow circles for a second LoRA seed sit next to the first. A dashed orange line for a Qwen3-1.7B LoRA runs above 100% at the higher learning rate, because its base collapses at 3 bits." width="2000" height="900" loading="lazy">
+            <img src="../images/ftquant-lr-sweep.webp" alt="Two panels of fine-tune gain retained against learning rate on a log scale, at MLX 3-bit on the left and GGUF Q3_K_M on the right. On Qwen3-0.6B, the LoRA rises from 0% at learning rate 3e-6 to 95% at 1e-4 at MLX 3-bit, and from about 45% to about 100% at Q3_K_M. Full fine-tuning rises from 0% to 78% at MLX 3-bit and from about 19% to about 98% at Q3_K_M. Hollow circles for a second LoRA seed sit next to the first. A dashed orange line for a Qwen3-1.7B LoRA runs above 100% at 1e-4 in both panels and at both learning rates at Q3_K_M, because its base collapses at 3 bits." width="2000" height="900" loading="lazy">
             <span class="visually-hidden"> (opens in a new tab)</span>
           </a>
           <figcaption>Gain retained at MLX 3-bit (left) and GGUF Q3_K_M (right) against learning rate, 500 steps each. Blue: LoRA on Qwen3-0.6B, with hollow circles for a second seed. Gray: full fine-tuning on Qwen3-0.6B. Orange: LoRA on Qwen3-1.7B, whose values above 125% are drawn at 125% because its base collapses at 3 bits. A LoRA at 3e-4 never learned the task and is left out. Round 2, exploratory.</figcaption>
@@ -185,7 +185,7 @@
 
         <p>All ten passed, and all ten intervals also clear zero at the Bonferroni-corrected level of 99.5%. They are five fine-tune pairs at two correlated formats, and each interval describes one trained pair.</p>
 
-        <p>The sizes are not comparable across settings. Gain retention divides by each fine-tune&rsquo;s own gain, and a base that degrades inflates the difference in the strong LoRA&rsquo;s favor: for Qwen3-4B at MLX 3-bit, 0.155 of the 0.539 comes from the base&rsquo;s own drop. So each test was repeated on a quantity that leaves the base out, how much more accuracy the gentle LoRA lost than the strong one. It was positive in all ten, by 3.6 to 41.8 points.</p>
+        <p>The sizes are not comparable across settings. Gain retention divides by each fine-tune&rsquo;s own gain, and a base that degrades inflates the difference in the strong LoRA&rsquo;s favor: for Qwen3-4B at MLX 3-bit, 0.155 of the 0.539 comes from the base&rsquo;s own drop. So, as an exploratory check, I repeated each comparison on a quantity that leaves the base out, how much more accuracy the gentle LoRA lost than the strong one. It was positive in all ten, by 3.6 to 41.8 points.</p>
 
         <figure>
           <a href="../images/ftquant-replication-3x.webp" target="_blank" rel="noopener">
@@ -195,17 +195,17 @@
           <figcaption>Accuracy kept, as a share of each fine-tune&rsquo;s own bf16 accuracy, at MLX 3-bit (left) and GGUF Q3_K_M (right), for the LoRA at 1e-5 (orange) and at 1e-4 (blue) in the eight settings where both were trained. Row labels give their bf16 accuracies. Exploratory.</figcaption>
         </figure>
 
-        <p>In all eight of those settings the gentle LoRA had the higher bf16 accuracy and kept a smaller share of it at each of the five formats compared, MLX 4-bit and 3-bit and GGUF Q4_K_M, Q3_K_M and Q2_K: 40 comparisons, all in the same direction. Two cautions apply. The eight settings are not independent, since three are second seeds of others. And at Q4_K_M the gaps are small: six of the eight are under 2 points, and for two of them the interval includes zero.</p>
+        <p>These comparisons are exploratory. In all eight of those settings the gentle LoRA had the higher bf16 accuracy and kept a smaller share of it at each of the five formats compared, MLX 4-bit and 3-bit and GGUF Q4_K_M, Q3_K_M and Q2_K: 40 comparisons, all in the same direction. Two cautions apply. The eight settings are not independent, since three are second seeds of others. And at Q4_K_M the gaps are small: six of the eight are under 2 points, and for two of them the interval includes zero.</p>
 
         <p>Two checks argue against reading the gentle LoRAs as simply undertrained. Their final validation loss was no higher than the strong LoRAs&rsquo; in any of the eight pairs. And the loss is not confined to borderline items: for Qwen3-4B at MLX 3-bit, among the test items each model answered correctly at bf16 with confidence of at least 0.9, the gentle LoRA still answered 89.6% correctly after quantization and the strong one 99.8%.</p>
 
         <p>Qwen3-4B differs in degree. Its base does not break at MLX 3-bit, and the gap between its two LoRAs is smaller there, 0.80 against 0.94 in accuracy retention, where Qwen3-0.6B showed 0.06 against 0.85. At Q2_K, where its base does break, the gentle 4B LoRA still lost 40% of its accuracy. With one pair per size, that is not a trend with size.</p>
 
-        <p>Seeds matter too. On OLMo the second seed reproduced closely, moving gain retention by at most 0.016 at MLX 3-bit and Q3_K_M. On MASSIVE the direction held, but the gentle LoRA&rsquo;s gain retention at MLX 3-bit went from 0.32 with seed 0 to 0.05 with seed 1. The intervals in this post cover test-set sampling only, not variation between training runs, and that pair is the reminder.</p>
+        <p>Seeds matter too. On OLMo the second seed reproduced closely, moving gain retention by at most 0.016 at MLX 3-bit and Q3_K_M. On MASSIVE the direction held, but the gentle LoRA&rsquo;s gain retention at MLX 3-bit went from 0.32 with seed 0 to 0.05 with seed 1. The accuracy and retention intervals in this post cover test-set sampling only, not variation between training runs, and that pair is the reminder.</p>
 
         <h2>Which one to ship depends on the file</h2>
 
-        <p>Retention is not what you ship. Accuracy is. Ranked by accuracy after quantization, the answer depends on the format:</p>
+        <p>Retention is not what you ship. Accuracy is. Ranked by accuracy after quantization, in another exploratory comparison, the answer depends on the format:</p>
 
         <div class="table-scroll">
           <table>
@@ -226,9 +226,9 @@
 
         <p>So the practical rule is short. Choose a fine-tune by evaluating the quantized file you will actually ship, not the bf16 checkpoint it came from.</p>
 
-        <h2>It is not the rounding</h2>
+        <h2>In MLX, it is not the rounding</h2>
 
-        <p>My first account of the mechanism was about rounding. Quantization snaps weights to a grid, and an update that is small next to the grid&rsquo;s step either rounds away or drowns in the rounding noise. The weight measurements fit that story. For each fine-tune and format I measured how much of the update survives quantization along its own direction and how much noise lands on top of it, and when the base was intact and most of the update survived, all 44 pairs with noise below three times the update kept at least 90% of their gain. I chose those bands after seeing the data, so they describe it and test nothing.</p>
+        <p>My first account of the mechanism was about rounding. Quantization snaps weights to a grid, and an update that is small next to the grid&rsquo;s step either rounds away or drowns in the rounding noise. The weight measurements fit that story. For each fine-tune and format I measured how much of the update survives quantization along its own direction and how much noise lands on top of it, and in rounds 1 and 2, when the base was intact and most of the update survived, all 44 pairs with noise below three times the update kept at least 90% of their gain. I chose those bands after seeing the data, so they describe it and test nothing.</p>
 
         <p>But round 1 already held evidence against it, in runs my first draft did not report. The gentle Qwen3-0.6B LoRA had also been evaluated unfused, with its update kept exactly in bf16 on top of the quantized base, and it lost about as much as the fused model: gain retention 0.83 unfused against 0.84 fused at MLX 4-bit. An update that is never quantized cannot be rounded away. A review of the draft pointed that out, so I ran a fifth round to test it, under a plan pushed to GitHub before anything ran.</p>
 
@@ -251,15 +251,15 @@
 
         <p>The first test kept the update exact. On OLMo-2 1B at MLX 3-bit, where the base stays usable and the fused gentle LoRAs kept only 0.83 and 0.81 of their gain, loading the adapter unfused recovered 5% and 12% of the lost gain for the two seeds, with upper 95% bounds of 16% and 22%. The plan counted that as no rescue if each seed&rsquo;s upper bound stayed below +0.08 in gain retention, and both did.</p>
 
-        <p>The second test trained against the weights that ship. A gentle LoRA trained directly on the 4-bit Qwen3-0.6B base, the QLoRA setup, delivered 96% of its bf16 gain at 4 bits, against 84% for the same LoRA trained in bf16, fused and quantized. Its accuracy at 4 bits, 77.6%, was within a point of what the bf16-trained LoRA reached at bf16, 78.5%. On the 3-bit base, which scores 0% on its own, the same recipe reached 67.5% and delivered 95% of the gain, against 6% for fuse-then-quantize.</p>
+        <p>The second test trained against the weights that ship. A gentle LoRA trained directly on the 4-bit Qwen3-0.6B base, the QLoRA setup, delivered 96% of the bf16 gain at 4 bits, against 84% for the same LoRA trained in bf16, fused and quantized. Its accuracy at 4 bits, 77.6%, was within a point of what the bf16-trained LoRA reached at bf16, 78.5%. On the 3-bit base, which scores 0% on its own, the same recipe reached 67.5% and delivered 95% of the bf16 gain, against 6% for fuse-then-quantize.</p>
 
-        <p>The remedy has a cost. At the strong learning rate, training on the quantized base made things worse at 4 bits: that LoRA trained less well there and delivered 78% of its gain, against 94% when trained in bf16, fused and quantized. The most accurate 4-bit and 3-bit models in this comparison were the gentle LoRAs trained on the quantized base.</p>
+        <p>The remedy has a cost. At the strong learning rate, training on the quantized base made things worse at 4 bits: that LoRA trained less well there and delivered 78% of the bf16 gain, against 94% when trained in bf16, fused and quantized. The most accurate 4-bit and 3-bit models in this comparison were the gentle LoRAs trained on the quantized base.</p>
 
         <p>So in these MLX tests the loss followed the base rather than the update. A gentle update trained against the bf16 weights did not survive those weights moving onto the quantized grid, even when the update itself was kept exact. For gentle LoRAs, the remedy is the one QLoRA builds in and LoftQ prepares for at initialization: train against the weights that will ship. GGUF has no such training path in my pipeline, so none of this was tested there.</p>
 
         <h2>Measuring it before you quantize</h2>
 
-        <p>The tool that came out of the study, <code>ftquant check</code>, compares a fine-tune&rsquo;s weights with its base and runs both through the exact quantizer you plan to ship, with numpy on a CPU. It reports how much of the update survives, how much noise lands on top of it, how much the format damages the base model itself and, where it has been tested, how much of the gain it expects you to keep. This is its real output for a Qwen3-0.6B LoRA trained on MASSIVE at learning rate 1e-5, a fine-tune its predictor had never seen:</p>
+        <p>The tool that came out of the study, <code>ftquant check</code>, compares a fine-tune&rsquo;s weights with its base and runs both through the exact quantizer you plan to ship, with numpy on a CPU. It reports how much of the update survives, how much noise lands on top of it, how much the format damages the base model itself, for the three bases it ships measurements for, and, where it has been tested, how much of the gain it expects you to keep. This is its real output for a Qwen3-0.6B LoRA trained on MASSIVE at learning rate 1e-5, a fine-tune its predictor had never seen:</p>
 
         <div class="table-scroll">
           <table>
@@ -279,17 +279,17 @@
 
         <p>The predicted column comes from a three-parameter model of those measurements, fitted on rounds 1 and 2 and frozen before it was tested. The first version missed its pre-registered error bar by 0.007, so, as that plan required, the tool fell back to descriptive output. The second met its bar on both held-out rounds, with mean absolute errors of 0.059 and 0.084 against a bar of 0.10, though in round 4 the interval reached 0.146.</p>
 
-        <p>Then I fitted a model that only knows the size of the update and the base damage, and it did better: 0.049 in both rounds. The weight measurements describe what happens, but they have not been shown to add anything beyond how big the update is. The tool prints a prediction only for the formats and base models it was tested on, and not for Qwen3-4B, where the predictor&rsquo;s error was 0.115.</p>
+        <p>After the pre-registered tests, I fitted a model that only knows the size of the update and the base damage, post hoc and by the same procedure, and it did better: 0.049 in both rounds. The weight measurements describe what happens, but they have not been shown to add anything beyond how big the update is. The tool prints a prediction only for the formats and base models it was tested on, and not for Qwen3-4B, where the predictor&rsquo;s error was 0.115.</p>
 
         <h2>Confidence moves before accuracy</h2>
 
-        <p>One more result, exploratory but worth knowing if you gate outputs on confidence. Fit a threshold on the full-precision model so that the predictions it accepts automatically are at most 5% wrong, then quantize and keep the threshold. Coverage falls much faster than accuracy. For the round-1 Qwen3-1.7B LoRA, MLX 3-bit kept 93% of the accuracy but cut the share of accepted items from 38.1% to 27.8%, and Q2_K kept 85% of the accuracy but cut it from 36.4% to 10.1%.</p>
+        <p>One more result, exploratory but worth knowing if you gate outputs on confidence. Fit a threshold on the full-precision model so that the predictions it accepts automatically are at most 5% wrong, then quantize and keep the threshold. At low bit widths, coverage falls much faster than accuracy. For the round-1 Qwen3-1.7B LoRA, MLX 3-bit kept 93% of the accuracy but cut the share of accepted items from 38.1% to 27.8%, and Q2_K kept 85% of the accuracy but cut it from 36.4% to 10.1%.</p>
 
         <p>The gentle LoRA&rsquo;s coverage fell further than the strong one&rsquo;s in 36 of 40 cases, and what it still accepted was less reliable: on Qwen3-1.7B at MLX 3-bit, its error among accepted items rose from 5.4% to 23.2%. A system that sends low-confidence outputs to a person would see that person&rsquo;s workload change at formats where accuracy still looks fine. The one pre-registered test of this, at 4 bits, was not supported, because Q4_K_M moved coverage by only 1.2 points.</p>
 
         <h2>How the study was run</h2>
 
-        <p>Every round started with a written plan: the configurations, hypotheses, statistical tests and verdict rules, and from round 2 on, what each key outcome would change. Each plan was hashed and timestamped before its confirmatory runs, and the plans for rounds 3 to 5 were also pushed to GitHub before any of their fine-tunes had been evaluated. Results that already existed when a plan was written were labeled exploratory, which in round 1 meant all of Qwen3-0.6B.</p>
+        <p>Every round&rsquo;s confirmatory runs followed a written plan: the configurations, hypotheses, statistical tests and verdict rules, and from round 2 on, what each key outcome would change. Each plan was hashed and timestamped before its confirmatory runs, and the plans for rounds 3 to 5 were also pushed to GitHub before any of their fine-tunes had been evaluated. Results that already existed when a plan was written were labeled exploratory, which in round 1 meant all of Qwen3-0.6B.</p>
 
         <p>Every pre-registered result is reported, including the round-1 hypotheses that were not supported and the bar the first predictor missed, and the paper lists six deviations from the plans. Every fine-tune of rounds 1 to 4 was evaluated on its complete test set in both engines.<span class="sn-ref">3</span></p>
 
@@ -300,12 +300,12 @@
         <div class="takeaways">
           <h2>Bottom line</h2>
           <ul>
-            <li><strong>Pick the fine-tune on the file you ship.</strong> The gentle LoRA was more accurate at Q4_K_M in all eight settings, the strong one at MLX 3-bit and Q2_K in all eight.</li>
-            <li><strong>The LoRA at mlx-&#8288;lm&rsquo;s default learning rate kept less at 3 bits.</strong> At MLX 3-bit and Q3_K_M, the LoRA at 1e-5 kept less of its gain than the one at 1e-4 in all 10 pre-registered tests.</li>
-            <li><strong>Unfusing does not save a gentle LoRA in MLX. Training on the quantized base does.</strong> It delivered 96% of the gain at 4 bits instead of 84%, but the same move cost the strong LoRA at 4 bits.</li>
+            <li><strong>Pick the fine-tune on the file you ship.</strong> The gentle LoRA was more accurate at Q4_K_M in all eight settings, the strong one at MLX 3-bit and Q2_K in all eight (exploratory).</li>
+            <li><strong>The LoRA at mlx-&#8288;lm&rsquo;s default learning rate kept less at MLX 3-bit and Q3_K_M.</strong> At MLX 3-bit and Q3_K_M, the LoRA at 1e-5 kept less of its gain than the one at 1e-4 in all 10 pre-registered tests.</li>
+            <li><strong>Unfusing does not save a gentle LoRA in MLX. Training on the quantized base does.</strong> It delivered 96% of the bf16 gain at 4 bits instead of 84%, but the same move cost the strong LoRA at 4 bits.</li>
             <li><strong>Read GGUF names as labels, not sizes.</strong> Q3_K_M measured 4.2 to 4.4 bits per weight, closer to MLX 4-bit than to MLX 3-bit.</li>
-            <li><strong>Check coverage, not only accuracy.</strong> At a confidence threshold fixed at bf16, quantization cut the share of accepted items much faster than it cut accuracy.</li>
-            <li><strong>The size of the update predicts retention at least as well as the weight measurements.</strong> Those describe the loss; they have not been shown to predict it better.</li>
+            <li><strong>Check coverage, not only accuracy.</strong> At a confidence threshold fixed at bf16, quantization at low bit widths cut the share of accepted items much faster than it cut accuracy (exploratory).</li>
+            <li><strong>A post hoc model of update size plus base damage predicted retention at least as well.</strong> The weight measurements describe the loss; they have not been shown to predict it better than the size of the update.</li>
           </ul>
         </div>
 
@@ -328,7 +328,7 @@
 
     <footer class="post-foot">
       <a class="back" href="./">&larr; All writing</a>
-      <p class="made">Run on one laptop in five pre-registered rounds between September 27 and October 4, 2026. Every number here comes from the paper in the ftquant repository, where a script recomputes it from the per-item predictions.</p>
+      <p class="made">Run on one laptop in five pre-registered rounds between September 27 and October 4, 2026. Every number here comes from the paper in the ftquant repository, where a script recomputes it from the committed per-item predictions, run logs and result files.</p>
     </footer>
 
   </div>
