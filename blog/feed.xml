@@ -6,8 +6,17 @@
     <atom:link href="https://www.jayeshsuryavanshi.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Technical studies and field notes on machine learning, LLM agents, and the models I take apart.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>One barrier short</title>
+      <link>https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html</link>
+      <guid isPermaLink="true">https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html</guid>
+      <pubDate>Sat, 31 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Field Guide</category>
+      <description>A data race in mlx-lm&#x27;s fused KL and JS loss kernels: one 64-float scratch array, two exchanges, no barrier between the read and the overwrite. On an M1 Pro the fp32 loss was wrong on most calls at a Qwen-sized vocabulary and the shipped tests could not see it. Instrumentation caught the overwrites in the act, and one barrier per kernel fixed it.</description>
+      <enclosure url="https://www.jayeshsuryavanshi.com/images/og-one-barrier-short.png" length="132840" type="image/png"/>
+    </item>
     <item>
       <title>Small updates break first</title>
       <link>https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html</link>

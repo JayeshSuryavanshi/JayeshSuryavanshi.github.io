@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>One barrier short · Jayesh Suryavanshi</title>
+  <meta name="description" content="mlx-lm's fused KL and JS loss kernels pass row maximums and partial sums through the same 64 floats of shared memory, with no barrier between the read and the overwrite. On an M1 Pro the fp32 loss came back wrong on most calls at a Qwen-sized vocabulary, and the shipped tests cannot see it. The race, the instrumentation that caught it in the act, and the one-line fix that merged in October.">
+  <meta name="author" content="Jayesh Suryavanshi">
+  <link rel="canonical" href="https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html">
+  <meta property="og:site_name" content="Jayesh Suryavanshi">
+  <meta property="og:title" content="One barrier short">
+  <meta property="og:description" content="A data race in mlx-lm's fused loss kernels: one scratch array, two exchanges, no barrier. Wrong losses on most fp32 calls, invisible to the tests, fixed by one line.">
+  <meta property="og:image" content="https://www.jayeshsuryavanshi.com/images/og-one-barrier-short.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="One barrier short, a field guide by Jayesh Suryavanshi">
+  <meta property="article:published_time" content="2026-10-31">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@2jayesh3">
+  <meta name="twitter:creator" content="@2jayesh3">
+  <meta name="twitter:title" content="One barrier short">
+  <meta name="twitter:description" content="A data race in mlx-lm's fused loss kernels: one scratch array, two exchanges, no barrier. Wrong losses on most fp32 calls, invisible to the tests, fixed by one line.">
+  <meta name="twitter:image" content="https://www.jayeshsuryavanshi.com/images/og-one-barrier-short.png">
+  <meta name="twitter:image:alt" content="One barrier short, a field guide by Jayesh Suryavanshi">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="alternate" type="application/rss+xml" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.xml">
+  <link rel="alternate" type="application/feed+json" title="Jayesh Suryavanshi · Writing" href="https://www.jayeshsuryavanshi.com/blog/feed.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "One barrier short",
+    "description": "A data race in mlx-lm's fused KL and JS loss kernels: one scratch array, two exchanges, no barrier between the read and the overwrite. How it hides, how it was caught in the act, and the one-line fix.",
+    "image": "https://www.jayeshsuryavanshi.com/images/og-one-barrier-short.png",
+    "datePublished": "2026-10-31",
+    "dateModified": "2026-10-31",
+    "author": { "@type": "Person", "name": "Jayesh Suryavanshi", "url": "https://www.jayeshsuryavanshi.com/" },
+    "publisher": { "@type": "Person", "name": "Jayesh Suryavanshi" },
+    "mainEntityOfPage": "https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html",
+    "url": "https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="blog.css?v=7">
+  <script>
+    /* scheme boot. runs before first paint so a pinned theme never flashes the
+       other one. with no pinned choice the attribute stays off and the page
+       follows prefers-color-scheme, which is also the no JavaScript path.
+       the js class only reveals the switcher, which is inert without script */
+    (function () {
+      var r = document.documentElement;
+      r.className += (r.className ? ' ' : '') + 'js';
+      try {
+        var t = localStorage.getItem('blog-theme');
+        if (t === 'light' || t === 'dark' || t === 'reading') { r.setAttribute('data-theme', t); }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div id="progress"></div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <a class="brand" href="../">Jayesh Suryavanshi<span class="dot">.</span></a>
+      <nav>
+        <a href="../">Home</a>
+        <a href="./" class="here">Writing</a>
+      </nav>
+      <div class="theme-switch" role="group" aria-label="Color scheme">
+        <button type="button" data-theme-set="light" aria-pressed="false" title="Light scheme"><span class="sw-label">Light</span></button>
+        <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark scheme"><span class="sw-label">Dark</span></button>
+        <button type="button" data-theme-set="reading" aria-pressed="false" title="Reading scheme, warm paper and larger type"><span class="sw-label">Reading</span></button>
+      </div>
+    </header>
+
+    <main id="main">
+    <article>
+      <p class="kicker">Field Guide</p>
+      <h1 class="title">One barrier short</h1>
+      <p class="dek">mlx-&#8288;lm&rsquo;s fused KL and JS loss kernels pass row maximums and partial sums through the same 64 floats of shared memory, and for fifteen months nothing stopped a fast group of threads from overwriting a slot before a slow one had read it. The shipped tests cannot see it. Here is the race, the instrumentation that caught it in the act, and the one line that fixed it.</p>
+      <div class="byline">
+        <span>By <strong>Jayesh Suryavanshi</strong></span>
+        <span class="sep">&middot;</span>
+        <span>October&nbsp;31,&nbsp;2026</span>
+        <span class="sep">&middot;</span>
+        <span>~15&nbsp;min read</span>
+      </div>
+
+      <section class="abstract" aria-label="Abstract">
+        <h2>Abstract</h2>
+        <p>DWQ, mlx-&#8288;lm&rsquo;s distilled weight quantization, trains a quantized student against a higher-precision teacher with a KL divergence over the whole vocabulary, computed by hand-written Metal kernels. The loss module has four of them, KL and Jensen-Shannon, forward and backward, and each reduces one row with 32 groups of 32 threads that exchange partial results through a single 64-float scratch array: first the row maximums, then the partial sums, in the same slots, with no barrier between one group reading the maximums and another overwriting them. On an M1 Pro the fp32 kernels returned a wrong loss or gradient in 60 to 100% of calls at a Qwen-sized vocabulary, by up to 34% in the loss and 0.49 in the gradient, and a different answer for the same input on most calls. The bf16 path DWQ uses by default was hit about once in 20 to 50 calls here, and far more often on the M5 Max where the bug was first reported. Instrumented copies of the kernels caught 4,982 reads that returned a neighbour&rsquo;s partial sum where a maximum should have been, with none unexplained. One barrier after the read removes every error at no measurable cost. The diagnosis was posted two days after the August bug report. The fix merged on October 29.</p>
+      </section>
+
+      <div class="prose">
+
+        <p class="lead">The kernels are a sensible optimization. A KL divergence between two 151,936-way distributions, once per token, is a lot of memory traffic if you materialize the log-softmaxes, so since v0.26.0 in July 2025 mlx-&#8288;lm has computed it in one fused pass on the GPU, forward and backward, for KL, and from v0.26.3 for Jensen-Shannon.<span class="sn-ref">1</span> In August a user running DWQ on an M5 Max reported that the backward pass sometimes returned <code>-3.39e38</code>, about the most negative value a 32-bit float can hold, and that the first training step corrupted the weights of models above roughly a billion parameters. Routing the loss through plain MLX ops made the problem go away.</p>
+
+        <aside class="sidenote"><span class="sn-num">1</span>KL in <a href="https://github.com/ml-explore/mlx-lm/pull/280">#280</a>, released in v0.26.0 on July 8, 2025. Jensen-Shannon in <a href="https://github.com/ml-explore/mlx-lm/pull/352">#352</a>, v0.26.3, August 6, 2025. Every tag from v0.26.0 to v0.32.0 was checked and carries the race, and main carried it unchanged until the fix, so the current release, v0.32.2, has it too.</aside>
+
+        <p>The report came with a careful hypothesis about a padding sentinel and the input domain of <code>fast::exp</code>, offered as a starting point and labelled as one. Two days later a contributor, AxelNoun, posted a different one: the kernels reuse their shared scratch buffer for two exchanges with no barrier in between, which fits a failure that comes and goes with batch size and gradient checkpointing far better than a deterministic math-domain bug would. That diagnosis was right. What follows is what it took to prove it on a machine, and why a one-line fix still took until the end of October to land.</p>
+
+        <div class="callout">
+          <div class="label">How I checked</div>
+          <p>Everything measured here ran on one Apple M1 Pro with 16 GB, macOS 27.0.1, mlx 0.32.3, against mlx-&#8288;lm main at <code>ba8a08f</code>. Every script asserts the sha256 of the <code>losses.py</code> it imports, so the kernels under test are byte-identical to upstream. The reference is the same loss written in standard MLX ops in fp32, which agrees with NumPy float64 to within 4e-6. A row counts as wrong when its loss is off by more than 1e-4 relative or any gradient entry by more than 1e-4 absolute (1e-2 for bf16). A correct kernel stays under 8e-6 on the synthetic inputs and under 5e-5 on real logits.</p>
+          <p>One machine is one machine. How often the race bites depends on how the GPU schedules its thread groups, and the reporter&rsquo;s M5 Max numbers, further down, are a lot worse than mine. The mechanism does not depend on the chip. The rate does.</p>
+        </div>
+
+        <h2>Sixty-four floats</h2>
+
+        <p>Each call launches one threadgroup of 1,024 threads per row of logits. A thread strides through the row four values at a time, keeping a running maximum and a running sum of exponentials relative to that maximum, the usual online log-sum-exp. At the end the 1,024 partial results have to be combined. Inside a SIMD group of 32 lanes that is free: <code>simd_max</code> and <code>simd_sum</code> are register shuffles.<span class="sn-ref">2</span> Across the 32 groups it needs memory, and the kernels declare exactly enough for one exchange, <code>threadgroup float shared[32 * 2]</code>: two floats per group, one for the student distribution <em>q</em> and one for the teacher <em>p</em>.</p>
+
+        <aside class="sidenote"><span class="sn-num">2</span>A SIMD group is the 32 threads that execute in lockstep on Apple GPUs. Within one, the shuffle intrinsics exchange values without touching memory, so they need no barrier. Between groups there is no such hardware path, which is why the kernel goes through <code>threadgroup</code> memory.</aside>
+
+        <p>Here is the exchange as it shipped, from the KL forward kernel. The other three kernels have the same lines.</p>
+
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">mlx_lm/tuner/losses.py, before #2010</span><span class="lang">metal</span></div>
+          <pre tabindex="0" role="region" aria-label="Code: the shared-memory exchange as shipped"><code>// Share the maxs across the threadgroup
+float prev_max_q = max_q;
+float prev_max_p = max_p;
+max_q = simd_max(max_q);
+max_p = simd_max(max_p);
+<span class="c">// step 1: lane 0 of group g writes into slots 2g and 2g+1</span>
+if (simd_lane_id == 0) {
+    shared[simd_group_id * 2 + 0] = max_q;
+    shared[simd_group_id * 2 + 1] = max_p;
+}
+<span class="c">// step 2</span>
+threadgroup_barrier(mem_flags::mem_threadgroup);
+<span class="c">// step 3: lane L reads the maximums of group L</span>
+max_q = shared[simd_lane_id * 2 + 0];
+max_p = shared[simd_lane_id * 2 + 1];
+max_q = simd_max(max_q);
+max_p = simd_max(max_p);
+<span class="c">// nothing here</span>
+// Share the sum_exp across the threadgroup
+sum_exp_q *= metal::fast::exp(prev_max_q - max_q);
+sum_exp_p *= metal::fast::exp(prev_max_p - max_p);
+sum_exp_q = simd_sum(sum_exp_q);
+sum_exp_p = simd_sum(sum_exp_p);
+<span class="c">// step 4: the same slots</span>
+if (simd_lane_id == 0) {
+    shared[simd_group_id * 2 + 0] = sum_exp_q;
+    shared[simd_group_id * 2 + 1] = sum_exp_p;
+}
+<span class="c">// step 5</span>
+threadgroup_barrier(mem_flags::mem_threadgroup);
+sum_exp_q = shared[simd_lane_id * 2 + 0];
+sum_exp_p = shared[simd_lane_id * 2 + 1];
+sum_exp_q = simd_sum(sum_exp_q);
+sum_exp_p = simd_sum(sum_exp_p);</code></pre>
+        </div>
+
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Step</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Lane 0 of group <em>g</em> writes the group&rsquo;s two maximums into <code>shared[2g]</code> and <code>shared[2g+1]</code></td></tr>
+            <tr><td>2</td><td>Barrier. Nobody proceeds until every group has written</td></tr>
+            <tr><td>3</td><td>Lane <em>L</em> of every group reads <code>shared[2L]</code> and <code>shared[2L+1]</code>, the maximums of group <em>L</em>. A <code>simd_max</code> then gives every thread the row maximum</td></tr>
+            <tr><td>4</td><td>Lane 0 of group <em>g</em> writes the group&rsquo;s two partial sums into the <strong>same</strong> slots, <code>shared[2g]</code> and <code>shared[2g+1]</code></td></tr>
+            <tr><td>5</td><td>Barrier, then every lane reads the sums</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Nothing orders step 3 in one group against step 4 in another. That is the whole bug.</p>
+
+        <h2>A barrier is a rendezvous, not a lock</h2>
+
+        <p>It is easy to read the barrier in step 2 as protecting the array. It does not. A threadgroup barrier means every thread has to arrive before any thread leaves. Once they have all left, each group runs at its own pace again, and nothing orders them until the next barrier. So a fast group can finish step 3, rescale, do its <code>simd_sum</code>, and have lane 0 write its partial sum into slot <code>2g</code> while a slower group is still on its way to reading slot <code>2g</code> as a maximum.</p>
+
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">two of the 32 groups, one row</span><span class="lang">timeline</span></div>
+          <pre tabindex="0" role="region" aria-label="Code: timeline of the race between two SIMD groups"><code>group 7, fast                       group 20, slow
+write max_q, max_p into [14], [15]  write max_q, max_p into [40], [41]
+<span class="c">======== barrier, step 2: all 32 groups arrive, all 32 leave ========</span>
+read [0..63] as maximums
+simd_max: row maximum in hand
+rescale, simd_sum
+write sum_q, sum_p into [14], [15]  <span class="c">&lt;- slot 14 now holds a partial sum</span>
+                                    read [0..63] as maximums
+                                    lane 7 gets group 7's SUM, not its max
+                                    simd_max folds it into the row maximum
+                                    this group's normalizer is now wrong
+<span class="c">======== barrier, step 5 ========</span></code></pre>
+        </div>
+
+        <p>The slow group now has the wrong maximum for the row, so the normalizer it computes from it is wrong, and so is that row&rsquo;s loss or gradient. Whether the row actually comes out wrong depends on which slot was overwritten and what it held. A partial sum that happens to sit below the true maximum changes nothing, which is why some overwritten rows are still correct and why the bug is intermittent rather than constant. In the backward kernel the wrong normalizer multiplies into a full vocabulary-wide gradient row, which is how AxelNoun connected it to the saturated <code>-3.39e38</code> gradients in the report.</p>
+
+        <p>The Metal Shading Language specification is plain about this. Section 6.10.1 of version 4.1 gives the barrier one ordering guarantee, that all threads reach it before any continue; what memory it fences is set by the flag, and its Table 6.13 describes a barrier with <code>mem_none</code> as an execution barrier only, with no memory fence. An unsynchronized read and write of the same location by different threads is a data race by definition. MLX core&rsquo;s own log-sum-exp kernel, <code>logsumexp.h</code>, does the same two exchanges with two separate arrays, <code>local_max</code> and <code>local_normalizer</code>, and never reuses a slot.</p>
+
+        <h2>Catching it in the act</h2>
+
+        <p>A diagnosis that fits is not the same as a diagnosis that is true, so the first thing I wanted was to watch the overwrite happen. The obvious instrumentation, storing every value a thread reads to a debug buffer as it reads it, mostly made the bug disappear: 0 and 18 events across two runs that should have shown hundreds, and no wrong rows. Extra memory traffic changing whether a bug appears is itself typical of a timing race, but it is not proof.<span class="sn-ref">3</span></p>
+
+        <aside class="sidenote"><span class="sn-num">3</span>The classic heisenbug shape: the probe slows the fast group just enough that the slow group gets its read in. Any instrumentation for a race has to stay out of the window it is measuring.</aside>
+
+        <p>The version that worked keeps everything in registers. Each thread holds the two values it read in step 3, lane 0 of each group holds what its group wrote in steps 1 and 4, and nothing is stored until the kernel is otherwise finished. Afterwards every read is compared with what the slot&rsquo;s owner wrote as its maximum.</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Inputs, fp32, KL forward and backward</th><th>Reads checked</th><th>Not a maximum</th><th>Equal to the owner&rsquo;s partial sum</th><th>Unexplained</th><th>Wrong rows</th><th>Wrong rows with an overwrite</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>synthetic, 512 &times; 151,936, logit scale 4, 30 calls</td><td>62,914,560</td><td class="warn">964</td><td>964</td><td>0</td><td>2</td><td>2</td></tr>
+            <tr><td>synthetic, 512 &times; 151,936, logit scale 20, 30 calls</td><td>62,914,560</td><td class="warn">1,398</td><td>1,398</td><td>0</td><td>5</td><td>5</td></tr>
+            <tr><td>real Qwen3-0.6B logits, 1,024 &times; 151,936, 30 calls</td><td>125,829,120</td><td class="warn">2,620</td><td>2,620</td><td>0</td><td>17</td><td>17</td></tr>
+            <tr><td>any of the above, one barrier added</td><td>same</td><td class="win">0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>4,982 reads returned something other than the owner&rsquo;s maximum, and every one of them was, bit for bit, the partial sum that owner had written in step 4. Every wrong row had an overwrite in it. No row went wrong without one. With one barrier added after step 3, the count is zero everywhere.</p>
+
+        <h2>How wrong, how often</h2>
+
+        <p>Then the public function, called the way a user would call it, on identical inputs 30 times per setting:</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Loss</th><th>Rows &times; vocab</th><th>dtype</th><th>Logit scale</th><th>Calls with a wrong row</th><th>Worst loss error</th><th>Worst gradient error</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>KL</td><td>512 &times; 151,936</td><td>fp32</td><td>20</td><td class="warn">18/30</td><td>34%</td><td>0.49</td></tr>
+            <tr><td>KL</td><td>512 &times; 151,936</td><td>fp32</td><td>4</td><td class="warn">26/30</td><td>19%</td><td>0.15</td></tr>
+            <tr><td>JS</td><td>512 &times; 151,936</td><td>fp32</td><td>4</td><td class="warn">23/30</td><td>0.37%</td><td>4.0e-4</td></tr>
+            <tr><td>KL</td><td>16 &times; 32,000</td><td>fp32</td><td>20</td><td>1/30</td><td>0.21%</td><td>6e-8</td></tr>
+            <tr><td>KL</td><td>8 &times; 4,000, the test shape</td><td>fp32</td><td>1</td><td class="win">0/30</td><td>2e-6</td><td>1e-8</td></tr>
+            <tr><td>KL</td><td>1,024 &times; 151,936</td><td>bf16</td><td>4</td><td>1/30, then 1/200</td><td>0.91%</td><td>0.39</td></tr>
+            <tr><td>KL</td><td>4,096 &times; 151,936</td><td>bf16</td><td>4</td><td>0/30, then 2/100</td><td>0.38%</td><td>0.039</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="table-note">Wrong means a loss off by more than 1e-4 relative or a gradient entry off by more than 1e-4 absolute, 1e-2 in bf16. The bf16 rows are flagged on their gradients: a bf16 loss error near 0.4% is rounding, and the same figure shows up in runs with no wrong rows. Two runs are shown for each bf16 shape, and the worst errors are the worst across both.</p>
+
+        <p>Two things in that table explain the fifteen months. First, the tests. <code>tests/test_losses.py</code> checked the kernels on inputs of shape 2 &times; 4 &times; 4000, which is 8 rows of 4,000: zero wrong in 30 calls, and 1 in 30 at 16 rows of 32,000. The window only opens wide at vocabulary-sized rows, where each thread&rsquo;s share of the work is long enough for the groups to drift apart. Second, the dtype. DWQ runs the loss in bf16 by default, and on this M1 Pro bf16 was hit in 2 of 230 calls at 1,024 rows and in 2 of 130 at 4,096 rows, close to DWQ&rsquo;s default batch of four 1,025-token sequences.<span class="sn-ref">4</span> fp32 is hit most of the time. A bug that passes its tests and corrupts one gradient in fifty looks, from the outside, like noise.</p>
+
+        <aside class="sidenote"><span class="sn-num">4</span>The reporter saw it far more often on an M5 Max. In September, on mlx-&#8288;lm 0.31.3 at 512 rows and logit scale 20, two identical bf16 gradient calls disagreed with each other in 12 of 50 trials, and fp32 in 26 of 50. A different yardstick from mine, which compares against a reference, but the same race on a different scheduler.</aside>
+
+        <p>Real logits behave the same way. With Qwen3-0.6B in bf16 as the teacher, its own 4-bit, group-size-64 quantization as the student, 4 &times; 1,024 tokens of the repository&rsquo;s Markdown as input, and the loss called exactly as DWQ calls it, <code>kl_div_loss(0.5 * student, 0.5 * teacher)</code>: in fp32, on 1,024 of those tokens, every one of 30 calls had wrong rows, 340 in all, and the batch loss DWQ would have trained on was off by more than 0.1% in 18 of 20 calls, by 4.0% at worst. In bf16, on all 4,096, 1 of 20 gradients was off by 5.4%. DWQ makes one such call per step, so a run of a few hundred steps absorbs a handful of corrupted gradients on this chip, and many more on an M5 Max.</p>
+
+        <h2>Cause, not correlation</h2>
+
+        <p>The last thing a race diagnosis needs is to rule out everything else that looked suspicious in those kernels. There were two candidates: the slot reuse, and a barrier in the KL forward kernel&rsquo;s final reduction that used <code>mem_none</code> where a write-then-read through shared memory calls for <code>mem_threadgroup</code>. Same inputs, same 30 calls, one change at a time. The p-values are two-sided Fisher exact tests against upstream.</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Variant</th><th>What changed</th><th>Scale 20</th><th>Scale 4</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>upstream</td><td>nothing, the public API</td><td>18/30</td><td>26/30</td></tr>
+            <tr><td>recompiled copy</td><td>same source, compiled by the harness</td><td>22/30 (p 0.41)</td><td>20/30 (p 0.13)</td></tr>
+            <tr><td>flag only</td><td><code>mem_none</code> to <code>mem_threadgroup</code> at the final reduction</td><td>19/30 (p 1.0)</td><td>22/30 (p 0.33)</td></tr>
+            <tr><td>separate arrays</td><td>sums go to a second array, <strong>no barrier added</strong></td><td class="win">0/30 (p 1.9e-7)</td><td class="win">0/30 (p 7.8e-13)</td></tr>
+            <tr><td>one barrier</td><td><code>mem_threadgroup</code> barrier after the step 3 read</td><td class="win">0/30 (p 1.9e-7)</td><td class="win">0/30 (p 7.8e-13)</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The row that settles it is <em>separate arrays</em>. Give the sums their own 64 floats and add no synchronization whatsoever, and every error disappears. The reuse is the cause, not a side effect of extra waiting. The <code>mem_none</code> flag sits outside what the spec guarantees, and fixing it alone changed nothing measurable. The Jensen-Shannon kernels behave identically: 23 of 30 upstream, 0 of 30 with the barrier.</p>
+
+        <h2>The fix</h2>
+
+        <p>One barrier, after the maximums have been read and before the sums are written, in each of the four kernels:</p>
+
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">mlx_lm/tuner/losses.py, #2010</span><span class="lang">diff</span></div>
+          <pre tabindex="0" role="region" aria-label="Code: the fix"><code>         max_q = simd_max(max_q);
+         max_p = simd_max(max_p);
+
++        // All threads must read the maxs before the sums overwrite them
++        threadgroup_barrier(mem_flags::mem_threadgroup);
++
+         // Share the sum_exp across the threadgroup
+         sum_exp_q *= metal::fast::exp(prev_max_q - max_q);</code></pre>
+        </div>
+
+        <p>The pull request, <a href="https://github.com/ml-explore/mlx-lm/pull/2010">#2010</a>, also switches the KL forward kernel&rsquo;s final-reduction barrier from <code>mem_none</code> to <code>mem_threadgroup</code>, because that step does write shared memory and then read it, and the matching step in the JS kernel already used the stronger flag. That change is spec-driven; no measurement shows it. The diff is 44 lines added and 1 removed across two files, and most of the added lines are the test: fp32 logits of shape 128 &times; 151,936, loss and gradient checked against the CPU path at a relative tolerance of 1e-4, then ten more calls that have to be bit-identical to the first. Against main, both new tests failed in all five runs I tried. With the barrier, they pass. Speed is unchanged within noise: across 16 configurations, the fixed kernels averaged 0.1% faster than main, inside a run-to-run spread of up to 24% between two copies of main.</p>
+
+        <p>michalk8 approved it on October 27 and merged it on October 29, closing #1700. As of this writing the fix is on main and not yet in a tagged release; v0.32.2, from October 16, still has the race. One thing #2010 does not touch: at a logit scale of 20 the Jensen-Shannon loss still overflows to non-finite values on main, and so does the plain MLX reference at that scale. That is a separate, deterministic bug, one that AxelNoun&rsquo;s original PR had also fixed with a stable softplus. It has not been fixed on main.</p>
+
+        <h2>Run it yourself</h2>
+
+        <p>The whole reproduction is twenty lines and a few seconds on any Apple GPU. It calls the public function on identical inputs 20 times and checks each result against the plain-MLX reference. A correct kernel gives one answer, the right one, every time.</p>
+
+        <div class="code">
+          <div class="code-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file">repro.py</span><span class="lang">python</span></div>
+          <pre tabindex="0" role="region" aria-label="Code: minimal reproduction"><code>import mlx.core as mx
+from mlx_lm.tuner.losses import kl_div_loss
+
+mx.random.seed(0)
+q = mx.random.normal((512, 151936)) * 4  <span class="c"># student, Qwen-sized vocabulary</span>
+p = mx.random.normal((512, 151936)) * 4  <span class="c"># teacher</span>
+
+lq = q - mx.logsumexp(q, axis=-1, keepdims=True)
+lp = p - mx.logsumexp(p, axis=-1, keepdims=True)
+ref = mx.sum(mx.exp(lp) * (lp - lq), axis=-1)
+ref_grad = mx.exp(lq) - mx.exp(lp)
+
+answers, bad = set(), 0
+for i in range(20):
+    kl = kl_div_loss(q, p)
+    grad = mx.grad(lambda x: kl_div_loss(x, p).sum())(q)
+    err = mx.max(mx.abs(kl - ref) / mx.abs(ref)).item()
+    gerr = mx.max(mx.abs(grad - ref_grad)).item()
+    answers.add(bytes(memoryview(kl)))
+    bad += err &gt; 1e-4 or gerr &gt; 1e-4
+    print(f"call {i:2d}: loss rel error {err:.1e}, grad error {gerr:.1e}")
+print(f"{bad}/20 calls wrong; {len(answers)} different losses for one input")</code></pre>
+        </div>
+
+        <p>On October 31, against the last pre-fix main, this gave 15 wrong calls out of 20 and 13 different losses for one input, with a worst loss error of 19% and a worst gradient error of 0.28. Against main with #2010, 0 of 20 and one answer, with errors at the 1e-6 floor.</p>
+
+        <h2>Fifteen months, in dates</h2>
+
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>What happened</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2025-07-08</td><td>KL kernels merged (#280) and released in v0.26.0</td></tr>
+            <tr><td>2025-08-06</td><td>Jensen-Shannon kernels merged (#352), released in v0.26.3</td></tr>
+            <tr><td>2026-08-10</td><td><a href="https://github.com/ml-explore/mlx-lm/issues/1700">#1700</a> opened: DWQ diverges on the first step on an M5 Max, the backward pass returns <code>-3.39e38</code></td></tr>
+            <tr><td>2026-08-12</td><td>AxelNoun posts the race diagnosis, with 50 of 50 nondeterministic fp32 calls on CI runners, and opens <a href="https://github.com/ml-explore/mlx-lm/pull/1714">#1714</a>: the barrier, a stable softplus for JS, hardened sentinels and regression tests, in five commits, 186 lines added and 54 removed. It closes the same day when the fork hosting its branch is detached</td></tr>
+            <tr><td>2026-08-13</td><td><a href="https://github.com/ml-explore/mlx-lm/pull/1719">#1719</a> reopens the identical commit</td></tr>
+            <tr><td>2026-08-21</td><td>#1719 closed by a maintainer: &ldquo;the number of PRs is way beyond our capacity to review so I'm closing the non-essential ones&rdquo;</td></tr>
+            <tr><td>2026-09-15</td><td>The reporter confirms the fix branch on the M5 Max: KL fp32 26 of 50 to 0 of 50, bf16 12 of 50 to 0 of 50, and the original DWQ recipe completes with no workaround, perplexity 9.21 against 9.45 on the reference path. Asks the maintainers to look again</td></tr>
+            <tr><td>2026-10-11</td><td>The measurements above</td></tr>
+            <tr><td>2026-10-26</td><td>#2010 opened: one barrier per kernel and a test that fails on main, 44 lines added, 1 removed</td></tr>
+            <tr><td>2026-10-29</td><td>Merged. #1700 closed</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>I want to be careful about the lesson, because the easy one is unfair. The maintainers were carrying a queue they said outright they could not review, and from inside that queue a five-commit PR fixing three things at once, for a bug the shipped tests could not see, is hard to tell from the pile. The diagnosis never changed between August and October. The packaging did. What landed was one fix and one flag change in 44 lines, with its own test that failed on main in every run and credit in the description to the person who found the cause. The earlier PR had the fix and the tests too, plus two more fixes and 186 lines, and eight days after it was reopened the maintainers were closing pull requests to stay afloat. If you are sitting on a correct fix that was closed for capacity, split it and resend the smallest piece.</p>
+
+        <h2>If you run DWQ</h2>
+
+        <p>Install mlx-&#8288;lm from main, or wait for the first release after v0.32.2 and check that it includes #2010. Until then the fp32 path is the dangerous one, and the default bf16 path is hit occasionally on an M1 Pro and often on an M5 Max. The reporter&rsquo;s workaround is unchanged: make <code>mlx_lm.tuner.losses.can_run_metal</code> return <code>False</code> before the first loss call, which routes the loss through plain MLX ops at a cost in memory and speed, the two things the fused kernels were written to save. And the cheapest self-check for any fused reduction kernel is the one in the script above. Call it twice on the same large input and compare the bytes. If they differ, you do not need a theory yet. You need a barrier.</p>
+
+        <div class="rule"></div>
+
+        <div class="takeaways">
+          <h2>Bottom line</h2>
+          <ul>
+            <li><strong>It is a plain data race.</strong> One 64-float scratch array, two exchanges through the same slots, and no barrier between a group reading the maximums and another group overwriting them, in all four fused loss kernels.</li>
+            <li><strong>It hides in the test shape and in bf16.</strong> Zero wrong calls in 30 at 8 &times; 4,000, the shipped test. 60 to 87% of fp32 calls wrong at 512 &times; 151,936 on an M1 Pro, and 30 of 30 on real 1,024-row logits. bf16 rare here, 12 of 50 on an M5 Max.</li>
+            <li><strong>Proof beat plausibility.</strong> Instrumented kernels that stay out of the race window caught 4,982 overwrites with zero unexplained reads, and removing the slot reuse with no synchronization at all removed every error.</li>
+            <li><strong>One barrier per kernel fixes it at no measurable cost.</strong> Merged October 29 as #2010 with a test that fails on main. Not yet in a release. The JS overflow at large logit scales is a separate bug and is still there.</li>
+            <li><strong>The diagnosis was right in August.</strong> It landed in October as a 44-line PR carrying one fix and its own failing test. If a correct fix of yours was closed for capacity, split it and resend the smallest piece.</li>
+          </ul>
+        </div>
+
+        <div class="rule"></div>
+
+        <div class="sources">
+          <h3>Sources</h3>
+          <ul>
+            <li>Issue <a href="https://github.com/ml-explore/mlx-lm/issues/1700">ml-explore/mlx-lm #1700</a>, with AxelNoun&rsquo;s diagnosis (August 12, 2026) and the M5 Max confirmation (September 15, 2026).</li>
+            <li>Pull request <a href="https://github.com/ml-explore/mlx-lm/pull/2010">#2010</a>, merged October 29, 2026, and the earlier <a href="https://github.com/ml-explore/mlx-lm/pull/1714">#1714</a> and <a href="https://github.com/ml-explore/mlx-lm/pull/1719">#1719</a>.</li>
+            <li>The kernels before the fix: <a href="https://github.com/ml-explore/mlx-lm/blob/ba8a08fd2ed72bbc53de84f89933f91fe4743e4a/mlx_lm/tuner/losses.py#L84-L112">mlx_lm/tuner/losses.py at ba8a08f</a>. The kernels were added in <a href="https://github.com/ml-explore/mlx-lm/pull/280">#280</a> (v0.26.0) and <a href="https://github.com/ml-explore/mlx-lm/pull/352">#352</a> (v0.26.3).</li>
+            <li>Metal Shading Language Specification, version 4.1, section 6.10.1, Tables 6.12 and 6.13: <a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">developer.apple.com/metal</a></li>
+            <li>MLX core&rsquo;s log-sum-exp kernel, with separate arrays for the two exchanges: <a href="https://github.com/ml-explore/mlx/blob/main/mlx/backend/metal/kernels/logsumexp.h">mlx/backend/metal/kernels/logsumexp.h</a></li>
+            <li>DWQ: <a href="https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/LEARNED_QUANTS.md">mlx_lm/LEARNED_QUANTS.md</a> and <code>mlx_lm/quant/dwq.py</code>, whose own defaults call the loss at temperature 2 with batch size 4 and sequence length 1,025 (the documentation quotes other defaults).</li>
+            <li>Companion piece: <a href="small-updates-break-first.html">Small updates break first</a>, on what MLX quantization does to a fine-tune.</li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+    </main>
+
+    <footer class="post-foot">
+      <a class="back" href="./">&larr; All writing</a>
+      <p class="made">Measured on one M1 Pro, mlx 0.32.3, against mlx-lm main at ba8a08f on October 11, 2026, and re-run against the merged fix on October 31. The 20-line script above is the complete public reproduction. The permanent one is the test that shipped with #2010.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('progress');
+      function tick() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', tick, { passive: true });
+      tick();
+    })();
+  </script>
+  <script>
+    /* a table gets the pinned-column hairline only while it really overflows
+       its box, rechecked on resize. the class is cleared before measuring
+       because the rule it enables widens the first column */
+    (function () {
+      var boxes = document.querySelectorAll('.table-scroll');
+      if (!boxes.length) { return; }
+      function check() {
+        for (var i = 0; i < boxes.length; i++) {
+          boxes[i].classList.remove('is-scrolling');
+          if (boxes[i].scrollWidth > boxes[i].clientWidth + 1) { boxes[i].classList.add('is-scrolling'); }
+        }
+      }
+      check();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(check); }
+      window.addEventListener('resize', check);
+    })();
+  </script>
+  <script>
+    (function () {
+      /* margin notes float from where their <aside> sits in the source, after
+         the paragraph that cites them, so on the rail they started a paragraph
+         or more below their mark. this lifts each note until its first line
+         shares a baseline with its reference, never closer than 16px under the
+         note above. rail widths only: below 1104px the notes are plain blocks
+         after their paragraph and are left alone */
+      var notes = document.querySelectorAll('aside.sidenote');
+      if (!notes.length || !window.matchMedia) { return; }
+      var wide = window.matchMedia('(min-width: 1104px)');
+      function textNear(el, forward) {
+        var box = forward ? el.parentNode : (el.closest('p, li, td, blockquote') || el.parentNode);
+        var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, hit = null;
+        while ((n = w.nextNode())) {
+          var after = el.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el.contains(n) || !/\S/.test(n.data)) { continue; }
+          if (forward && after) { return { n: n, i: n.data.search(/\S/) }; }
+          if (!forward && !after) { hit = { n: n, i: n.data.replace(/\s+$/, '').length - 1 }; }
+        }
+        return hit;
+      }
+      function charBottom(t) {
+        var r = document.createRange();
+        r.setStart(t.n, t.i); r.setEnd(t.n, t.i + 1);
+        return r.getBoundingClientRect().bottom;
+      }
+      function align() {
+        var i, floor = -Infinity;
+        for (i = 0; i < notes.length; i++) { notes[i].style.removeProperty('--sn-lift'); }
+        if (!wide.matches) { return; }
+        var refs = document.querySelectorAll('.sn-ref');
+        for (i = 0; i < notes.length; i++) {
+          var n = notes[i], num = n.querySelector('.sn-num'), ref = null;
+          for (var j = 0; num && j < refs.length; j++) {
+            if (refs[j].textContent.trim() === num.textContent.trim()) { ref = refs[j]; break; }
+          }
+          var a = num && textNear(num, true), b = ref && textNear(ref, false);
+          if (!a || !b) { continue; }
+          /* a zero size inline-block sits on the baseline. measured inside the
+             note only, where the first line is never full, then carried to the
+             reference line as a fraction of font size (both are the same face) */
+          var probe = document.createElement('span');
+          probe.style.cssText = 'display:inline-block;width:0;height:0';
+          num.parentNode.insertBefore(probe, num.nextSibling);
+          var noteBase = probe.getBoundingClientRect().top;
+          probe.parentNode.removeChild(probe);
+          var nfs = parseFloat(getComputedStyle(n).fontSize);
+          var drop = (charBottom(a) - noteBase) / nfs;
+          var refBase = charBottom(b) - drop * parseFloat(getComputedStyle(b.n.parentNode).fontSize);
+          var top = n.getBoundingClientRect().top;
+          var want = Math.max(top + refBase - noteBase, floor);
+          /* a custom property, not margin-top: blog.css reads it only on the
+             rail, so print and narrow layouts never inherit a stale lift */
+          n.style.setProperty('--sn-lift', ((parseFloat(getComputedStyle(n).marginTop) || 0) + want - top) + 'px');
+          floor = n.getBoundingClientRect().bottom + 16;
+        }
+      }
+      align();
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+      window.addEventListener('load', align);
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(align, 100); });
+      if (wide.addEventListener) { wide.addEventListener('change', align); } else if (wide.addListener) { wide.addListener(align); }
+      /* the reading scheme changes type size, so every line moves */
+      if (window.MutationObserver) {
+        new MutationObserver(align).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      }
+    })();
+  </script>
+  <script>
+    /* the scheme switcher. the pinned choice lives in localStorage, and every
+       access is guarded because storage throws in private mode and when site
+       data is blocked. with nothing pinned the buttons show whichever scheme
+       the operating system is asking for, and follow it if it changes */
+    (function () {
+      var KEY = 'blog-theme';
+      var OK = { light: 1, dark: 1, reading: 1 };
+      var root = document.documentElement;
+      var group = document.querySelector('.theme-switch');
+      if (!group) { return; }
+      var buttons = group.querySelectorAll('button[data-theme-set]');
+      var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+      /* the attribute on <html> is the source of truth, not storage: the boot
+         script has already copied any pinned choice onto it, and when storage
+         is unavailable the buttons still agree with what the page is showing */
+      function pinned() { var t = root.getAttribute('data-theme'); return OK[t] ? t : null; }
+      function mark() {
+        var active = pinned() || ((mq && mq.matches) ? 'dark' : 'light');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].setAttribute('aria-pressed',
+            buttons[i].getAttribute('data-theme-set') === active ? 'true' : 'false');
+        }
+      }
+      function pick(name) {
+        if (!OK[name]) { return; }
+        root.setAttribute('data-theme', name);
+        try { localStorage.setItem(KEY, name); } catch (e) {}
+        mark();
+      }
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+          pick(this.getAttribute('data-theme-set'));
+        });
+      }
+      mark();
+      if (mq) {
+        var follow = function () { if (!pinned()) { mark(); } };
+        if (mq.addEventListener) { mq.addEventListener('change', follow); }
+        else if (mq.addListener) { mq.addListener(follow); }
+      }
+    })();
+  </script>
+</body>
+
+</html>

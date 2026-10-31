@@ -13,6 +13,18 @@
   ],
   "items": [
     {
+      "id": "https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html",
+      "url": "https://www.jayeshsuryavanshi.com/blog/one-barrier-short.html",
+      "title": "One barrier short",
+      "summary": "A data race in mlx-lm's fused KL and JS loss kernels: one 64-float scratch array, two exchanges, no barrier between the read and the overwrite. On an M1 Pro the fp32 loss was wrong on most calls at a Qwen-sized vocabulary and the shipped tests could not see it. Instrumentation caught the overwrites in the act, and one barrier per kernel fixed it.",
+      "content_text": "A data race in mlx-lm's fused KL and JS loss kernels: one 64-float scratch array, two exchanges, no barrier between the read and the overwrite. On an M1 Pro the fp32 loss was wrong on most calls at a Qwen-sized vocabulary and the shipped tests could not see it. Instrumentation caught the overwrites in the act, and one barrier per kernel fixed it.",
+      "image": "https://www.jayeshsuryavanshi.com/images/og-one-barrier-short.png",
+      "date_published": "2026-10-31T12:00:00Z",
+      "tags": [
+        "field-guide"
+      ]
+    },
+    {
       "id": "https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html",
       "url": "https://www.jayeshsuryavanshi.com/blog/small-updates-break-first.html",
       "title": "Small updates break first",
