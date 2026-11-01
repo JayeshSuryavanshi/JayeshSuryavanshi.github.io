@@ -548,9 +548,10 @@
                 </div>
 
                 <p class="lead" data-aos="fade-up">
-                    Four pull requests merged into maintained scientific Python libraries, each reviewed and
-                    accepted by the people who run them. One of them shipped as a named estimator in a
-                    release, alongside two packages of my own on PyPI.
+                    Five pull requests merged into maintained Python libraries, four scientific packages and
+                    Apple&rsquo;s mlx-lm, each reviewed and accepted by the people who run them. One shipped as a
+                    named estimator in a release. Another fixed a GPU kernel that had returned wrong training
+                    losses for fifteen months. Two packages of my own are on PyPI.
                 </p>
             </div> <!-- end s-services--leftcol -->
 
@@ -558,7 +559,26 @@
                 <ul class="services-list" data-aos="fade-up">
                     <li class="services-list__item is-active">
                         <div class="services-list__item-header">
-                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="true" aria-controls="svc-6">aeon&nbsp;&middot; MADRID anomaly detector</button></h3>
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="true" aria-controls="svc-13">mlx-lm&nbsp;&middot; Metal loss-kernel data race</button></h3>
+                        </div>
+                        <div class="services-list__item-body" id="svc-13">
+                            <p>
+                                The fused KL and Jensen-Shannon loss kernels in Apple&rsquo;s
+                                <a href="https://github.com/ml-explore/mlx-lm" target="_blank" rel="noopener">mlx-lm<span class="visually-hidden"> (opens in a new tab)</span></a>,
+                                which drive its distillation and DWQ quantization, let 1,024 GPU threads exchange
+                                values through one scratch array with no barrier between the read and the next write.
+                                On a Qwen-sized vocabulary the fp32 loss came back wrong on most calls, and the
+                                gradient with it, in every release since July 2025. I turned a diagnosis from the
+                                issue thread into the fix that landed: one barrier plus a test against the CPU
+                                reference, merged in October 2026. The full account is in
+                                <a href="blog/one-barrier-short.html">One barrier short</a>.
+                                <a href="https://github.com/ml-explore/mlx-lm/pull/2010" target="_blank" rel="noopener">PR #2010<span class="visually-hidden"> (opens in a new tab)</span></a>
+                            </p>
+                        </div>
+                    </li> <!-- services-list__item -->
+                    <li class="services-list__item">
+                        <div class="services-list__item-header">
+                            <h3 class="h5"><button type="button" class="services-list__toggle" aria-expanded="false" aria-controls="svc-6">aeon&nbsp;&middot; MADRID anomaly detector</button></h3>
                         </div>
                         <div class="services-list__item-body" id="svc-6">
                             <p>
@@ -638,10 +658,11 @@
                         </div>
                         <div class="services-list__item-body" id="svc-11">
                             <p>
-                                Twelve further pull requests are open with maintainers, across
+                                Fourteen further pull requests are open with maintainers, across
                                 <a href="https://github.com/scikit-learn/scikit-learn/pull/34629" target="_blank" rel="noopener">scikit-learn<span class="visually-hidden"> (opens in a new tab)</span></a>,
-                                PyOD, river, imbalanced-learn, hiclass, pythresh, DeepOD and aeon. Four add new
-                                detectors, the other eight are correctness fixes. Open is not merged, so I count them separately.
+                                PyOD, river, imbalanced-learn, hiclass, pythresh, DeepOD, aeon and mlx-lm. Four add new
+                                detectors, one adds model support, the other nine are correctness fixes. Open is not
+                                merged, so I count them separately.
                             </p>
                         </div>
                     </li> <!-- services-list__item -->
